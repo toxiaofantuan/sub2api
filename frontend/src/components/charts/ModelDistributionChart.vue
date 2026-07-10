@@ -122,7 +122,7 @@
             <template v-for="model in displayModelStats" :key="model.model">
               <tr
                 class="transition-colors"
-                :class="enableBreakdown ? 'cursor-pointer hover:bg-[#FBF3D4] dark:hover:bg-[#373745]' : ''"
+                :class="enableBreakdown ? 'cursor-pointer hover:bg-primary-100/70 dark:hover:bg-primary-400/10' : ''"
                 @click="enableBreakdown && toggleBreakdown('model', model.model)"
               >
                 <td
@@ -202,8 +202,8 @@
               :key="item.isOther ? 'others' : `${item.user_id}-${index}`"
               class="transition-colors"
               :class="item.isOther
-                ? 'bg-[#F8F7F2] dark:bg-[#1F2230]'
-                : 'cursor-pointer hover:bg-[#FBF3D4] dark:hover:bg-[#373745]'"
+                ? 'bg-primary-50/80 dark:bg-dark-950/80'
+                : 'cursor-pointer hover:bg-primary-100/70 dark:hover:bg-primary-400/10'"
               @click="item.isOther ? undefined : emit('ranking-click', item)"
             >
               <td class="py-1.5">

@@ -1,5 +1,5 @@
 <template>
-  <div class="relative flex min-h-screen flex-col bg-[#FEFEFD] dark:bg-[#1F2230]">
+  <div class="key-usage-shell relative flex min-h-screen flex-col">
     <!-- Header (same pattern as HomeView) -->
     <header class="relative z-20 px-6 py-4">
       <nav class="mx-auto flex max-w-6xl items-center justify-between">
@@ -77,7 +77,7 @@
           <button
             @click="queryKey"
             :disabled="isQuerying"
-            class="flex h-12 items-center gap-2 whitespace-nowrap rounded-lg bg-[#F0C845] px-7 text-sm font-medium text-[#292C3B] transition-all hover:bg-[#DDA931] active:scale-[0.97] disabled:opacity-60"
+            class="btn btn-primary h-12 whitespace-nowrap px-7"
           >
             <svg v-if="isQuerying" class="w-4 h-4 animate-spin" viewBox="0 0 24 24" fill="none">
               <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="3" opacity="0.25"/>
@@ -120,7 +120,7 @@
               />
               <button
                 @click="queryKey"
-                class="text-xs px-3 py-1.5 rounded-lg bg-[#F0C845] text-[#292C3B] hover:bg-[#DDA931]"
+                class="btn btn-primary btn-sm text-xs"
               >{{ t('keyUsage.apply') }}</button>
             </div>
           </div>
@@ -159,7 +159,7 @@
             <div class="key-glass-pill inline-flex items-center gap-2 px-5 py-2.5">
               <span
                 class="w-2.5 h-2.5 rounded-full pulse-dot"
-                :class="statusInfo.isActive ? 'bg-[#DDA931]' : 'bg-[#3B4256] dark:bg-[#FEFEFD]/50'"
+                :class="statusInfo.isActive ? 'key-status-active' : 'key-status-inactive'"
               ></span>
               <span class="text-sm font-medium text-gray-900 dark:text-white">{{ statusInfo.label }}</span>
               <span class="text-xs text-gray-400 dark:text-dark-500">|</span>
@@ -527,14 +527,14 @@ function setDailyUsageDays(days: 7 | 30 | 90) {
 
 const CIRCUMFERENCE = 2 * Math.PI * 68
 const RING_GRADIENTS = [
-  { from: '#F0C845', to: '#DDA931' },
-  { from: '#DDA931', to: '#F0C845' },
+  { from: 'var(--ui-primary)', to: 'var(--ui-accent)' },
+  { from: 'var(--ui-accent)', to: 'var(--ui-primary-strong)' },
 ]
 
 const ringAnimated = ref(false)
 const displayPcts = ref<number[]>([])
 
-const ringTrackColor = computed(() => isDark.value ? '#3B4256' : '#E8E4D6')
+const ringTrackColor = 'var(--ui-border)'
 
 interface RingItem {
   title: string
@@ -671,14 +671,14 @@ interface DetailRow {
 
 function getUsageColor(pct: number): string {
   if (pct > 90) return 'text-rose-500'
-  if (pct > 70) return 'text-[#DDA931] dark:text-[#F0C845]'
-  return 'text-[#292C3B] dark:text-[#FEFEFD]'
+  if (pct > 70) return 'text-amber-600 dark:text-amber-300'
+  return 'key-value-default'
 }
 
 function getRemainingColor(value: number, warningThreshold: number): string {
   if (value <= 0) return 'text-rose-500'
-  if (value < warningThreshold) return 'text-[#DDA931] dark:text-[#F0C845]'
-  return 'text-[#292C3B] dark:text-[#FEFEFD]'
+  if (value < warningThreshold) return 'text-amber-600 dark:text-amber-300'
+  return 'key-value-default'
 }
 
 const detailRows = computed<DetailRow[]>(() => {
@@ -942,10 +942,26 @@ onUnmounted(() => {
 </script>
 
 <style scoped>
+.key-usage-shell {
+  background:
+    linear-gradient(125deg, var(--ui-accent-soft) 0%, transparent 38%),
+    linear-gradient(235deg, var(--ui-primary-soft) 0%, transparent 44%);
+}
+
+.key-usage-shell .btn-primary {
+  color: var(--ui-on-action);
+  background: linear-gradient(135deg, var(--ui-action-start) 0%, var(--ui-action-end) 100%);
+}
+
+.key-usage-shell .btn-primary:hover {
+  color: var(--ui-on-action);
+  background: linear-gradient(135deg, var(--ui-action-hover-start) 0%, var(--ui-action-hover-end) 100%);
+}
+
 .key-inline-icon,
 .key-icon-button,
 .key-ring-icon {
-  color: #dda931;
+  color: var(--ui-primary-strong);
 }
 
 .key-icon-button {
@@ -953,17 +969,7 @@ onUnmounted(() => {
 }
 
 .key-icon-button:hover {
-  color: #292c3b;
-}
-
-:global(html.dark .key-inline-icon),
-:global(html.dark .key-icon-button),
-:global(html.dark .key-ring-icon) {
-  color: #f0c845;
-}
-
-:global(html.dark .key-icon-button:hover) {
-  color: #fefefd;
+  color: var(--ui-ink);
 }
 
 .key-option-button {
@@ -975,77 +981,66 @@ onUnmounted(() => {
 }
 
 .key-option-button-selected {
-  color: #292c3b;
-  background: #f0c845;
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.36);
+  color: var(--ui-on-action);
+  background: linear-gradient(135deg, var(--ui-action-start) 0%, var(--ui-action-end) 100%);
+  box-shadow: inset 0 1px 0 var(--ui-highlight);
 }
 
 .key-option-button-idle {
-  color: rgba(41, 44, 59, 0.72);
-  background: rgba(254, 254, 253, 0.5);
+  color: var(--ui-muted);
+  background: var(--ui-surface);
+  border: 1px solid var(--ui-border);
 }
 
 .key-option-button-idle:hover {
-  color: #292c3b;
-  background: rgba(240, 200, 69, 0.16);
+  color: var(--ui-ink);
+  background: var(--ui-primary-soft);
 }
 
 .key-date-input {
   border-radius: 7px;
-  color: #292c3b;
-  background: #fefefd;
-  box-shadow: 0 1px 2px rgba(31, 34, 48, 0.04);
+  color: var(--ui-ink);
+  background: var(--ui-surface);
+  border: 1px solid var(--ui-border);
+  box-shadow: inset 0 1px 0 var(--ui-highlight);
 }
 
 .key-segmented {
-  background: rgba(41, 44, 59, 0.06);
+  background: var(--ui-surface-muted);
+  border: 1px solid var(--ui-border);
 }
 
 .key-detail-icon {
-  color: #292c3b;
-  background: rgba(240, 200, 69, 0.16);
+  color: var(--ui-primary-strong);
+  background: var(--ui-primary-soft);
 }
 
 .key-detail-icon-svg {
   color: currentColor;
 }
 
-:global(html.dark .key-option-button-selected) {
-  color: #292c3b;
-  background: #f0c845;
+.key-status-active {
+  background: var(--ui-primary);
 }
 
-:global(html.dark .key-option-button-idle) {
-  color: rgba(254, 254, 253, 0.68);
-  background: rgba(254, 254, 253, 0.06);
+.key-status-inactive {
+  background: var(--ui-muted);
+  opacity: 0.55;
 }
 
-:global(html.dark .key-option-button-idle:hover) {
-  color: #fefefd;
-  background: rgba(240, 200, 69, 0.12);
-}
-
-:global(html.dark .key-date-input) {
-  color: #fefefd;
-  background: #1f2230;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.14);
-}
-
-:global(html.dark .key-segmented) {
-  background: rgba(254, 254, 253, 0.06);
-}
-
-:global(html.dark .key-detail-icon) {
-  color: #f0c845;
-  background: rgba(240, 200, 69, 0.12);
+.key-value-default {
+  color: var(--ui-ink);
 }
 
 .key-panel,
 .key-glass-card {
   position: relative;
   overflow: hidden;
-  background: #fefefd;
-  box-shadow: 0 4px 12px rgba(31, 34, 48, 0.045);
+  background: var(--ui-surface);
+  border: 1px solid var(--ui-border);
+  box-shadow: var(--ui-shadow);
+  backdrop-filter: blur(26px) saturate(1.45);
+  -webkit-backdrop-filter: blur(26px) saturate(1.45);
   transition:
     transform 0.22s ease,
     box-shadow 0.22s ease;
@@ -1053,28 +1048,34 @@ onUnmounted(() => {
 
 .key-panel:hover,
 .key-glass-card:hover {
-  box-shadow: 0 8px 18px rgba(31, 34, 48, 0.07);
+  box-shadow: var(--ui-shadow-hover);
 }
 
 .key-glass-input {
-  background: #fefefd;
-  box-shadow: 0 2px 6px rgba(31, 34, 48, 0.04);
+  background: var(--ui-surface);
+  border: 1px solid var(--ui-border);
+  box-shadow: inset 0 1px 0 var(--ui-highlight), var(--ui-shadow-sm);
+  backdrop-filter: blur(20px) saturate(1.35);
+  -webkit-backdrop-filter: blur(20px) saturate(1.35);
 }
 
 .key-glass-pill {
   position: relative;
   overflow: hidden;
   border-radius: 999px;
-  background: #fefefd;
-  box-shadow: 0 2px 8px rgba(31, 34, 48, 0.05);
+  background: var(--ui-surface-strong);
+  border: 1px solid var(--ui-border);
+  box-shadow: var(--ui-shadow-sm);
+  backdrop-filter: blur(20px) saturate(1.4);
+  -webkit-backdrop-filter: blur(20px) saturate(1.4);
 }
 
 .key-detail-row {
-  background: rgba(41, 44, 59, 0.035);
+  background: var(--ui-surface-muted);
 }
 
 .key-detail-row:hover {
-  background: rgba(240, 200, 69, 0.08);
+  background: var(--ui-primary-soft);
 }
 
 .key-stat-grid {
@@ -1082,20 +1083,20 @@ onUnmounted(() => {
 }
 
 .key-stat-cell {
-  background: rgba(41, 44, 59, 0.035);
+  background: var(--ui-surface-muted);
 }
 
 .key-table-head {
-  background: #f8f7f2;
+  background: var(--ui-table-header);
 }
 
 .key-table-row {
-  background: #fefefd;
+  background: var(--ui-table-row);
   transition: background-color 0.15s ease;
 }
 
 .key-table-row > td {
-  background: #fefefd;
+  background: var(--ui-table-row);
 }
 
 .key-table-row:last-child {
@@ -1104,54 +1105,7 @@ onUnmounted(() => {
 
 .key-table-row:hover,
 .key-table-row:hover > td {
-  background: #fbf3d4;
-}
-
-:global(html.dark .key-panel),
-:global(html.dark .key-glass-card) {
-  background: #292c3b;
-  box-shadow: 0 5px 14px rgba(0, 0, 0, 0.14);
-}
-
-:global(html.dark .key-panel:hover),
-:global(html.dark .key-glass-card:hover) {
-  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.18);
-}
-
-:global(html.dark .key-glass-pill),
-:global(html.dark .key-glass-input) {
-  background: #292c3b;
-  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.14);
-}
-
-:global(html.dark .key-detail-row) {
-  background: rgba(254, 254, 253, 0.045);
-}
-
-:global(html.dark .key-detail-row:hover) {
-  background: rgba(240, 200, 69, 0.1);
-}
-
-:global(html.dark .key-stat-grid) {
-  background: transparent;
-}
-
-:global(html.dark .key-stat-cell) {
-  background: rgba(254, 254, 253, 0.045);
-}
-
-:global(html.dark .key-table-head) {
-  background: #1f2230;
-}
-
-:global(html.dark .key-table-row),
-:global(html.dark .key-table-row > td) {
-  background: #292c3b;
-}
-
-:global(html.dark .key-table-row:hover),
-:global(html.dark .key-table-row:hover > td) {
-  background: #373745;
+  background: var(--ui-table-hover);
 }
 
 /* Input focus ring */
@@ -1159,8 +1113,8 @@ onUnmounted(() => {
   transition: box-shadow 0.2s ease, border-color 0.2s ease;
 }
 .input-ring:focus {
-  box-shadow: 0 0 0 3px rgba(240, 200, 69, 0.22);
-  border-color: #dda931;
+  box-shadow: 0 0 0 3px var(--ui-primary-soft), inset 0 1px 0 var(--ui-highlight);
+  border-color: var(--ui-primary);
   outline: none;
 }
 

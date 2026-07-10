@@ -53,7 +53,7 @@
             <template v-for="group in displayGroupStats" :key="group.group_id">
               <tr
                 class="transition-colors"
-                :class="enableBreakdown && group.group_id > 0 ? 'cursor-pointer hover:bg-[#FBF3D4] dark:hover:bg-[#373745]' : ''"
+                :class="enableBreakdown && group.group_id > 0 ? 'cursor-pointer hover:bg-primary-100/70 dark:hover:bg-primary-400/10' : ''"
                 @click="enableBreakdown && group.group_id > 0 && toggleBreakdown('group', group.group_id)"
               >
                 <td

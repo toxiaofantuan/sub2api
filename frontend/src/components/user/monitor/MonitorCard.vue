@@ -86,9 +86,9 @@ import MonitorAvailabilityRow from './MonitorAvailabilityRow.vue'
 import MonitorTimeline from './MonitorTimeline.vue'
 
 const PROVIDER_TINT: Record<string, string> = {
-  openai: 'text-[#DDA931] dark:text-[#F0C845]',
-  anthropic: 'text-[#DDA931] dark:text-[#F0C845]',
-  gemini: 'text-[#DDA931] dark:text-[#F0C845]',
+  openai: 'text-primary-600 dark:text-primary-300',
+  anthropic: 'text-primary-600 dark:text-primary-300',
+  gemini: 'text-primary-600 dark:text-primary-300',
 }
 
 const props = defineProps<{
@@ -112,7 +112,7 @@ const {
 } = useChannelMonitorFormat()
 
 const providerTintClass = computed(() =>
-  PROVIDER_TINT[props.item.provider] ?? 'text-[#DDA931] dark:text-[#F0C845]'
+  PROVIDER_TINT[props.item.provider] ?? 'text-primary-600 dark:text-primary-300'
 )
 
 const availabilityLabel = computed(() => {

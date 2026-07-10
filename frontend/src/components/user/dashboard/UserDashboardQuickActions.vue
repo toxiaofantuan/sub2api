@@ -15,7 +15,7 @@
         <Icon
           name="chevronRight"
           size="md"
-          class="text-gray-400 transition-colors group-hover:text-[#DDA931] dark:text-dark-500 dark:group-hover:text-[#F0C845]"
+          class="text-gray-400 transition-colors group-hover:text-primary-600 dark:text-dark-500 dark:group-hover:text-primary-300"
         />
       </button>
 
@@ -30,7 +30,7 @@
         <Icon
           name="chevronRight"
           size="md"
-          class="text-gray-400 transition-colors group-hover:text-[#DDA931] dark:text-dark-500 dark:group-hover:text-[#F0C845]"
+          class="text-gray-400 transition-colors group-hover:text-primary-600 dark:text-dark-500 dark:group-hover:text-primary-300"
         />
       </button>
 
@@ -45,7 +45,7 @@
         <Icon
           name="chevronRight"
           size="md"
-          class="text-gray-400 transition-colors group-hover:text-[#DDA931] dark:text-dark-500 dark:group-hover:text-[#F0C845]"
+          class="text-gray-400 transition-colors group-hover:text-primary-600 dark:text-dark-500 dark:group-hover:text-primary-300"
         />
       </button>
 
@@ -60,7 +60,7 @@
         <Icon
           name="chevronRight"
           size="md"
-          class="text-gray-400 transition-colors group-hover:text-[#DDA931] dark:text-dark-500 dark:group-hover:text-[#F0C845]"
+          class="text-gray-400 transition-colors group-hover:text-primary-600 dark:text-dark-500 dark:group-hover:text-primary-300"
         />
       </button>
     </div>

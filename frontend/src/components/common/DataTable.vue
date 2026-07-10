@@ -481,7 +481,7 @@ const applySortState = (state: PersistedSortState | null) => {
 
 const getSortIndicatorClass = (key: string, order: 'asc' | 'desc') => {
   return sortKey.value === key && sortOrder.value === order
-    ? 'text-[#DDA931] dark:text-[#F0C845]'
+    ? 'data-table-sort-indicator-active'
     : 'text-gray-300 transition-colors dark:text-dark-500'
 }
 
@@ -782,11 +782,12 @@ defineExpose({
   height: 100%;
   min-height: 0;
   isolation: isolate;
-  background: #fefefd;
+  color: var(--ui-ink, #25233a);
+  background: var(--ui-surface-strong, rgba(255, 255, 255, 0.88));
 }
 
 :global(.dark) .table-wrapper {
-  background: #292c3b;
+  background: var(--ui-surface-strong, rgba(32, 30, 52, 0.9));
 }
 
 /* 表头容器，确保在滚动时覆盖表体内容 */
@@ -794,34 +795,36 @@ defineExpose({
   position: sticky;
   top: 0;
   z-index: 200;
-  background: #f8f7f2;
+  background: var(--ui-table-header, #efeffa);
   backdrop-filter: none;
   -webkit-backdrop-filter: none;
 }
 
 :global(.dark) .table-wrapper .table-header {
-  background: #1f2230;
+  background: var(--ui-table-header, #292640);
 }
 
 /* 表体保持在表头下方 */
 .table-body {
   position: relative;
   z-index: 0;
-  background: #fefefd;
+  background: var(--ui-table-row, #ffffff);
 }
 
 :global(.dark) .table-body {
-  background: #292c3b;
+  background: var(--ui-table-row, #242139);
 }
 
 .table-body td {
-  border-bottom: 1px solid transparent;
-  background: #fefefd;
+  border-bottom: 1px solid var(--ui-border, rgba(129, 119, 190, 0.14));
+  background: var(--ui-table-row, #ffffff);
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
 }
 
 :global(.dark) .table-body td {
-  border-bottom-color: transparent;
-  background: #292c3b;
+  border-bottom-color: var(--ui-border, rgba(194, 187, 240, 0.12));
+  background: var(--ui-table-row, #242139);
 }
 
 /* 所有表头单元格固定在顶部 */
@@ -829,8 +832,8 @@ defineExpose({
   position: sticky;
   top: 0;
   z-index: 210; /* 必须高于所有表体内容 */
-  background: #f8f7f2;
-  border-bottom-color: transparent;
+  background: var(--ui-table-header, #efeffa);
+  border-bottom-color: var(--ui-border, rgba(129, 119, 190, 0.16));
   backdrop-filter: none;
   -webkit-backdrop-filter: none;
 }
@@ -844,19 +847,23 @@ defineExpose({
 
 .data-table-sortable-header:hover,
 .data-table-sort-active {
-  color: #292c3b;
-  background: #f0c845;
+  color: var(--ui-primary-strong, #6858c7);
+  background: var(--ui-primary-soft, rgba(139, 125, 224, 0.18));
 }
 
 :global(.dark) .data-table-sortable-header:hover,
 :global(.dark) .data-table-sort-active {
-  color: #292c3b;
-  background: #f0c845;
+  color: var(--ui-primary-strong, #c8c1ff);
+  background: var(--ui-primary-soft, rgba(151, 137, 232, 0.22));
+}
+
+.data-table-sort-indicator-active {
+  color: var(--ui-primary-strong, #6858c7);
 }
 
 :global(.dark) .sticky-header-cell {
-  background: #1f2230;
-  border-bottom-color: transparent;
+  background: var(--ui-table-header, #292640);
+  border-bottom-color: var(--ui-border, rgba(194, 187, 240, 0.12));
 }
 
 /* Sticky 列基础样式 */
@@ -892,41 +899,41 @@ defineExpose({
 
 /* 表体 sticky 列背景 */
 tbody .sticky-col {
-  background: #fefefd;
+  background: var(--ui-table-row, #ffffff);
   backdrop-filter: none;
   -webkit-backdrop-filter: none;
 }
 
 :global(.dark) .table-wrapper tbody .sticky-col {
-  background: #292c3b;
+  background: var(--ui-table-row, #242139);
 }
 
 /* hover 状态保持 */
 tbody tr:hover .sticky-col {
-  background: #fbf3d4;
+  background: var(--ui-table-hover, #eeecff);
 }
 
 :global(.dark) .table-wrapper tbody tr:hover .sticky-col {
-  background: #373745;
+  background: var(--ui-table-hover, #35304f);
 }
 
 .data-table-row {
-  background: #fefefd;
+  background: var(--ui-table-row, #ffffff);
   transition: background-color 0.15s ease;
 }
 
 .data-table-row:hover,
 .data-table-row:hover > td {
-  background: #fbf3d4;
+  background: var(--ui-table-hover, #eeecff);
 }
 
 :global(.dark) .data-table-row {
-  background: #292c3b;
+  background: var(--ui-table-row, #242139);
 }
 
 :global(.dark) .data-table-row:hover,
 :global(.dark) .data-table-row:hover > td {
-  background: #373745;
+  background: var(--ui-table-hover, #35304f);
 }
 
 /* 阴影只在可滚动时显示 */
@@ -939,7 +946,7 @@ tbody tr:hover .sticky-col {
   bottom: 0;
   width: 10px;
   transform: translateX(100%);
-  background: linear-gradient(to right, rgba(0, 0, 0, 0.04), transparent);
+  background: linear-gradient(to right, var(--ui-primary-soft, rgba(139, 125, 224, 0.16)), transparent);
   pointer-events: none;
 }
 
@@ -952,7 +959,7 @@ tbody tr:hover .sticky-col {
   bottom: 0;
   width: 10px;
   transform: translateX(100%);
-  background: linear-gradient(to right, rgba(0, 0, 0, 0.04), transparent);
+  background: linear-gradient(to right, var(--ui-primary-soft, rgba(139, 125, 224, 0.16)), transparent);
   pointer-events: none;
 }
 
@@ -965,18 +972,18 @@ tbody tr:hover .sticky-col {
   bottom: 0;
   width: 10px;
   transform: translateX(-100%);
-  background: linear-gradient(to left, rgba(0, 0, 0, 0.04), transparent);
+  background: linear-gradient(to left, var(--ui-primary-soft, rgba(139, 125, 224, 0.16)), transparent);
   pointer-events: none;
 }
 
 /* 暗色模式阴影 */
 :global(.dark) .is-scrollable .sticky-col-left::after,
 :global(.dark) .is-scrollable .sticky-col-left-second::after {
-  background: linear-gradient(to right, rgba(0, 0, 0, 0.12), transparent);
+  background: linear-gradient(to right, var(--ui-primary-soft, rgba(151, 137, 232, 0.2)), transparent);
 }
 
 :global(.dark) .is-scrollable .sticky-col-right::before {
-  background: linear-gradient(to left, rgba(0, 0, 0, 0.12), transparent);
+  background: linear-gradient(to left, var(--ui-primary-soft, rgba(151, 137, 232, 0.2)), transparent);
 }
 </style>
 
@@ -1000,41 +1007,41 @@ tbody tr:hover .sticky-col {
 }
 
 .table-wrapper::-webkit-scrollbar-track {
-  background-color: rgba(0, 0, 0, 0.03) !important;
+  background-color: var(--ui-surface-muted, rgba(239, 239, 250, 0.72)) !important;
   border-radius: 6px !important;
   margin: 0 4px !important;
 }
 .dark .table-wrapper::-webkit-scrollbar-track {
-  background-color: rgba(255, 255, 255, 0.05) !important;
+  background-color: var(--ui-surface-muted, rgba(255, 255, 255, 0.06)) !important;
 }
 
 /* 常驻、不透明的滑块，无视鼠标是否 hover 都在那！ */
 .table-wrapper::-webkit-scrollbar-thumb {
-  background-color: rgba(107, 114, 128, 0.75) !important; 
+  background-color: var(--ui-muted, #77738b) !important;
   border-radius: 6px !important;
   border: 2px solid transparent !important;
   background-clip: padding-box !important;
   -webkit-appearance: none !important;
 }
 .table-wrapper::-webkit-scrollbar-thumb:hover {
-  background-color: rgba(75, 85, 99, 0.9) !important;
+  background-color: var(--ui-primary-strong, #6858c7) !important;
 }
 
 .dark .table-wrapper::-webkit-scrollbar-thumb {
-  background-color: rgba(156, 163, 175, 0.75) !important;
+  background-color: var(--ui-muted, #aaa4c2) !important;
 }
 .dark .table-wrapper::-webkit-scrollbar-thumb:hover {
-  background-color: rgba(209, 213, 219, 0.9) !important;
+  background-color: var(--ui-primary-strong, #c8c1ff) !important;
 }
 
 /* 3. 仅给真正的 Firefox 留的后路 */
 @supports (-moz-appearance:none) {
   .table-wrapper {
     scrollbar-width: thin !important;
-    scrollbar-color: rgba(156, 163, 175, 0.5) rgba(0, 0, 0, 0.03) !important;
+    scrollbar-color: var(--ui-muted, #77738b) transparent !important;
   }
   .dark .table-wrapper {
-    scrollbar-color: rgba(75, 85, 99, 0.5) rgba(255, 255, 255, 0.05) !important;
+    scrollbar-color: var(--ui-muted, #aaa4c2) transparent !important;
   }
 }
 </style>

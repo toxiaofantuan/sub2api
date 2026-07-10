@@ -1,11 +1,11 @@
 <template>
   <div class="relative flex min-h-screen items-center justify-center overflow-hidden p-4">
     <!-- Background -->
-    <div class="absolute inset-0 bg-[#FEFEFD] dark:bg-[#1F2230]"></div>
+    <div class="auth-canvas absolute inset-0"></div>
 
     <!-- Quiet grid texture -->
     <div class="pointer-events-none absolute inset-0 overflow-hidden">
-      <div class="absolute inset-0 bg-[linear-gradient(rgba(41,44,59,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(41,44,59,0.03)_1px,transparent_1px)] bg-[size:64px_64px]"></div>
+      <div class="auth-grid absolute inset-0"></div>
     </div>
 
     <!-- Content Container -->
@@ -29,7 +29,7 @@
       </div>
 
       <!-- Card Container -->
-      <div class="card-glass rounded-md p-8">
+      <div class="auth-glass-card card-glass rounded-md p-8">
         <slot />
       </div>
 
@@ -66,11 +66,33 @@ onMounted(() => {
 </script>
 
 <style scoped>
-.text-gradient {
-  color: #292c3b;
+.auth-canvas {
+  background:
+    linear-gradient(125deg, rgba(195, 216, 255, 0.5) 0%, rgba(195, 216, 255, 0) 38%),
+    linear-gradient(235deg, rgba(219, 210, 255, 0.56) 0%, rgba(219, 210, 255, 0) 44%),
+    linear-gradient(180deg, var(--ui-canvas) 0%, var(--ui-canvas-end) 100%);
 }
 
-:global(.dark) .text-gradient {
-  color: #f0c845;
+.auth-grid {
+  background-image:
+    linear-gradient(rgba(98, 91, 164, 0.045) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(90, 167, 223, 0.04) 1px, transparent 1px);
+  background-size: 64px 64px;
+  mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.72), transparent 88%);
+}
+
+.auth-glass-card {
+  border: 1px solid var(--ui-border);
+  background: var(--ui-surface);
+  box-shadow: var(--ui-shadow-hover);
+  backdrop-filter: blur(32px) saturate(1.55);
+  -webkit-backdrop-filter: blur(32px) saturate(1.55);
+}
+
+.text-gradient {
+  color: transparent;
+  background-image: linear-gradient(105deg, var(--ui-ink) 0%, var(--ui-primary-strong) 58%, var(--ui-accent) 100%);
+  background-clip: text;
+  -webkit-background-clip: text;
 }
 </style>

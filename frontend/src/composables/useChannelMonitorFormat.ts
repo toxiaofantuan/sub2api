@@ -23,9 +23,9 @@ import {
 } from '@/constants/channelMonitor'
 
 const NEUTRAL_BADGE = 'bg-gray-100 text-gray-800 dark:bg-dark-700 dark:text-gray-300'
-const BRAND_BADGE = 'bg-[#F0C845]/15 text-[#292C3B] dark:bg-[#F0C845]/15 dark:text-[#FEFEFD]'
-const BRAND_PICKER_ACTIVE = 'border-transparent bg-[#F0C845] text-[#292C3B] dark:border-transparent dark:bg-[#F0C845] dark:text-[#292C3B]'
-const BRAND_PICKER_IDLE = 'border-gray-200 bg-white text-gray-600 hover:border-transparent hover:bg-[#F0C845]/15 hover:text-[#292C3B] dark:border-dark-700 dark:bg-dark-800 dark:text-gray-400 dark:hover:border-transparent dark:hover:bg-[#F0C845]/15 dark:hover:text-[#FEFEFD]'
+const BRAND_BADGE = 'bg-primary-100/80 text-primary-700 dark:bg-primary-400/15 dark:text-primary-200'
+const BRAND_PICKER_ACTIVE = 'border-primary-300 bg-primary-500 text-white dark:border-primary-400/30 dark:bg-primary-500 dark:text-white'
+const BRAND_PICKER_IDLE = 'border-primary-100 bg-white/70 text-gray-600 hover:border-primary-200 hover:bg-primary-100/70 hover:text-primary-700 dark:border-dark-700 dark:bg-dark-800/70 dark:text-gray-400 dark:hover:border-primary-400/20 dark:hover:bg-primary-400/10 dark:hover:text-primary-200'
 
 /** Availability HSL hue multiplier: 0%=red(0) / 50%=yellow(60) / 100%=green(120). */
 const HSL_HUE_PER_PERCENT = 1.2
@@ -50,7 +50,7 @@ export function useChannelMonitorFormat() {
       case STATUS_OPERATIONAL:
         return BRAND_BADGE
       case STATUS_DEGRADED:
-        return 'bg-[#DDA931]/15 text-[#292C3B] dark:bg-[#DDA931]/15 dark:text-[#FEFEFD]'
+        return 'bg-amber-100 text-amber-700 dark:bg-amber-500/15 dark:text-amber-300'
       case STATUS_FAILED:
         return 'bg-red-100 text-red-700 dark:bg-red-500/15 dark:text-red-300'
       case STATUS_ERROR:
@@ -90,7 +90,7 @@ export function useChannelMonitorFormat() {
       default:
         return active
           ? BRAND_PICKER_ACTIVE
-          : 'border-gray-200 bg-white text-gray-600 hover:border-transparent hover:bg-[#F0C845]/15 hover:text-[#292C3B] dark:border-dark-700 dark:bg-dark-800 dark:text-gray-400 dark:hover:border-transparent dark:hover:bg-[#F0C845]/15 dark:hover:text-[#FEFEFD]'
+          : BRAND_PICKER_IDLE
     }
   }
 
@@ -155,7 +155,7 @@ export function providerGradient(provider: string): string {
     case PROVIDER_OPENAI:
     case PROVIDER_ANTHROPIC:
     case PROVIDER_GEMINI:
-      return 'bg-gradient-to-br from-[#F0C845]/20 to-[#DDA931]/20 dark:from-[#F0C845]/15 dark:to-[#DDA931]/20'
+      return 'bg-gradient-to-br from-primary-200/70 to-accent-200/70 dark:from-primary-400/15 dark:to-accent-400/20'
     default:
       return 'bg-gradient-to-br from-gray-100 to-gray-200 dark:from-dark-700 dark:to-dark-600'
   }

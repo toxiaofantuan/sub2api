@@ -52,7 +52,7 @@ describe('DataTable', () => {
     const nameHeader = wrapper.findAll('th')[0]
     expect(nameHeader.attributes('aria-sort')).toBe('ascending')
     expect(nameHeader.findAll('svg')).toHaveLength(2)
-    expect(nameHeader.findAll('svg')[0].classes()).toContain('text-[#DDA931]')
+    expect(nameHeader.findAll('svg')[0].classes()).toContain('data-table-sort-indicator-active')
     expect(nameHeader.findAll('svg')[1].classes()).toContain('text-gray-300')
 
     await nameHeader.trigger('click')
@@ -60,6 +60,6 @@ describe('DataTable', () => {
 
     expect(nameHeader.attributes('aria-sort')).toBe('descending')
     expect(nameHeader.findAll('svg')[0].classes()).toContain('text-gray-300')
-    expect(nameHeader.findAll('svg')[1].classes()).toContain('text-[#DDA931]')
+    expect(nameHeader.findAll('svg')[1].classes()).toContain('data-table-sort-indicator-active')
   })
 })

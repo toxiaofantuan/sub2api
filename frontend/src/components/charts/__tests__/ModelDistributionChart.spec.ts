@@ -176,7 +176,7 @@ describe('ModelDistributionChart', () => {
       'Others',
     ])
     expect(chartData.datasets[0].data).toEqual([12, 8, 10])
-    expect(chartData.datasets[0].backgroundColor[0]).toBe('#DDA931')
+    expect(chartData.datasets[0].backgroundColor[0]).toBe('#7768D5')
     expect(chartData.datasets[0].backgroundColor[2]).toBe('#B8BEC8')
     expect(chartData.datasets[0].backgroundColor[2]).not.toBe(chartData.datasets[0].backgroundColor[0])
 

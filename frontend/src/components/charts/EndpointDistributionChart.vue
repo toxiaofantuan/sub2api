@@ -90,7 +90,7 @@
             <template v-for="item in displayEndpointStats" :key="item.endpoint">
               <tr
                 class="transition-colors"
-                :class="enableBreakdown ? 'cursor-pointer hover:bg-[#FBF3D4] dark:hover:bg-[#373745]' : ''"
+                :class="enableBreakdown ? 'cursor-pointer hover:bg-primary-100/70 dark:hover:bg-primary-400/10' : ''"
                 @click="enableBreakdown && toggleBreakdown(item.endpoint)"
               >
                 <td class="max-w-[180px] truncate py-1.5 font-medium" :class="enableBreakdown ? 'dashboard-clickable' : 'text-gray-900 dark:text-white'" :title="item.endpoint">

@@ -3,8 +3,8 @@
     <!-- 铃铛按钮 -->
     <button
       @click="openModal"
-      class="relative flex h-9 w-9 items-center justify-center rounded-md text-gray-600 transition-all hover:scale-105 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-[#292C3B]"
-      :class="{ 'text-[#DDA931] dark:text-[#F0C845]': unreadCount > 0 }"
+      class="announcement-trigger relative flex h-9 w-9 items-center justify-center rounded-md transition-all hover:scale-105"
+      :class="{ 'announcement-trigger-unread': unreadCount > 0 }"
       :aria-label="t('announcements.title')"
     >
       <Icon name="bell" size="md" />
@@ -23,19 +23,19 @@
       <Transition name="modal-fade">
         <div
           v-if="isModalOpen"
-          class="fixed inset-0 z-[100] flex items-start justify-center overflow-y-auto bg-black/70 p-4 pt-[8vh] backdrop-blur-md"
+          class="announcement-overlay fixed inset-0 z-[100] flex items-start justify-center overflow-y-auto p-4 pt-[8vh] backdrop-blur-md"
           @click="closeModal"
         >
           <div
-          class="w-full max-w-[620px] overflow-hidden rounded-lg bg-white shadow-sm ring-1 ring-black/5 dark:bg-[#292C3B] dark:ring-white/10"
+          class="announcement-panel w-full max-w-[620px] overflow-hidden rounded-lg"
             @click.stop
           >
             <!-- Header with Gradient -->
-            <div class="relative overflow-hidden border-b border-gray-100/80 bg-[#f8f4e4] px-6 py-5 dark:border-dark-700/50 dark:bg-[#292C3B]">
+            <div class="announcement-header relative overflow-hidden border-b px-6 py-5">
               <div class="relative z-10 flex items-start justify-between">
                 <div>
                   <div class="flex items-center gap-2">
-                    <div class="flex h-8 w-8 items-center justify-center rounded-md bg-[#292C3B] text-white shadow-sm">
+                    <div class="announcement-primary-icon flex h-8 w-8 items-center justify-center rounded-md">
                       <Icon name="bell" size="sm" />
                     </div>
                     <h2 class="text-lg font-semibold text-gray-900 dark:text-white">
@@ -52,13 +52,13 @@
                     v-if="unreadCount > 0"
                     @click="markAllAsRead"
                     :disabled="loading"
-                    class="rounded-md bg-[#292C3B] px-4 py-2 text-xs font-medium text-white shadow-sm transition-all hover:bg-[#3B4256] disabled:opacity-50 dark:bg-[#292C3B] dark:hover:bg-[#3B4256]"
+                    class="announcement-primary-button rounded-md px-4 py-2 text-xs font-medium disabled:opacity-50"
                   >
                     {{ t('announcements.markAllRead') }}
                   </button>
                   <button
                     @click="closeModal"
-                    class="flex h-9 w-9 items-center justify-center rounded-lg bg-white/50 text-gray-500 backdrop-blur-sm transition-all hover:bg-white hover:text-gray-700 dark:bg-dark-700/50 dark:text-gray-400 dark:hover:bg-dark-700 dark:hover:text-gray-300"
+                    class="announcement-icon-button flex h-9 w-9 items-center justify-center rounded-lg transition-all"
                     :aria-label="t('common.close')"
                   >
                     <Icon name="x" size="sm" />
@@ -66,7 +66,7 @@
                 </div>
               </div>
               <!-- Decorative gradient -->
-              <div class="absolute right-0 top-0 h-full w-48 bg-gradient-to-l from-[#F0C845]/10 to-transparent dark:from-[#F0C845]/10"></div>
+              <div class="announcement-header-sheen absolute right-0 top-0 h-full w-48"></div>
             </div>
 
             <!-- Body -->
@@ -84,8 +84,8 @@
                 <div
                   v-for="item in announcements"
                   :key="item.id"
-                  class="group relative flex items-center gap-4 border-b border-gray-100 px-6 py-4 transition-all hover:bg-gray-50 dark:border-dark-700 dark:hover:bg-dark-700/30"
-                  :class="{ 'bg-primary-50/40 dark:bg-primary-900/5': !item.read_at }"
+                  class="announcement-row group relative flex items-center gap-4 border-b px-6 py-4 transition-all"
+                  :class="{ 'announcement-row-unread': !item.read_at }"
                   style="min-height: 72px"
                   @click="openDetail(item)"
                 >
@@ -93,10 +93,10 @@
                   <div class="flex h-10 w-10 flex-shrink-0 items-center justify-center">
                     <div
                       v-if="!item.read_at"
-                      class="relative flex h-10 w-10 items-center justify-center rounded-lg bg-[#292C3B] text-white shadow-sm"
+                      class="announcement-unread-icon relative flex h-10 w-10 items-center justify-center rounded-lg"
                     >
                       <!-- Pulse ring -->
-                      <span class="absolute inline-flex h-full w-full animate-ping rounded-lg bg-[#F0C845] opacity-75"></span>
+                      <span class="absolute inline-flex h-full w-full animate-ping rounded-lg bg-primary-400 opacity-50"></span>
                       <!-- Icon -->
                       <svg class="relative z-10 h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
@@ -104,7 +104,7 @@
                     </div>
                     <div
                       v-else
-                      class="flex h-10 w-10 items-center justify-center rounded-xl bg-gray-100 text-gray-400 dark:bg-dark-700 dark:text-gray-600"
+                      class="announcement-read-icon flex h-10 w-10 items-center justify-center rounded-lg"
                     >
                       <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
@@ -124,11 +124,11 @@
                         </time>
                         <span
                           v-if="!item.read_at"
-                        class="inline-flex items-center gap-1 rounded-md bg-[#F0C845]/15 px-1.5 py-0.5 text-xs font-medium text-[#292C3B] dark:bg-[#F0C845]/15 dark:text-[#FEFEFD]"
+                        class="announcement-unread-badge inline-flex items-center gap-1 rounded-md px-1.5 py-0.5 text-xs font-medium"
                         >
                           <span class="relative flex h-1.5 w-1.5">
                             <span class="absolute inline-flex h-full w-full animate-ping rounded-full bg-primary-500 opacity-75"></span>
-                            <span class="relative inline-flex h-1.5 w-1.5 rounded-full bg-dark-900"></span>
+                            <span class="relative inline-flex h-1.5 w-1.5 rounded-full bg-primary-600 dark:bg-primary-300"></span>
                           </span>
                           {{ t('announcements.unread') }}
                         </span>
@@ -152,7 +152,7 @@
                   <!-- Unread indicator bar -->
                   <div
                     v-if="!item.read_at"
-                    class="absolute left-0 top-0 h-full w-1 bg-gradient-to-b from-[#292C3B] to-[#DDA931]"
+                    class="announcement-indicator absolute left-0 top-0 h-full w-1"
                   ></div>
                 </div>
               </div>
@@ -160,10 +160,10 @@
               <!-- Empty State -->
               <div v-else class="flex flex-col items-center justify-center py-16">
                 <div class="relative mb-4">
-                  <div class="flex h-20 w-20 items-center justify-center rounded-full bg-[#F8F4E4] dark:bg-[#3B4256]">
+                  <div class="announcement-empty-icon flex h-20 w-20 items-center justify-center rounded-lg">
                     <Icon name="inbox" size="xl" class="text-gray-400 dark:text-gray-500" />
                   </div>
-                  <div class="absolute -right-1 -top-1 flex h-6 w-6 items-center justify-center rounded-full bg-[#F0C845] text-[#292C3B]">
+                  <div class="absolute -right-1 -top-1 flex h-6 w-6 items-center justify-center rounded-md bg-emerald-500 text-white">
                     <svg class="h-3.5 w-3.5" fill="currentColor" viewBox="0 0 20 20">
                       <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
                     </svg>
@@ -183,33 +183,33 @@
       <Transition name="modal-fade">
         <div
           v-if="detailModalOpen && selectedAnnouncement"
-          class="fixed inset-0 z-[110] flex items-start justify-center overflow-y-auto bg-black/70 p-4 pt-[6vh] backdrop-blur-md"
+          class="announcement-overlay fixed inset-0 z-[110] flex items-start justify-center overflow-y-auto p-4 pt-[6vh] backdrop-blur-md"
           @click="closeDetail"
         >
           <div
-          class="w-full max-w-[780px] overflow-hidden rounded-lg bg-white shadow-sm ring-1 ring-black/5 dark:bg-[#292C3B] dark:ring-white/10"
+          class="announcement-panel w-full max-w-[780px] overflow-hidden rounded-lg"
             @click.stop
           >
             <!-- Header -->
-            <div class="relative overflow-hidden border-b border-gray-100 bg-[#f8f4e4]/80 px-8 py-6 dark:border-dark-700 dark:bg-[#292C3B]">
-              <div class="absolute right-0 top-0 h-full w-64 bg-gradient-to-l from-[#F0C845]/15 to-transparent dark:from-[#F0C845]/10"></div>
+            <div class="announcement-header relative overflow-hidden border-b px-8 py-6">
+              <div class="announcement-header-sheen absolute right-0 top-0 h-full w-64"></div>
 
               <div class="relative z-10 flex items-start justify-between gap-4">
                 <div class="flex-1 min-w-0">
                   <!-- Icon and Category -->
                   <div class="mb-3 flex items-center gap-2">
-                    <div class="flex h-10 w-10 items-center justify-center rounded-lg bg-[#292C3B] text-white shadow-sm">
+                    <div class="announcement-primary-icon flex h-10 w-10 items-center justify-center rounded-lg">
                       <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                       </svg>
                     </div>
                     <div class="flex items-center gap-2">
-                      <span class="rounded-md bg-[#F0C845] px-2.5 py-1 text-xs font-medium text-[#292C3B] dark:bg-[#F0C845]/15 dark:text-[#FEFEFD]">
+                      <span class="announcement-category-badge rounded-md px-2.5 py-1 text-xs font-medium">
                         {{ t('announcements.title') }}
                       </span>
                       <span
                         v-if="!selectedAnnouncement.read_at"
-                        class="inline-flex items-center gap-1.5 rounded-md bg-[#292C3B] px-2.5 py-1 text-xs font-medium text-white shadow-sm"
+                        class="announcement-unread-badge inline-flex items-center gap-1.5 rounded-md px-2.5 py-1 text-xs font-medium"
                       >
                         <span class="relative flex h-2 w-2">
                           <span class="absolute inline-flex h-full w-full animate-ping rounded-full bg-white opacity-75"></span>
@@ -246,7 +246,7 @@
                 <!-- Close button -->
                 <button
                   @click="closeDetail"
-                  class="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-md bg-white/50 text-gray-500 backdrop-blur-sm transition-all hover:bg-white hover:text-gray-700 hover:shadow-sm dark:bg-[#3B4256]/50 dark:text-gray-300 dark:hover:bg-[#3B4256] dark:hover:text-white"
+                  class="announcement-icon-button flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-md transition-all"
                   :aria-label="t('common.close')"
                 >
                   <Icon name="x" size="md" />
@@ -255,11 +255,11 @@
             </div>
 
             <!-- Body with Enhanced Markdown -->
-            <div class="max-h-[60vh] overflow-y-auto bg-white px-8 py-8 dark:bg-dark-800">
+            <div class="announcement-body max-h-[60vh] overflow-y-auto px-8 py-8">
               <!-- Content with decorative border -->
               <div class="relative">
                 <!-- Decorative left border -->
-                <div class="absolute left-0 top-0 bottom-0 w-1 rounded-full bg-gradient-to-b from-dark-700 via-primary-600 to-primary-500"></div>
+                <div class="announcement-indicator absolute bottom-0 left-0 top-0 w-1 rounded"></div>
 
                 <div class="pl-6">
                   <div
@@ -271,7 +271,7 @@
             </div>
 
             <!-- Footer with Actions -->
-            <div class="border-t border-gray-100 bg-gray-50/50 px-8 py-5 dark:border-dark-700 dark:bg-dark-900/30">
+            <div class="announcement-footer border-t px-8 py-5">
               <div class="flex items-center justify-between">
                 <div class="flex items-center gap-2 text-xs text-gray-500 dark:text-gray-400">
                   <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
@@ -282,14 +282,14 @@
                 <div class="flex items-center gap-3">
                   <button
                     @click="closeDetail"
-                  class="rounded-md border border-gray-300 bg-white px-5 py-2.5 text-sm font-medium text-gray-700 shadow-sm transition-all hover:bg-gray-50 hover:shadow dark:border-dark-600 dark:bg-[#3B4256] dark:text-gray-300 dark:hover:bg-[#4D566D]"
+                  class="announcement-secondary-button rounded-md px-5 py-2.5 text-sm font-medium"
                   >
                     {{ t('common.close') }}
                   </button>
                   <button
                     v-if="!selectedAnnouncement.read_at"
                     @click="markAsReadAndClose(selectedAnnouncement.id)"
-                    class="rounded-md bg-[#F0C845] px-5 py-2.5 text-sm font-medium text-[#292C3B] shadow-sm transition-all hover:shadow-sm hover:scale-[1.01]"
+                    class="announcement-primary-button rounded-md px-5 py-2.5 text-sm font-medium hover:scale-[1.01]"
                   >
                     <span class="flex items-center gap-2">
                       <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
@@ -418,6 +418,154 @@ watch(
 </script>
 
 <style scoped>
+.announcement-trigger {
+  border: 1px solid transparent;
+  color: var(--ui-muted);
+  background: transparent;
+}
+
+.announcement-trigger:hover,
+.announcement-trigger-unread {
+  color: var(--ui-primary-strong);
+  border-color: color-mix(in srgb, var(--ui-primary) 20%, transparent);
+  background: var(--ui-primary-soft);
+  box-shadow: inset 0 1px 0 var(--ui-highlight);
+}
+
+.announcement-overlay {
+  background: rgba(20, 23, 52, 0.58);
+}
+
+.announcement-panel {
+  border: 1px solid var(--ui-border);
+  color: var(--ui-ink);
+  background:
+    linear-gradient(145deg, var(--ui-highlight), transparent 36%),
+    var(--ui-surface-strong);
+  box-shadow: var(--ui-shadow-hover);
+  backdrop-filter: blur(30px) saturate(1.5);
+  -webkit-backdrop-filter: blur(30px) saturate(1.5);
+}
+
+.announcement-header {
+  border-color: var(--ui-border);
+  background:
+    linear-gradient(135deg, var(--ui-primary-soft), var(--ui-accent-soft)),
+    var(--ui-surface-strong);
+}
+
+.announcement-header-sheen {
+  pointer-events: none;
+  background: linear-gradient(to left, var(--ui-highlight), transparent);
+  opacity: 0.42;
+}
+
+.announcement-primary-icon,
+.announcement-primary-button {
+  border: 1px solid color-mix(in srgb, var(--ui-primary) 38%, transparent);
+  color: var(--ui-on-action, #ffffff);
+  background: linear-gradient(135deg, var(--ui-action-start, #6557bf), var(--ui-action-end, #3c78a8));
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.3),
+    0 8px 18px color-mix(in srgb, var(--ui-primary) 22%, transparent);
+}
+
+.announcement-primary-button {
+  transition:
+    filter 0.2s ease,
+    box-shadow 0.2s ease,
+    transform 0.2s ease;
+}
+
+.announcement-primary-button:hover {
+  filter: saturate(1.08) brightness(1.03);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.36),
+    0 11px 24px color-mix(in srgb, var(--ui-primary) 28%, transparent);
+}
+
+.announcement-icon-button,
+.announcement-secondary-button {
+  border: 1px solid var(--ui-border);
+  color: var(--ui-muted);
+  background: var(--ui-surface);
+  box-shadow: var(--ui-shadow-sm);
+  backdrop-filter: blur(18px) saturate(1.35);
+  -webkit-backdrop-filter: blur(18px) saturate(1.35);
+  transition:
+    color 0.2s ease,
+    border-color 0.2s ease,
+    background-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.announcement-icon-button:hover,
+.announcement-secondary-button:hover {
+  border-color: color-mix(in srgb, var(--ui-primary) 28%, transparent);
+  color: var(--ui-primary-strong);
+  background: var(--ui-surface-strong);
+  box-shadow: var(--ui-shadow);
+}
+
+.announcement-trigger:focus-visible,
+.announcement-primary-button:focus-visible,
+.announcement-icon-button:focus-visible,
+.announcement-secondary-button:focus-visible {
+  outline: 2px solid color-mix(in srgb, var(--ui-primary) 58%, transparent);
+  outline-offset: 2px;
+}
+
+.announcement-row {
+  border-color: var(--ui-border);
+  background: transparent;
+  cursor: pointer;
+}
+
+.announcement-row:hover {
+  background: color-mix(in srgb, var(--ui-primary-soft) 54%, transparent);
+}
+
+.announcement-row-unread {
+  background: linear-gradient(90deg, var(--ui-primary-soft), transparent 72%);
+}
+
+.announcement-unread-icon {
+  border: 1px solid color-mix(in srgb, var(--ui-primary) 34%, transparent);
+  color: var(--ui-on-action, #ffffff);
+  background: linear-gradient(145deg, var(--ui-action-start, #6557bf), var(--ui-action-end, #3c78a8));
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.3),
+    var(--ui-shadow-sm);
+}
+
+.announcement-read-icon,
+.announcement-empty-icon {
+  border: 1px solid var(--ui-border);
+  color: var(--ui-muted);
+  background: var(--ui-surface-muted);
+  box-shadow: inset 0 1px 0 var(--ui-highlight);
+}
+
+.announcement-unread-badge,
+.announcement-category-badge {
+  border: 1px solid color-mix(in srgb, var(--ui-primary) 22%, transparent);
+  color: var(--ui-primary-strong);
+  background: var(--ui-primary-soft);
+}
+
+.announcement-indicator {
+  background: linear-gradient(to bottom, var(--ui-primary), var(--ui-accent));
+}
+
+.announcement-body {
+  background: color-mix(in srgb, var(--ui-surface-strong) 92%, transparent);
+}
+
+.announcement-footer {
+  border-color: var(--ui-border);
+  background: var(--ui-surface-muted);
+}
+
 /* Modal Animations */
 .modal-fade-enter-active {
   transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
@@ -452,20 +600,47 @@ watch(
 }
 
 .overflow-y-auto::-webkit-scrollbar-thumb {
-  background: linear-gradient(to bottom, #cbd5e1, #94a3b8);
+  background: linear-gradient(
+    to bottom,
+    color-mix(in srgb, var(--ui-primary) 34%, var(--ui-surface-muted)),
+    color-mix(in srgb, var(--ui-accent) 38%, var(--ui-surface-muted))
+  );
   border-radius: 4px;
 }
 
 .dark .overflow-y-auto::-webkit-scrollbar-thumb {
-  background: linear-gradient(to bottom, #4b5563, #374151);
+  background: linear-gradient(
+    to bottom,
+    color-mix(in srgb, var(--ui-primary) 34%, var(--ui-surface-muted)),
+    color-mix(in srgb, var(--ui-accent) 38%, var(--ui-surface-muted))
+  );
 }
 
 .overflow-y-auto::-webkit-scrollbar-thumb:hover {
-  background: linear-gradient(to bottom, #94a3b8, #64748b);
+  background: linear-gradient(to bottom, var(--ui-primary), var(--ui-accent));
 }
 
 .dark .overflow-y-auto::-webkit-scrollbar-thumb:hover {
-  background: linear-gradient(to bottom, #6b7280, #4b5563);
+  background: linear-gradient(to bottom, var(--ui-primary), var(--ui-accent));
+}
+
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .announcement-panel,
+  .announcement-icon-button,
+  .announcement-secondary-button {
+    background: var(--ui-surface-strong);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .modal-fade-enter-active,
+  .modal-fade-leave-active,
+  .announcement-trigger,
+  .announcement-primary-button,
+  .announcement-icon-button,
+  .announcement-secondary-button {
+    transition: none;
+  }
 }
 </style>
 
@@ -473,23 +648,29 @@ watch(
 /* Enhanced Markdown Styles */
 .markdown-body {
   @apply text-[15px] leading-[1.75];
-  @apply text-gray-700 dark:text-gray-300;
+  color: var(--ui-muted);
 }
 
 .markdown-body h1 {
-  @apply mb-6 mt-8 border-b border-gray-200 pb-3 text-3xl font-bold text-gray-900 dark:border-dark-600 dark:text-white;
+  @apply mb-6 mt-8 border-b pb-3 text-3xl font-bold;
+  border-color: var(--ui-border);
+  color: var(--ui-ink);
 }
 
 .markdown-body h2 {
-  @apply mb-4 mt-7 border-b border-gray-100 pb-2 text-2xl font-bold text-gray-900 dark:border-dark-700 dark:text-white;
+  @apply mb-4 mt-7 border-b pb-2 text-2xl font-bold;
+  border-color: var(--ui-border);
+  color: var(--ui-ink);
 }
 
 .markdown-body h3 {
-  @apply mb-3 mt-6 text-xl font-semibold text-gray-900 dark:text-white;
+  @apply mb-3 mt-6 text-xl font-semibold;
+  color: var(--ui-ink);
 }
 
 .markdown-body h4 {
-  @apply mb-2 mt-5 text-lg font-semibold text-gray-900 dark:text-white;
+  @apply mb-2 mt-5 text-lg font-semibold;
+  color: var(--ui-ink);
 }
 
 .markdown-body p {
@@ -497,7 +678,13 @@ watch(
 }
 
 .markdown-body a {
-  @apply font-medium text-[#DDA931] underline decoration-[#DDA931]/30 decoration-2 underline-offset-2 transition-all hover:decoration-[#DDA931] dark:text-[#F0C845] dark:decoration-[#F0C845]/30 dark:hover:decoration-[#F0C845];
+  @apply font-medium underline decoration-2 underline-offset-2 transition-all;
+  color: var(--ui-primary-strong);
+  text-decoration-color: color-mix(in srgb, var(--ui-primary) 34%, transparent);
+}
+
+.markdown-body a:hover {
+  text-decoration-color: var(--ui-primary);
 }
 
 .markdown-body ul,
@@ -519,41 +706,53 @@ watch(
 }
 
 .markdown-body li::marker {
-  @apply text-[#DDA931] dark:text-[#F0C845];
+  color: var(--ui-primary);
 }
 
 .markdown-body blockquote {
-  @apply relative my-5 border-l-4 border-[#DDA931] bg-[#F8F4E4]/60 py-3 pl-5 pr-4 italic text-gray-700 dark:border-[#F0C845] dark:bg-[#292C3B]/30 dark:text-gray-300;
+  @apply relative my-5 border-l-4 py-3 pl-5 pr-4 italic;
+  border-color: var(--ui-primary);
+  color: var(--ui-muted);
+  background: linear-gradient(90deg, var(--ui-primary-soft), transparent);
 }
 
 .markdown-body blockquote::before {
   content: '"';
-  @apply absolute -left-1 top-0 text-5xl font-serif text-[#DDA931]/20 dark:text-[#F0C845]/20;
+  @apply absolute -left-1 top-0 text-5xl font-serif;
+  color: color-mix(in srgb, var(--ui-primary) 22%, transparent);
 }
 
 .markdown-body code {
-  @apply rounded-md bg-gray-100 px-2 py-1 text-[13px] font-mono text-[#292C3B] dark:bg-dark-700 dark:text-[#F0C845];
+  @apply rounded-md px-2 py-1 text-[13px] font-mono;
+  color: var(--ui-primary-strong);
+  background: var(--ui-surface-muted);
 }
 
 .markdown-body pre {
-  @apply my-5 overflow-x-auto rounded-lg border border-gray-200 bg-gray-50 p-5 dark:border-dark-600 dark:bg-[#1F2230]/70;
+  @apply my-5 overflow-x-auto rounded-lg border p-5;
+  border-color: var(--ui-border);
+  background: var(--ui-surface-muted);
 }
 
 .markdown-body pre code {
-  @apply bg-transparent p-0 text-[13px] text-gray-800 dark:text-gray-200;
+  @apply bg-transparent p-0 text-[13px];
+  color: var(--ui-ink);
 }
 
 .markdown-body hr {
-  @apply my-8 border-0 border-t-2 border-gray-200 dark:border-dark-700;
+  @apply my-8 border-0 border-t-2;
+  border-color: var(--ui-border);
 }
 
 .markdown-body table {
-  @apply mb-5 w-full overflow-hidden rounded-lg border border-gray-200 dark:border-dark-600;
+  @apply mb-5 w-full overflow-hidden rounded-lg border;
+  border-color: var(--ui-border);
 }
 
 .markdown-body th,
 .markdown-body td {
-  @apply border-r border-b border-gray-200 px-4 py-3 text-left dark:border-dark-600;
+  @apply border-r border-b px-4 py-3 text-left;
+  border-color: var(--ui-border);
 }
 
 .markdown-body th:last-child,
@@ -566,22 +765,31 @@ watch(
 }
 
 .markdown-body th {
-  @apply bg-[#F8F4E4] font-semibold text-gray-900 dark:bg-[#3B4256]/30 dark:text-white;
+  @apply font-semibold;
+  color: var(--ui-ink);
+  background: var(--ui-table-header);
 }
 
 .markdown-body tbody tr {
-  @apply transition-colors hover:bg-gray-50 dark:hover:bg-dark-700/30;
+  @apply transition-colors;
+}
+
+.markdown-body tbody tr:hover {
+  background: var(--ui-table-hover);
 }
 
 .markdown-body img {
-  @apply my-5 max-w-full rounded-lg border border-gray-200 shadow-sm dark:border-dark-600;
+  @apply my-5 max-w-full rounded-lg border shadow-sm;
+  border-color: var(--ui-border);
 }
 
 .markdown-body strong {
-  @apply font-semibold text-gray-900 dark:text-white;
+  @apply font-semibold;
+  color: var(--ui-ink);
 }
 
 .markdown-body em {
-  @apply italic text-gray-600 dark:text-gray-400;
+  @apply italic;
+  color: var(--ui-muted);
 }
 </style>

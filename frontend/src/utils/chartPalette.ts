@@ -1,26 +1,26 @@
 export const dashboardChartPalette = [
-  '#DDA931',
-  '#E9CB68',
-  '#A7B9D4',
-  '#96BDA8',
-  '#D2A092',
-  '#B7A7D4',
-  '#8FB7C4',
-  '#C9B57E',
-  '#B4C67A',
-  '#CFA4B5',
-  '#A7AFBC',
-  '#DDD0A8'
+  '#7768D5',
+  '#A596EA',
+  '#5AA7DF',
+  '#94D1EC',
+  '#70B9A1',
+  '#F08F83',
+  '#B88CE8',
+  '#54AFC1',
+  '#A9C66C',
+  '#E4A3B6',
+  '#8190B5',
+  '#C9B9F3'
 ]
 
 export const dashboardChartOtherColor = '#B8BEC8'
 
 export const tokenUsageTrendColors = {
-  input: '#A7B9D4',
-  output: '#96BDA8',
-  cacheCreation: '#DDA931',
-  cacheRead: '#B7A7D4',
-  cacheHitRate: '#D2A092'
+  input: '#5AA7DF',
+  output: '#70B9A1',
+  cacheCreation: '#7768D5',
+  cacheRead: '#A596EA',
+  cacheHitRate: '#F08F83'
 }
 
 export const getDashboardChartColors = (count: number): string[] => {

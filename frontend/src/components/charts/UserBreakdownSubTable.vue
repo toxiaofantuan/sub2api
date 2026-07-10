@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-[#F8F7F2] dark:bg-[#1F2230]">
+  <div class="bg-primary-50/80 dark:bg-dark-950/80">
     <div v-if="loading" class="flex items-center justify-center py-3">
       <LoadingSpinner />
     </div>
@@ -11,7 +11,7 @@
         <tr
           v-for="user in items"
           :key="user.user_id"
-          class="transition-colors hover:bg-[#FBF3D4] dark:hover:bg-[#373745]"
+          class="transition-colors hover:bg-primary-100/70 dark:hover:bg-primary-400/10"
         >
           <td class="max-w-[120px] truncate py-1 pl-6 text-gray-600 dark:text-gray-300" :title="user.email">
             {{ user.email || `User #${user.user_id}` }}

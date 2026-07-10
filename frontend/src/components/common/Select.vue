@@ -100,7 +100,7 @@
                   v-if="isSelected(option)"
                   name="check"
                   size="sm"
-                  class="text-[#DDA931] dark:text-[#F0C845]"
+                  class="select-option-check"
                   :stroke-width="2"
                 />
               </slot>
@@ -457,16 +457,27 @@ onUnmounted(() => {
 .select-trigger {
   @apply flex w-full items-center justify-between gap-2;
   @apply rounded-md px-4 py-2.5 text-sm;
-  @apply bg-white dark:bg-dark-800;
-  @apply border border-transparent;
-  @apply text-gray-900 dark:text-gray-100;
   @apply transition-all duration-200;
-  @apply focus:outline-none focus:ring-1 focus:ring-primary-500/25;
+  @apply focus:outline-none;
   @apply cursor-pointer;
+  color: var(--ui-ink, #25233a);
+  background: var(--ui-surface, rgba(255, 255, 255, 0.66));
+  border: 1px solid var(--ui-border, rgba(129, 119, 190, 0.2));
+  box-shadow: var(--ui-shadow-sm, 0 6px 18px rgba(88, 76, 145, 0.1));
+  backdrop-filter: blur(16px) saturate(145%);
+  -webkit-backdrop-filter: blur(16px) saturate(145%);
 }
 
 .select-trigger-open {
-  @apply ring-1 ring-primary-500/25;
+  border-color: var(--ui-primary, #8b7de0);
+  box-shadow:
+    0 0 0 3px var(--ui-primary-soft, rgba(139, 125, 224, 0.16)),
+    var(--ui-shadow-sm, 0 10px 24px rgba(88, 76, 145, 0.12));
+}
+
+.select-trigger:focus-visible {
+  outline: 2px solid color-mix(in srgb, var(--ui-primary, #8b7de0) 62%, transparent);
+  outline-offset: 2px;
 }
 
 .select-trigger-error {
@@ -474,7 +485,8 @@ onUnmounted(() => {
 }
 
 .select-trigger-disabled {
-  @apply cursor-not-allowed bg-gray-100 opacity-60 dark:bg-dark-900;
+  @apply cursor-not-allowed opacity-60;
+  background: var(--ui-surface-muted, rgba(239, 239, 250, 0.72));
 }
 
 .select-value {
@@ -482,7 +494,8 @@ onUnmounted(() => {
 }
 
 .select-icon {
-  @apply flex-shrink-0 text-gray-400 dark:text-dark-400;
+  @apply flex-shrink-0;
+  color: var(--ui-muted, #77738b);
 }
 
 .select-clear {
@@ -495,17 +508,20 @@ onUnmounted(() => {
 <style>
 .select-dropdown-portal {
   @apply w-max min-w-[200px];
-  @apply bg-white dark:bg-dark-800;
   @apply rounded-md;
-  @apply border border-transparent;
-  @apply shadow-md shadow-black/10 dark:shadow-black/25;
   @apply overflow-hidden;
+  color: var(--ui-ink, #25233a);
+  background: var(--ui-surface-strong, rgba(255, 255, 255, 0.86));
+  border: 1px solid var(--ui-border, rgba(129, 119, 190, 0.2));
+  box-shadow: var(--ui-shadow-hover, 0 18px 44px rgba(78, 66, 136, 0.2));
+  backdrop-filter: blur(24px) saturate(160%);
+  -webkit-backdrop-filter: blur(24px) saturate(160%);
   pointer-events: auto !important;
 }
 
 .select-dropdown-portal .select-search {
   @apply flex items-center gap-2 px-3 py-2;
-  @apply border-b-0;
+  border-bottom: 1px solid var(--ui-border, rgba(129, 119, 190, 0.16));
 }
 
 .select-dropdown-portal .select-search-input {
@@ -528,29 +544,34 @@ onUnmounted(() => {
 }
 
 .select-dropdown-portal .select-option:hover {
-  color: #292c3b;
-  background: rgba(240, 200, 69, 0.12);
+  color: var(--ui-primary-strong, #6858c7);
+  background: var(--ui-primary-soft, rgba(139, 125, 224, 0.16));
 }
 
 .select-dropdown-portal .select-option-selected {
-  color: #292c3b;
-  background: rgba(240, 200, 69, 0.22);
+  color: var(--ui-primary-strong, #6858c7);
+  background: var(--ui-primary-soft, rgba(139, 125, 224, 0.2));
+  box-shadow: inset 0 0 0 1px var(--ui-border, rgba(129, 119, 190, 0.2));
 }
 
 .select-dropdown-portal .select-option-focused {
-  color: #292c3b;
-  background: rgba(240, 200, 69, 0.14);
+  color: var(--ui-primary-strong, #6858c7);
+  background: var(--ui-primary-soft, rgba(139, 125, 224, 0.16));
 }
 
 .dark .select-dropdown-portal .select-option:hover,
 .dark .select-dropdown-portal .select-option-focused {
-  color: #fefefd;
-  background: rgba(240, 200, 69, 0.12);
+  color: var(--ui-primary-strong, #c8c1ff);
+  background: var(--ui-primary-soft, rgba(151, 137, 232, 0.2));
 }
 
 .dark .select-dropdown-portal .select-option-selected {
-  color: #292c3b;
-  background: #f0c845;
+  color: var(--ui-primary-strong, #c8c1ff);
+  background: var(--ui-primary-soft, rgba(151, 137, 232, 0.26));
+}
+
+.select-dropdown-portal .select-option-check {
+  color: var(--ui-primary-strong, #6858c7);
 }
 
 .select-dropdown-portal .select-option-disabled {

@@ -15,29 +15,27 @@
   <!-- Default Home Page -->
   <div
     v-else
-    class="relative flex min-h-screen flex-col overflow-hidden bg-[#fefefd] dark:bg-[#1f2230]"
+    class="home-shell relative flex min-h-screen flex-col overflow-hidden"
   >
     <!-- Background Decorations -->
     <div class="pointer-events-none absolute inset-0 overflow-hidden">
-      <div
-        class="absolute inset-0 bg-[linear-gradient(rgba(41,44,59,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(41,44,59,0.03)_1px,transparent_1px)] bg-[size:64px_64px]"
-      ></div>
+      <div class="home-background-grid absolute inset-0"></div>
     </div>
 
     <!-- Header -->
-    <header class="relative z-20 px-6 py-4">
-      <nav class="mx-auto flex max-w-6xl items-center justify-between">
+    <header class="relative z-20 px-4 py-4 sm:px-6">
+      <nav class="home-nav-shell mx-auto flex max-w-6xl items-center justify-between">
         <!-- Logo -->
         <div class="flex items-center">
-          <div class="h-10 w-10 overflow-hidden rounded-lg shadow-sm">
+          <div class="home-logo h-9 w-9 overflow-hidden rounded-lg sm:h-10 sm:w-10">
             <img :src="siteLogo || '/logo.png'" alt="Logo" class="h-full w-full object-contain" />
           </div>
         </div>
 
         <!-- Nav Actions -->
-        <div class="flex items-center gap-3">
+        <div class="flex items-center gap-1 sm:gap-3">
           <!-- Language Switcher -->
-          <LocaleSwitcher />
+          <LocaleSwitcher class="home-locale-switcher" />
 
           <!-- Doc Link -->
           <a
@@ -65,16 +63,16 @@
           <router-link
             v-if="isAuthenticated"
             :to="dashboardPath"
-            class="inline-flex items-center gap-1.5 rounded-md bg-[#292C3B] py-1 pl-1 pr-2.5 transition-colors hover:bg-[#3B4256] dark:bg-[#292C3B] dark:hover:bg-[#3B4256]"
+            class="home-account-button inline-flex items-center gap-1.5 py-1 pl-1 pr-2.5"
           >
             <span
-              class="flex h-5 w-5 items-center justify-center rounded-full bg-[#F0C845] text-[10px] font-semibold text-[#292C3B]"
+              class="home-account-avatar flex h-5 w-5 items-center justify-center rounded-full text-[10px] font-semibold"
             >
               {{ userInitial }}
             </span>
-            <span class="text-xs font-medium text-white">{{ t('home.dashboard') }}</span>
+            <span class="home-account-label text-xs font-medium">{{ t('home.dashboard') }}</span>
             <svg
-              class="h-3 w-3 text-gray-300"
+              class="home-account-arrow h-3 w-3"
               fill="none"
               viewBox="0 0 24 24"
               stroke="currentColor"
@@ -90,7 +88,7 @@
           <router-link
             v-else
             to="/login"
-            class="inline-flex items-center rounded-md bg-[#292C3B] px-3 py-1 text-xs font-medium text-white transition-colors hover:bg-[#3B4256] dark:bg-[#292C3B] dark:hover:bg-[#3B4256]"
+            class="home-account-button inline-flex items-center px-3 py-1 text-xs font-medium"
           >
             {{ t('home.login') }}
           </router-link>
@@ -99,18 +97,18 @@
     </header>
 
     <!-- Main Content -->
-    <main class="relative z-10 flex-1 px-6 py-16">
+    <main class="relative z-10 flex-1 px-4 py-12 sm:px-6 sm:py-16">
       <div class="mx-auto max-w-6xl">
         <!-- Hero Section - Left/Right Layout -->
         <div class="mb-12 flex flex-col items-center justify-between gap-12 lg:flex-row lg:gap-16">
           <!-- Left: Text Content -->
           <div class="flex-1 text-center lg:text-left">
             <h1
-              class="mb-4 text-4xl font-semibold text-gray-900 dark:text-white md:text-5xl lg:text-6xl"
+              class="home-hero-title mb-4 text-4xl font-semibold md:text-5xl lg:text-6xl"
             >
               {{ siteName }}
             </h1>
-            <p class="mb-8 max-w-2xl text-lg text-gray-600 dark:text-dark-300 md:text-xl">
+            <p class="home-copy mb-8 max-w-2xl text-lg md:text-xl">
               {{ siteSubtitle }}
             </p>
 
@@ -118,7 +116,7 @@
             <div>
               <router-link
                 :to="isAuthenticated ? dashboardPath : '/login'"
-                class="btn btn-primary px-8 py-3 text-base"
+                class="btn btn-primary home-primary-action px-8 py-3 text-base"
               >
                 {{ isAuthenticated ? t('home.goToDashboard') : t('home.getStarted') }}
                 <Icon name="arrowRight" size="md" class="ml-2" :stroke-width="2" />
@@ -168,19 +166,19 @@
         <div class="mb-12 flex flex-wrap items-center justify-center gap-4 md:gap-6">
           <div class="home-glass-chip inline-flex items-center gap-2.5 px-4 py-2">
             <Icon name="swap" size="sm" class="home-tag-icon" />
-            <span class="text-sm font-medium text-gray-700 dark:text-dark-200">{{
+            <span class="home-label text-sm font-medium">{{
               t('home.tags.subscriptionToApi')
             }}</span>
           </div>
           <div class="home-glass-chip inline-flex items-center gap-2.5 px-4 py-2">
             <Icon name="shield" size="sm" class="home-tag-icon" />
-            <span class="text-sm font-medium text-gray-700 dark:text-dark-200">{{
+            <span class="home-label text-sm font-medium">{{
               t('home.tags.stickySession')
             }}</span>
           </div>
           <div class="home-glass-chip inline-flex items-center gap-2.5 px-4 py-2">
             <Icon name="chart" size="sm" class="home-tag-icon" />
-            <span class="text-sm font-medium text-gray-700 dark:text-dark-200">{{
+            <span class="home-label text-sm font-medium">{{
               t('home.tags.realtimeBilling')
             }}</span>
           </div>
@@ -193,10 +191,10 @@
             <div class="home-icon-tile mb-4">
               <Icon name="server" size="lg" />
             </div>
-            <h3 class="mb-2 text-lg font-semibold text-gray-900 dark:text-white">
+            <h3 class="home-section-title mb-2 text-lg font-semibold">
               {{ t('home.features.unifiedGateway') }}
             </h3>
-            <p class="text-sm leading-relaxed text-gray-600 dark:text-dark-400">
+            <p class="home-copy text-sm leading-relaxed">
               {{ t('home.features.unifiedGatewayDesc') }}
             </p>
           </div>
@@ -206,10 +204,10 @@
             <div class="home-icon-tile mb-4">
               <Icon name="users" size="lg" />
             </div>
-            <h3 class="mb-2 text-lg font-semibold text-gray-900 dark:text-white">
+            <h3 class="home-section-title mb-2 text-lg font-semibold">
               {{ t('home.features.multiAccount') }}
             </h3>
-            <p class="text-sm leading-relaxed text-gray-600 dark:text-dark-400">
+            <p class="home-copy text-sm leading-relaxed">
               {{ t('home.features.multiAccountDesc') }}
             </p>
           </div>
@@ -219,10 +217,10 @@
             <div class="home-icon-tile mb-4">
               <Icon name="creditCard" size="lg" />
             </div>
-            <h3 class="mb-2 text-lg font-semibold text-gray-900 dark:text-white">
+            <h3 class="home-section-title mb-2 text-lg font-semibold">
               {{ t('home.features.balanceQuota') }}
             </h3>
-            <p class="text-sm leading-relaxed text-gray-600 dark:text-dark-400">
+            <p class="home-copy text-sm leading-relaxed">
               {{ t('home.features.balanceQuotaDesc') }}
             </p>
           </div>
@@ -230,10 +228,10 @@
 
         <!-- Supported Providers -->
         <div class="mb-8 text-center">
-          <h2 class="mb-3 text-2xl font-bold text-gray-900 dark:text-white">
+          <h2 class="home-section-title mb-3 text-2xl font-bold">
             {{ t('home.providers.title') }}
           </h2>
-          <p class="text-sm text-gray-600 dark:text-dark-400">
+          <p class="home-copy text-sm">
             {{ t('home.providers.description') }}
           </p>
         </div>
@@ -244,7 +242,7 @@
             <div class="home-provider-mark">
               <span>C</span>
             </div>
-            <span class="text-sm font-medium text-gray-700 dark:text-dark-200">{{ t('home.providers.claude') }}</span>
+            <span class="home-label text-sm font-medium">{{ t('home.providers.claude') }}</span>
             <span class="home-status-badge">{{ t('home.providers.supported') }}</span>
           </div>
           <!-- GPT - Supported -->
@@ -252,7 +250,7 @@
             <div class="home-provider-mark">
               <span>G</span>
             </div>
-            <span class="text-sm font-medium text-gray-700 dark:text-dark-200">GPT</span>
+            <span class="home-label text-sm font-medium">GPT</span>
             <span class="home-status-badge">{{ t('home.providers.supported') }}</span>
           </div>
           <!-- Gemini - Supported -->
@@ -260,7 +258,7 @@
             <div class="home-provider-mark">
               <span>G</span>
             </div>
-            <span class="text-sm font-medium text-gray-700 dark:text-dark-200">{{ t('home.providers.gemini') }}</span>
+            <span class="home-label text-sm font-medium">{{ t('home.providers.gemini') }}</span>
             <span class="home-status-badge">{{ t('home.providers.supported') }}</span>
           </div>
           <!-- Antigravity - Supported -->
@@ -268,7 +266,7 @@
             <div class="home-provider-mark">
               <span>A</span>
             </div>
-            <span class="text-sm font-medium text-gray-700 dark:text-dark-200">{{ t('home.providers.antigravity') }}</span>
+            <span class="home-label text-sm font-medium">{{ t('home.providers.antigravity') }}</span>
             <span class="home-status-badge">{{ t('home.providers.supported') }}</span>
           </div>
           <!-- More - Coming Soon -->
@@ -276,7 +274,7 @@
             <div class="home-provider-mark home-provider-mark-muted">
               <span>+</span>
             </div>
-            <span class="text-sm font-medium text-gray-700 dark:text-dark-200">{{ t('home.providers.more') }}</span>
+            <span class="home-label text-sm font-medium">{{ t('home.providers.more') }}</span>
             <span class="home-status-badge home-status-badge-muted">{{ t('home.providers.soon') }}</span>
           </div>
         </div>
@@ -288,7 +286,7 @@
       <div
         class="mx-auto flex max-w-6xl flex-col items-center justify-center gap-4 text-center sm:flex-row sm:text-left"
       >
-        <p class="text-sm text-gray-500 dark:text-dark-400">
+        <p class="home-muted text-sm">
           &copy; {{ currentYear }} {{ siteName }}. {{ t('home.footer.allRightsReserved') }}
         </p>
         <div class="flex items-center gap-4">
@@ -297,7 +295,7 @@
             :href="docUrl"
             target="_blank"
             rel="noopener noreferrer"
-            class="text-sm text-gray-500 transition-colors hover:text-gray-700 dark:text-dark-400 dark:hover:text-white"
+            class="home-footer-link text-sm"
           >
             {{ t('home.docs') }}
           </a>
@@ -305,7 +303,7 @@
             :href="githubUrl"
             target="_blank"
             rel="noopener noreferrer"
-            class="text-sm text-gray-500 transition-colors hover:text-gray-700 dark:text-dark-400 dark:hover:text-white"
+            class="home-footer-link text-sm"
           >
             GitHub
           </a>
@@ -393,30 +391,224 @@ onMounted(() => {
 </script>
 
 <style scoped>
+.home-shell {
+  --home-glass-fill: rgba(255, 255, 255, 0.56);
+  --home-glass-strong: rgba(255, 255, 255, 0.72);
+  --home-glass-muted: rgba(245, 245, 255, 0.48);
+  --home-sheen: rgba(255, 255, 255, 0.62);
+  --home-terminal-start: rgba(59, 57, 105, 0.94);
+  --home-terminal-end: rgba(39, 49, 88, 0.96);
+  --home-terminal-ink: #f8f7ff;
+  --home-terminal-muted: #b9bed9;
+  isolation: isolate;
+  color: var(--ui-ink, #2e2c4f);
+  background:
+    linear-gradient(
+      145deg,
+      var(--ui-canvas, #f8f7ff) 0%,
+      color-mix(in srgb, var(--ui-accent-soft, #e7efff) 48%, var(--ui-canvas, #f8f7ff)) 48%,
+      color-mix(in srgb, var(--ui-primary-soft, #eee9ff) 52%, var(--ui-canvas, #f8f7ff)) 100%
+    );
+}
+
+:global(html.dark) .home-shell {
+  --home-glass-fill: rgba(38, 39, 70, 0.58);
+  --home-glass-strong: rgba(47, 48, 83, 0.7);
+  --home-glass-muted: rgba(34, 36, 64, 0.5);
+  --home-sheen: rgba(236, 233, 255, 0.14);
+  --home-terminal-start: rgba(38, 37, 73, 0.94);
+  --home-terminal-end: rgba(25, 31, 60, 0.96);
+  --home-terminal-ink: #faf9ff;
+  --home-terminal-muted: #b8bdd7;
+}
+
+.home-background-grid {
+  opacity: 0.78;
+  background-image:
+    linear-gradient(
+      color-mix(in srgb, var(--ui-primary, #7d70df) 9%, transparent) 1px,
+      transparent 1px
+    ),
+    linear-gradient(
+      90deg,
+      color-mix(in srgb, var(--ui-accent, #73a5df) 9%, transparent) 1px,
+      transparent 1px
+    );
+  background-size: 64px 64px;
+  mask-image: linear-gradient(to bottom, rgba(255, 255, 255, 0.92), transparent 82%);
+  -webkit-mask-image: linear-gradient(to bottom, rgba(255, 255, 255, 0.92), transparent 82%);
+}
+
+.home-nav-shell {
+  min-height: 3.5rem;
+  padding: 0.5rem 0.625rem;
+  border: 1px solid var(--ui-border, rgba(125, 112, 223, 0.2));
+  border-radius: 8px;
+  background: linear-gradient(135deg, var(--home-glass-strong), var(--home-glass-fill));
+  box-shadow:
+    inset 0 1px 0 var(--ui-highlight, rgba(255, 255, 255, 0.72)),
+    var(--ui-shadow, 0 12px 32px rgba(77, 68, 137, 0.12));
+  backdrop-filter: blur(26px) saturate(1.45);
+  -webkit-backdrop-filter: blur(26px) saturate(1.45);
+}
+
+.home-logo {
+  padding: 2px;
+  border: 1px solid var(--ui-border, rgba(125, 112, 223, 0.2));
+  background: var(--home-glass-strong);
+  box-shadow:
+    inset 0 1px 0 var(--home-sheen),
+    0 5px 14px rgba(78, 69, 139, 0.13);
+}
+
 .home-icon-button {
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  width: 2.25rem;
+  height: 2.25rem;
+  border: 1px solid transparent;
   border-radius: 8px;
-  padding: 0.5rem;
-  color: rgba(41, 44, 59, 0.62);
+  padding: 0;
+  color: var(--ui-muted, #6e6b86);
+  background: color-mix(in srgb, var(--home-glass-fill) 72%, transparent);
   transition:
+    transform 0.2s ease,
+    border-color 0.2s ease,
     background-color 0.2s ease,
-    color 0.2s ease;
+    color 0.2s ease,
+    box-shadow 0.2s ease;
 }
 
 .home-icon-button:hover {
-  color: #292c3b;
-  background: rgba(240, 200, 69, 0.16);
+  color: var(--ui-primary-strong, #6456cb);
+  border-color: color-mix(in srgb, var(--ui-primary, #7d70df) 28%, transparent);
+  background: var(--ui-primary-soft, #eee9ff);
+  box-shadow: inset 0 1px 0 var(--home-sheen);
+  transform: translateY(-1px);
 }
 
-:global(html.dark .home-icon-button) {
-  color: rgba(254, 254, 253, 0.66);
+.home-icon-button:focus-visible,
+.home-account-button:focus-visible,
+.home-primary-action:focus-visible,
+.home-footer-link:focus-visible {
+  outline: 2px solid color-mix(in srgb, var(--ui-primary, #7d70df) 66%, transparent);
+  outline-offset: 2px;
 }
 
-:global(html.dark .home-icon-button:hover) {
-  color: #f0c845;
-  background: rgba(240, 200, 69, 0.12);
+:deep(.home-locale-switcher > button) {
+  min-height: 2.25rem;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  color: var(--ui-muted, #6e6b86);
+  background: color-mix(in srgb, var(--home-glass-fill) 72%, transparent);
+}
+
+:deep(.home-locale-switcher > button:hover) {
+  color: var(--ui-primary-strong, #6456cb);
+  border-color: color-mix(in srgb, var(--ui-primary, #7d70df) 28%, transparent);
+  background: var(--ui-primary-soft, #eee9ff);
+}
+
+:deep(.home-locale-switcher .absolute) {
+  border-color: var(--ui-border, rgba(125, 112, 223, 0.2));
+  border-radius: 8px;
+  background: var(--ui-surface-strong, rgba(255, 255, 255, 0.9));
+  box-shadow: var(--ui-shadow-hover, 0 16px 36px rgba(77, 68, 137, 0.18));
+  backdrop-filter: blur(24px) saturate(1.4);
+  -webkit-backdrop-filter: blur(24px) saturate(1.4);
+}
+
+.home-account-button {
+  min-height: 2rem;
+  border: 1px solid color-mix(in srgb, var(--ui-primary, #7d70df) 34%, transparent);
+  border-radius: 8px;
+  color: var(--ui-on-action, #ffffff);
+  background: linear-gradient(
+    135deg,
+    var(--ui-action-start, #6557bf),
+    var(--ui-action-end, #3c78a8)
+  );
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.3),
+    0 7px 18px color-mix(in srgb, var(--ui-primary, #7d70df) 24%, transparent);
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease,
+    filter 0.2s ease;
+}
+
+.home-account-button:hover {
+  filter: saturate(1.08) brightness(1.03);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.38),
+    0 10px 22px color-mix(in srgb, var(--ui-primary, #7d70df) 30%, transparent);
+  transform: translateY(-1px);
+}
+
+.home-account-avatar {
+  border-radius: 6px;
+  color: var(--ui-primary-strong, #6456cb);
+  background: rgba(255, 255, 255, 0.9);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.5);
+}
+
+.home-account-label,
+.home-account-arrow {
+  color: var(--ui-on-action, #ffffff);
+}
+
+.home-hero-title,
+.home-section-title {
+  color: var(--ui-ink, #2e2c4f);
+}
+
+.home-hero-title {
+  overflow-wrap: anywhere;
+  text-wrap: balance;
+  text-shadow: 0 1px 0 var(--ui-highlight, rgba(255, 255, 255, 0.62));
+}
+
+.home-copy {
+  color: var(--ui-muted, #6e6b86);
+}
+
+.home-label {
+  color: color-mix(in srgb, var(--ui-ink, #2e2c4f) 86%, var(--ui-muted, #6e6b86));
+}
+
+.home-muted {
+  color: var(--ui-muted, #77748e);
+}
+
+.btn-primary.home-primary-action {
+  max-width: 100%;
+  border: 1px solid color-mix(in srgb, var(--ui-primary, #7d70df) 42%, transparent);
+  border-radius: 8px;
+  color: var(--ui-on-action, #ffffff);
+  text-align: center;
+  white-space: normal;
+  background: linear-gradient(
+    135deg,
+    var(--ui-action-start, #6557bf),
+    var(--ui-action-end, #3c78a8)
+  );
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.32),
+    0 12px 26px color-mix(in srgb, var(--ui-primary, #7d70df) 26%, transparent);
+}
+
+.btn-primary.home-primary-action:hover {
+  color: var(--ui-on-action, #ffffff);
+  background: linear-gradient(
+    135deg,
+    var(--ui-action-hover-start, #5549a7),
+    var(--ui-action-hover-end, #2f709e)
+  );
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.38),
+    0 16px 32px color-mix(in srgb, var(--ui-primary, #7d70df) 30%, transparent);
+  transform: translateY(-1px);
 }
 
 .home-glass-chip,
@@ -425,43 +617,61 @@ onMounted(() => {
   border-radius: 8px;
   position: relative;
   overflow: hidden;
-  background: rgba(254, 254, 253, 0.78);
-  box-shadow: 0 5px 14px rgba(31, 34, 48, 0.055);
-  backdrop-filter: blur(16px) saturate(1.12);
-  -webkit-backdrop-filter: blur(16px) saturate(1.12);
+  isolation: isolate;
+  border: 1px solid var(--ui-border, rgba(125, 112, 223, 0.2));
+  background: linear-gradient(135deg, var(--home-glass-strong), var(--home-glass-fill));
+  box-shadow:
+    inset 0 1px 0 var(--ui-highlight, rgba(255, 255, 255, 0.72)),
+    var(--ui-shadow, 0 12px 32px rgba(77, 68, 137, 0.12));
+  backdrop-filter: blur(26px) saturate(1.5);
+  -webkit-backdrop-filter: blur(26px) saturate(1.5);
+}
+
+.home-glass-chip::before,
+.home-feature-card::before,
+.home-provider-chip::before {
+  content: '';
+  position: absolute;
+  z-index: 0;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(
+    118deg,
+    var(--home-sheen) 0%,
+    transparent 38%,
+    color-mix(in srgb, var(--ui-accent-soft, #e7efff) 22%, transparent) 100%
+  );
+  opacity: 0.62;
+}
+
+.home-glass-chip > *,
+.home-feature-card > *,
+.home-provider-chip > * {
+  position: relative;
+  z-index: 1;
 }
 
 .home-feature-card,
 .home-provider-chip {
   transition:
     transform 0.22s ease,
-    box-shadow 0.22s ease;
+    border-color 0.22s ease,
+    box-shadow 0.22s ease,
+    background-color 0.22s ease;
 }
 
 .home-feature-card:hover,
 .home-provider-chip:hover {
   transform: translateY(-2px);
-  box-shadow: 0 10px 22px rgba(31, 34, 48, 0.09);
-}
-
-:global(html.dark .home-glass-chip),
-:global(html.dark .home-feature-card),
-:global(html.dark .home-provider-chip) {
-  background: rgba(41, 44, 59, 0.82);
-  box-shadow: 0 7px 18px rgba(0, 0, 0, 0.16);
-}
-
-:global(html.dark .home-feature-card:hover),
-:global(html.dark .home-provider-chip:hover) {
-  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.2);
+  border-color: color-mix(in srgb, var(--ui-primary, #7d70df) 34%, transparent);
+  background: linear-gradient(135deg, var(--home-glass-strong), var(--home-glass-muted));
+  box-shadow:
+    inset 0 1px 0 var(--home-sheen),
+    var(--ui-shadow-hover, 0 18px 40px rgba(77, 68, 137, 0.18));
 }
 
 .home-tag-icon {
-  color: #dda931;
-}
-
-:global(html.dark .home-tag-icon) {
-  color: #f0c845;
+  color: var(--ui-primary-strong, #6456cb);
 }
 
 .home-icon-tile,
@@ -470,13 +680,16 @@ onMounted(() => {
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
-  color: #292c3b;
-  background:
-    linear-gradient(135deg, rgba(240, 200, 69, 0.96), rgba(221, 169, 49, 0.9)),
-    #f0c845;
+  border: 1px solid color-mix(in srgb, var(--ui-primary, #7d70df) 24%, transparent);
+  color: var(--ui-primary-strong, #6456cb);
+  background: linear-gradient(
+    145deg,
+    color-mix(in srgb, var(--ui-primary-soft, #eee9ff) 74%, var(--home-glass-strong)),
+    color-mix(in srgb, var(--ui-accent-soft, #e7efff) 72%, var(--home-glass-fill))
+  );
   box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.36),
-    0 8px 18px rgba(41, 44, 59, 0.1);
+    inset 0 1px 0 var(--home-sheen),
+    0 8px 18px color-mix(in srgb, var(--ui-primary, #7d70df) 15%, transparent);
 }
 
 .home-icon-tile {
@@ -490,6 +703,15 @@ onMounted(() => {
   transform: scale(1.04);
 }
 
+.home-feature-card:nth-child(2) .home-icon-tile {
+  color: var(--ui-accent, #73a5df);
+  background: color-mix(in srgb, var(--ui-accent-soft, #e7efff) 76%, var(--home-glass-strong));
+}
+
+.home-feature-card:nth-child(3) .home-icon-tile {
+  color: color-mix(in srgb, var(--ui-primary-strong, #6456cb) 72%, var(--ui-accent, #73a5df));
+}
+
 .home-provider-mark {
   width: 2rem;
   height: 2rem;
@@ -500,32 +722,46 @@ onMounted(() => {
 }
 
 .home-provider-mark-muted {
-  color: #fefefd;
-  background: #3b4256;
+  color: var(--ui-muted, #77748e);
+  background: var(--ui-surface-muted, #eeeff8);
+}
+
+.home-provider-chip:nth-child(2) .home-provider-mark {
+  color: var(--ui-accent, #73a5df);
+}
+
+.home-provider-chip:nth-child(3) .home-provider-mark {
+  color: color-mix(in srgb, var(--ui-primary, #7d70df) 58%, var(--ui-accent, #73a5df));
+}
+
+.home-provider-chip:nth-child(4) .home-provider-mark {
+  color: var(--ui-primary, #7d70df);
 }
 
 .home-status-badge {
+  border: 1px solid color-mix(in srgb, var(--ui-accent, #73a5df) 22%, transparent);
   border-radius: 6px;
   padding: 0.125rem 0.375rem;
   font-size: 10px;
   font-weight: 600;
-  color: #292c3b;
-  background: rgba(240, 200, 69, 0.22);
+  color: color-mix(in srgb, var(--ui-accent, #73a5df) 62%, var(--ui-ink, #2e2c4f));
+  background: var(--ui-accent-soft, #e7efff);
 }
 
 .home-status-badge-muted {
-  color: rgba(41, 44, 59, 0.68);
-  background: rgba(41, 44, 59, 0.08);
+  border-color: var(--ui-border, rgba(125, 112, 223, 0.2));
+  color: var(--ui-muted, #77748e);
+  background: var(--ui-surface-muted, #eeeff8);
 }
 
-:global(html.dark .home-status-badge) {
-  color: #fefefd;
-  background: rgba(240, 200, 69, 0.16);
+.home-footer-link {
+  border-radius: 4px;
+  color: var(--ui-muted, #77748e);
+  transition: color 0.2s ease;
 }
 
-:global(html.dark .home-status-badge-muted) {
-  color: rgba(254, 254, 253, 0.68);
-  background: rgba(254, 254, 253, 0.08);
+.home-footer-link:hover {
+  color: var(--ui-primary-strong, #6456cb);
 }
 
 /* Terminal Container */
@@ -537,24 +773,52 @@ onMounted(() => {
 /* Terminal Window */
 .terminal-window {
   width: min(420px, calc(100vw - 3rem));
-  background: linear-gradient(145deg, #292c3b 0%, #1f2230 100%);
-  border-radius: 10px;
-  box-shadow: 0 18px 40px -16px rgba(31, 34, 48, 0.42);
+  position: relative;
+  border: 1px solid rgba(221, 216, 255, 0.24);
+  border-radius: 8px;
+  background: linear-gradient(145deg, var(--home-terminal-start), var(--home-terminal-end));
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.16),
+    0 24px 48px -20px rgba(54, 47, 112, 0.55);
+  backdrop-filter: blur(28px) saturate(1.35);
+  -webkit-backdrop-filter: blur(28px) saturate(1.35);
   overflow: hidden;
   transform: perspective(1000px) rotateX(1.5deg) rotateY(-1.5deg);
-  transition: transform 0.3s ease;
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+.terminal-window::before {
+  content: '';
+  position: absolute;
+  z-index: 0;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(
+    125deg,
+    rgba(255, 255, 255, 0.14) 0%,
+    transparent 34%,
+    rgba(148, 181, 241, 0.08) 100%
+  );
 }
 
 .terminal-window:hover {
   transform: perspective(1000px) rotateX(0deg) rotateY(0deg) translateY(-4px);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.2),
+    0 28px 54px -20px rgba(54, 47, 112, 0.64);
 }
 
 /* Terminal Header */
 .terminal-header {
+  position: relative;
+  z-index: 1;
   display: flex;
   align-items: center;
   padding: 12px 16px;
-  background: rgba(41, 44, 59, 0.92);
+  border-bottom: 1px solid rgba(222, 218, 255, 0.12);
+  background: rgba(255, 255, 255, 0.075);
 }
 
 .terminal-buttons {
@@ -569,13 +833,13 @@ onMounted(() => {
 }
 
 .btn-close {
-  background: #DDA931;
+  background: #b39cf5;
 }
 .btn-minimize {
-  background: #F0C845;
+  background: #79afe8;
 }
 .btn-maximize {
-  background: #FEFEFD;
+  background: #f2f0ff;
 }
 
 .terminal-title {
@@ -583,12 +847,14 @@ onMounted(() => {
   text-align: center;
   font-size: 12px;
   font-family: ui-monospace, monospace;
-  color: #F0C845;
+  color: #d7ceff;
   margin-right: 52px;
 }
 
 /* Terminal Body */
 .terminal-body {
+  position: relative;
+  z-index: 1;
   padding: 20px 24px;
   font-family: ui-monospace, 'Fira Code', monospace;
   font-size: 14px;
@@ -644,31 +910,32 @@ onMounted(() => {
 }
 
 .code-prompt {
-  color: #F0C845;
+  color: #c9bcff;
   font-weight: bold;
 }
 .code-cmd {
-  color: #FEFEFD;
+  color: var(--home-terminal-ink);
 }
 .code-flag {
-  color: #DDA931;
+  color: #a9cfff;
 }
 .code-url {
-  color: #F0C845;
+  color: #d8d1ff;
 }
 .code-comment {
-  color: #Aab0c0;
+  color: var(--home-terminal-muted);
   font-style: italic;
 }
 .code-success {
-  color: #292C3B;
-  background: rgba(240, 200, 69, 0.95);
+  border: 1px solid rgba(155, 201, 255, 0.28);
+  color: #eef6ff;
+  background: rgba(111, 169, 229, 0.24);
   padding: 2px 8px;
   border-radius: 4px;
   font-weight: 600;
 }
 .code-response {
-  color: #F0C845;
+  color: #ddd7ff;
 }
 
 /* Blinking Cursor */
@@ -676,7 +943,7 @@ onMounted(() => {
   display: inline-block;
   width: 8px;
   height: 16px;
-  background: #F0C845;
+  background: #c6b8ff;
   animation: blink 1s step-end infinite;
 }
 
@@ -692,10 +959,38 @@ onMounted(() => {
 }
 
 /* Dark mode adjustments */
-:global(html.dark .terminal-window) {
+:global(html.dark) .terminal-window {
   box-shadow:
-    0 18px 40px -16px rgba(0, 0, 0, 0.55),
-    inset 0 0 0 1px rgba(254, 254, 253, 0.08),
-    inset 0 1px 0 rgba(255, 255, 255, 0.08);
+    inset 0 1px 0 rgba(255, 255, 255, 0.12),
+    0 24px 48px -20px rgba(13, 14, 43, 0.68);
+}
+
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .home-nav-shell,
+  .home-glass-chip,
+  .home-feature-card,
+  .home-provider-chip {
+    background: var(--ui-surface-strong, #ffffff);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .home-icon-button,
+  .home-account-button,
+  .home-primary-action,
+  .home-feature-card,
+  .home-provider-chip,
+  .home-icon-tile,
+  .terminal-window,
+  .code-line,
+  .cursor {
+    animation: none;
+    transition: none;
+    transform: none;
+  }
+
+  .code-line {
+    opacity: 1;
+  }
 }
 </style>

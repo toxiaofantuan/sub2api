@@ -60,8 +60,8 @@ const isDarkMode = computed(() => {
 })
 
 const chartColors = computed(() => ({
-  text: isDarkMode.value ? '#FEFEFD' : '#292C3B',
-  grid: isDarkMode.value ? 'rgba(254, 254, 253, 0.08)' : 'rgba(41, 44, 59, 0.08)',
+  text: isDarkMode.value ? '#F4F5FF' : '#2D3354',
+  grid: isDarkMode.value ? 'rgba(218, 223, 255, 0.09)' : 'rgba(102, 93, 170, 0.09)',
   ...tokenUsageTrendColors
 }))
 
