@@ -1,35 +1,37 @@
 <template>
   <div class="space-y-4">
     <div class="card p-4">
-      <div class="flex flex-wrap items-center gap-3">
-        <div class="flex-1 sm:max-w-64">
+      <div class="table-toolbar">
+        <div class="table-toolbar-primary">
+        <div class="table-toolbar-search">
           <input
             v-model="searchQuery"
             type="text"
             :placeholder="t('payment.admin.searchOrders')"
-            class="input"
+            class="input w-full"
             @input="handleSearch"
           />
         </div>
         <Select
           v-model="filters.status"
           :options="statusFilterOptions"
-          class="w-36"
+          class="table-toolbar-control-sm"
           @change="emitFiltersChanged"
         />
         <Select
           v-model="filters.payment_type"
           :options="paymentTypeFilterOptions"
-          class="w-40"
+          class="table-toolbar-control"
           @change="emitFiltersChanged"
         />
         <Select
           v-model="filters.order_type"
           :options="orderTypeFilterOptions"
-          class="w-36"
+          class="table-toolbar-control-sm"
           @change="emitFiltersChanged"
         />
-        <div class="flex flex-1 flex-wrap items-center justify-end gap-2">
+        </div>
+        <div class="table-toolbar-actions">
           <button
             @click="emit('refresh')"
             :disabled="loading"
@@ -97,7 +99,7 @@
           <button
             v-if="row.status === 'PENDING'"
             @click="emit('cancel', row)"
-            class="flex flex-col items-center gap-0.5 rounded-lg p-1.5 text-gray-500 transition-colors hover:bg-yellow-50 hover:text-yellow-600 dark:hover:bg-yellow-900/20 dark:hover:text-yellow-400"
+            class="flex flex-col items-center gap-0.5 rounded-lg p-1.5 text-gray-500 transition-colors hover:bg-rose-50 hover:text-rose-600 dark:hover:bg-rose-900/20 dark:hover:text-rose-400"
           >
             <Icon name="x" size="sm" />
             <span class="text-xs">{{ t('payment.orders.cancel') }}</span>

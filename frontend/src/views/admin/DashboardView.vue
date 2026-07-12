@@ -100,7 +100,7 @@
           <!-- Today Tokens -->
           <div class="card p-4">
             <div class="flex items-center gap-3">
-              <div class="dashboard-icon-tile dashboard-icon-amber">
+              <div class="dashboard-icon-tile dashboard-icon-blue">
                 <Icon name="cube" size="md" class="dashboard-icon-glyph" :stroke-width="2" />
               </div>
               <div>
@@ -172,7 +172,7 @@
           <!-- Performance (RPM/TPM) -->
           <div class="card p-4">
             <div class="flex items-center gap-3">
-              <div class="dashboard-icon-tile dashboard-icon-orange">
+              <div class="dashboard-icon-tile dashboard-icon-teal">
                 <Icon name="bolt" size="md" class="dashboard-icon-glyph" :stroke-width="2" />
               </div>
               <div class="flex-1">

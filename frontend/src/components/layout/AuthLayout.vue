@@ -15,9 +15,9 @@
         <!-- Custom Logo or Default Logo -->
         <template v-if="settingsLoaded">
           <div
-            class="mb-4 inline-flex h-16 w-16 items-center justify-center overflow-hidden rounded-md"
+            class="auth-logo-glass brand-glass-logo mb-4 inline-flex items-center justify-center"
           >
-            <img :src="siteLogo || '/logo.png'" alt="Logo" class="h-full w-full object-contain" />
+            <img :src="siteLogo || '/logo.png'" alt="Logo" class="brand-glass-logo-image h-16 w-auto max-w-[180px] object-contain" />
           </div>
           <h1 class="text-gradient mb-2 text-3xl font-bold">
             {{ siteName }}
@@ -68,8 +68,8 @@ onMounted(() => {
 <style scoped>
 .auth-canvas {
   background:
-    linear-gradient(125deg, rgba(195, 216, 255, 0.5) 0%, rgba(195, 216, 255, 0) 38%),
-    linear-gradient(235deg, rgba(219, 210, 255, 0.56) 0%, rgba(219, 210, 255, 0) 44%),
+    linear-gradient(125deg, rgba(190, 225, 255, 0.62) 0%, rgba(190, 225, 255, 0) 38%),
+    linear-gradient(235deg, rgba(226, 245, 255, 0.74) 0%, rgba(226, 245, 255, 0) 44%),
     linear-gradient(180deg, var(--ui-canvas) 0%, var(--ui-canvas-end) 100%);
 }
 
@@ -87,6 +87,11 @@ onMounted(() => {
   box-shadow: var(--ui-shadow-hover);
   backdrop-filter: blur(32px) saturate(1.55);
   -webkit-backdrop-filter: blur(32px) saturate(1.55);
+}
+
+.auth-logo-glass {
+  border-radius: 24px;
+  padding: 0.75rem;
 }
 
 .text-gradient {

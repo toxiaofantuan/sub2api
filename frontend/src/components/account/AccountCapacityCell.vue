@@ -55,7 +55,7 @@ const concurrencyClass = computed(() => {
   const current = currentConcurrency.value
   const max = props.account.concurrency
   if (current >= max) return 'bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400'
-  if (current > 0) return 'bg-yellow-100 text-yellow-700 dark:bg-yellow-900/30 dark:text-yellow-400'
+  if (current > 0) return 'bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400'
   return 'bg-gray-100 text-gray-600 dark:bg-gray-800 dark:text-gray-400'
 })
 
@@ -79,8 +79,8 @@ const windowCostClass = computed(() => {
   const limit = props.account.window_cost_limit || 0
   const reserve = props.account.window_cost_sticky_reserve || 10
   if (current >= limit + reserve) return 'bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400'
-  if (current >= limit) return 'bg-orange-100 text-orange-700 dark:bg-orange-900/30 dark:text-orange-400'
-  if (current >= limit * 0.8) return 'bg-yellow-100 text-yellow-700 dark:bg-yellow-900/30 dark:text-yellow-400'
+  if (current >= limit) return 'bg-rose-100 text-rose-700 dark:bg-rose-900/30 dark:text-rose-400'
+  if (current >= limit * 0.8) return 'bg-sky-100 text-sky-700 dark:bg-sky-900/30 dark:text-sky-400'
   return 'bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-400'
 })
 
@@ -108,7 +108,7 @@ const sessionLimitClass = computed(() => {
   const current = activeSessions.value
   const max = props.account.max_sessions || 0
   if (current >= max) return 'bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400'
-  if (current >= max * 0.8) return 'bg-yellow-100 text-yellow-700 dark:bg-yellow-900/30 dark:text-yellow-400'
+  if (current >= max * 0.8) return 'bg-sky-100 text-sky-700 dark:bg-sky-900/30 dark:text-sky-400'
   return 'bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-400'
 })
 
@@ -144,11 +144,11 @@ const rpmClass = computed(() => {
   const buffer = rpmBuffer.value
   if (rpmStrategy.value === 'tiered') {
     if (current >= base + buffer) return 'bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400'
-    if (current >= base) return 'bg-orange-100 text-orange-700 dark:bg-orange-900/30 dark:text-orange-400'
+    if (current >= base) return 'bg-rose-100 text-rose-700 dark:bg-rose-900/30 dark:text-rose-400'
   } else {
-    if (current >= base) return 'bg-orange-100 text-orange-700 dark:bg-orange-900/30 dark:text-orange-400'
+    if (current >= base) return 'bg-rose-100 text-rose-700 dark:bg-rose-900/30 dark:text-rose-400'
   }
-  if (current >= base * 0.8) return 'bg-yellow-100 text-yellow-700 dark:bg-yellow-900/30 dark:text-yellow-400'
+  if (current >= base * 0.8) return 'bg-sky-100 text-sky-700 dark:bg-sky-900/30 dark:text-sky-400'
   return 'bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-400'
 })
 

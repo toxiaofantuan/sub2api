@@ -14,13 +14,13 @@
       <!-- Registration Disabled Message -->
       <div
         v-if="!registrationEnabled && settingsLoaded"
-        class="rounded-xl border border-amber-200 bg-amber-50 p-4 dark:border-amber-800/50 dark:bg-amber-900/20"
+        class="rounded-xl border border-rose-200 bg-rose-50 p-4 dark:border-rose-500/30 dark:bg-rose-500/10"
       >
         <div class="flex items-start gap-3">
           <div class="flex-shrink-0">
-            <Icon name="exclamationCircle" size="md" class="text-amber-500" />
+            <Icon name="exclamationCircle" size="md" class="text-rose-500" />
           </div>
-          <p class="text-sm text-amber-700 dark:text-amber-400">
+          <p class="text-sm text-rose-700 dark:text-rose-300">
             {{ t('auth.registrationDisabled') }}
           </p>
         </div>
@@ -288,7 +288,7 @@
         {{ t('auth.alreadyHaveAccount') }}
         <router-link
           to="/login"
-          class="font-medium text-primary-600 transition-colors hover:text-primary-500 dark:text-primary-400 dark:hover:text-primary-300"
+          class="font-medium text-sky-700 transition-colors hover:text-blue-600 dark:text-sky-200 dark:hover:text-blue-100"
         >
           {{ t('auth.signIn') }}
         </router-link>

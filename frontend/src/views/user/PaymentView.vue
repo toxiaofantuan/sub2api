@@ -48,7 +48,7 @@
                 :min="globalMinAmount"
                 :max="globalMaxAmount"
               />
-              <p v-if="amountError" class="mt-2 text-xs text-amber-600 dark:text-amber-300">{{ amountError }}</p>
+              <p v-if="amountError" class="mt-2 text-xs text-rose-600 dark:text-rose-300">{{ amountError }}</p>
             </div>
             <div v-if="enabledMethods.length >= 1" class="card p-6">
               <PaymentMethodSelector
@@ -123,7 +123,7 @@
                   </div>
                   <div v-if="planHasPeakRate(selectedPlan)">
                     <span class="text-xs text-gray-400 dark:text-gray-500">{{ t('payment.planCard.peakRate') }}</span>
-                    <div class="text-sm font-semibold text-amber-700 dark:text-amber-300">
+                    <div class="text-sm font-semibold text-sky-700 dark:text-sky-300">
                       {{ planPeakRateLabel(selectedPlan) }}
                     </div>
                   </div>

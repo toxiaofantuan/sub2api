@@ -3,14 +3,16 @@
     <div class="space-y-4">
       <!-- Filters -->
       <div class="card p-4">
-        <div class="flex flex-wrap items-center gap-3">
-          <div class="flex-1 sm:max-w-64">
-            <input v-model="orderSearch" type="text" :placeholder="t('payment.admin.searchOrders')" class="input" @input="debounceLoadOrders" />
+        <div class="table-toolbar">
+          <div class="table-toolbar-primary">
+          <div class="table-toolbar-search">
+            <input v-model="orderSearch" type="text" :placeholder="t('payment.admin.searchOrders')" class="input w-full" @input="debounceLoadOrders" />
           </div>
-          <Select v-model="orderFilters.status" :options="statusFilterOptions" class="w-36" @change="loadOrders" />
-          <Select v-model="orderFilters.payment_type" :options="paymentTypeFilterOptions" class="w-40" @change="loadOrders" />
-          <Select v-model="orderFilters.order_type" :options="orderTypeFilterOptions" class="w-36" @change="loadOrders" />
-          <div class="flex flex-1 flex-wrap items-center justify-end gap-2">
+          <Select v-model="orderFilters.status" :options="statusFilterOptions" class="table-toolbar-control-sm" @change="loadOrders" />
+          <Select v-model="orderFilters.payment_type" :options="paymentTypeFilterOptions" class="table-toolbar-control" @change="loadOrders" />
+          <Select v-model="orderFilters.order_type" :options="orderTypeFilterOptions" class="table-toolbar-control-sm" @change="loadOrders" />
+          </div>
+          <div class="table-toolbar-actions">
             <button @click="loadOrders" :disabled="ordersLoading" class="btn btn-secondary" :title="t('common.refresh')">
               <Icon name="refresh" size="md" :class="ordersLoading ? 'animate-spin' : ''" />
             </button>
@@ -26,7 +28,7 @@
               <Icon name="eye" size="sm" />
               {{ t('common.view') }}
             </button>
-            <button v-if="row.status === 'PENDING'" @click="handleCancelOrder(row)" class="inline-flex items-center gap-1 rounded-md px-2 py-1 text-xs font-medium text-yellow-600 hover:bg-yellow-50 dark:text-yellow-400 dark:hover:bg-yellow-900/20">
+            <button v-if="row.status === 'PENDING'" @click="handleCancelOrder(row)" class="inline-flex items-center gap-1 rounded-md px-2 py-1 text-xs font-medium text-rose-600 hover:bg-rose-50 dark:text-rose-400 dark:hover:bg-rose-900/20">
               <Icon name="x" size="sm" />
               {{ t('payment.orders.cancel') }}
             </button>
@@ -45,7 +47,7 @@
               <Icon name="refresh" size="sm" />
               {{ t('payment.admin.retryRefund') }}
             </button>
-            <button v-else-if="row.status === 'REFUND_PENDING'" :disabled="refundQueryingIds.has(row.id)" @click="handleQueryRefund(row)" class="inline-flex items-center gap-1 rounded-md px-2 py-1 text-xs font-medium text-orange-600 hover:bg-orange-50 disabled:opacity-60 dark:text-orange-400 dark:hover:bg-orange-900/20">
+            <button v-else-if="row.status === 'REFUND_PENDING'" :disabled="refundQueryingIds.has(row.id)" @click="handleQueryRefund(row)" class="inline-flex items-center gap-1 rounded-md px-2 py-1 text-xs font-medium text-violet-600 hover:bg-violet-50 disabled:opacity-60 dark:text-violet-400 dark:hover:bg-violet-900/20">
               <Icon name="refresh" size="sm" :class="refundQueryingIds.has(row.id) ? 'animate-spin' : ''" />
               {{ t('payment.admin.queryRefundStatus') }}
             </button>

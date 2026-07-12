@@ -1,8 +1,8 @@
 <template>
-  <div class="flex flex-col justify-between gap-4 lg:flex-row lg:items-start">
+  <div class="table-toolbar">
     <!-- Left: Search + Filters -->
-    <div class="flex flex-1 flex-wrap items-center gap-3">
-      <div class="relative w-full sm:w-64">
+    <div class="table-toolbar-primary">
+      <div class="relative table-toolbar-search">
         <Icon
           name="search"
           size="md"
@@ -12,7 +12,7 @@
           v-model="search"
           type="text"
           :placeholder="t('admin.channelMonitor.searchPlaceholder')"
-          class="input pl-10"
+          class="input pl-10 w-full"
           @input="$emit('search-input')"
         />
       </div>
@@ -21,7 +21,7 @@
         v-model="provider"
         :options="providerFilterOptions"
         :placeholder="t('admin.channelMonitor.allProviders')"
-        class="w-44"
+        class="table-toolbar-control"
         @change="$emit('reload')"
       />
 
@@ -29,13 +29,13 @@
         v-model="enabled"
         :options="enabledFilterOptions"
         :placeholder="t('admin.channelMonitor.enabledFilter')"
-        class="w-40"
+        class="table-toolbar-control-sm"
         @change="$emit('reload')"
       />
     </div>
 
     <!-- Right: Actions -->
-    <div class="flex w-full flex-shrink-0 flex-wrap items-center justify-end gap-3 lg:w-auto">
+    <div class="table-toolbar-actions">
       <button
         @click="$emit('reload')"
         :disabled="loading"

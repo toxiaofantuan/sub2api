@@ -20,7 +20,7 @@
                   ? 'from-blue-500 to-blue-600'
                   : isAntigravity
                     ? 'from-purple-500 to-purple-600'
-                    : 'from-orange-500 to-orange-600'
+                    : 'from-violet-500 to-violet-600'
             ]"
           >
             <Icon name="sparkles" size="md" class="text-white" />
@@ -86,7 +86,7 @@
                 ? 'bg-purple-500 text-white'
                 : geminiOAuthType === 'code_assist'
                   ? 'bg-blue-500 text-white'
-                  : 'bg-amber-500 text-white'
+                  : 'bg-sky-500 text-white'
             ]"
           >
             <Icon v-if="geminiOAuthType === 'google_one'" name="user" size="sm" />

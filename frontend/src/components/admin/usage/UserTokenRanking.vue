@@ -2,13 +2,13 @@
   <!-- 用量页"用户排行"tab 内容：无卡片外观，依赖父级统一卡片；筛选/时间范围复用页面级筛选栏 -->
   <div>
     <!-- Toolbar -->
-    <div class="flex flex-wrap items-center justify-between gap-3 border-b border-gray-100 px-4 py-3 dark:border-dark-700/50 sm:px-6">
+    <div class="table-toolbar border-b border-gray-100 px-4 py-3 dark:border-dark-700/50 sm:px-6">
       <p class="text-xs text-gray-400 dark:text-gray-500">{{ t('admin.usage.tokenRanking.subtitle') }}</p>
-      <div class="flex items-center gap-3">
+      <div class="table-toolbar-actions">
         <span v-if="!loading && items.length > 0" class="text-xs text-gray-400 dark:text-gray-500">
           {{ t('admin.usage.tokenRanking.userCount', { count: items.length }) }}
         </span>
-        <div class="w-28">
+        <div class="table-toolbar-control-sm">
           <Select v-model="limit" :options="limitOptions" @change="load" />
         </div>
       </div>
@@ -116,11 +116,11 @@ const limitOptions = [
   { value: 200, label: 'Top 200' },
 ]
 
-// 前三名金/银/铜徽章
+// 前三名使用薰衣草/中性/浅蓝徽章，避免与旧黄色主题混淆
 const RANK_BADGE_CLASSES = [
-  'bg-amber-100 text-amber-700 dark:bg-amber-500/20 dark:text-amber-400',
+  'bg-violet-100 text-violet-700 dark:bg-violet-500/20 dark:text-violet-400',
   'bg-gray-200 text-gray-600 dark:bg-gray-500/20 dark:text-gray-300',
-  'bg-orange-100 text-orange-700 dark:bg-orange-500/20 dark:text-orange-400',
+  'bg-blue-100 text-blue-700 dark:bg-blue-500/20 dark:text-blue-400',
 ]
 
 const items = ref<UserBreakdownItem[]>([])

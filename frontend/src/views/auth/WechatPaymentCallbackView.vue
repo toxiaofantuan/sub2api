@@ -14,7 +14,7 @@
           class="mt-6 flex items-center justify-center py-10"
         >
           <div
-            class="h-8 w-8 animate-spin rounded-full border-4 border-primary-500 border-t-transparent"
+            class="h-8 w-8 animate-spin rounded-full border-4 border-sky-500 border-t-transparent"
           ></div>
         </div>
 

@@ -51,7 +51,7 @@
                 </p>
                 <div class="mt-1 flex flex-wrap gap-x-3 gap-y-1 text-[11px] text-gray-400 dark:text-gray-500">
                   <span>{{ t('payment.planCard.rate') }}: ×{{ subscription.group?.rate_multiplier ?? 1 }}</span>
-                  <span v-if="subscriptionHasPeakRate(subscription)" class="text-amber-700 dark:text-amber-300">
+                  <span v-if="subscriptionHasPeakRate(subscription)" class="text-sky-700 dark:text-sky-300">
                     {{ t('payment.planCard.peakRate') }}: {{ subscriptionPeakRateLabel(subscription) }}
                   </span>
                 </div>
@@ -263,7 +263,7 @@ import { getRemainingDurationParts, isOneTimeDailyQuota, type RemainingDurationP
 
 function platformAccentDotClass(p: string): string {
   switch (p) {
-    case 'anthropic': return 'bg-orange-500'
+    case 'anthropic': return 'bg-slate-500'
     case 'openai': return 'bg-emerald-500'
     case 'antigravity': return 'bg-purple-500'
     case 'gemini': return 'bg-blue-500'
@@ -308,7 +308,7 @@ function getProgressBarClass(used: number | undefined, limit: number | null | un
   if (!limit || limit === 0) return 'bg-gray-400'
   const percentage = ((used || 0) / limit) * 100
   if (percentage >= 90) return 'bg-red-500'
-  if (percentage >= 70) return 'bg-orange-500'
+  if (percentage >= 70) return 'bg-sky-500'
   return 'bg-green-500'
 }
 
@@ -342,7 +342,7 @@ function getExpirationClass(expiresAt: string): string {
 
   if (days <= 0) return 'text-red-600 dark:text-red-400 font-medium'
   if (days <= 3) return 'text-red-600 dark:text-red-400'
-  if (days <= 7) return 'text-orange-600 dark:text-orange-400'
+  if (days <= 7) return 'text-sky-600 dark:text-sky-400'
   return 'text-gray-700 dark:text-gray-300'
 }
 

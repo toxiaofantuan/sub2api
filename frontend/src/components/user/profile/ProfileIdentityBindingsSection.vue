@@ -490,7 +490,7 @@ function providerInitial(provider: UserAuthProvider): string {
 
 function providerIconClass(provider: UserAuthProvider): string {
   if (provider === 'linuxdo') {
-    return 'bg-orange-100 text-orange-600 dark:bg-orange-900/20 dark:text-orange-300'
+    return 'bg-sky-100 text-sky-600 dark:bg-sky-900/20 dark:text-sky-300'
   }
   if (provider === 'dingtalk') {
     return 'bg-blue-100 text-blue-600 dark:bg-blue-900/20 dark:text-blue-300'

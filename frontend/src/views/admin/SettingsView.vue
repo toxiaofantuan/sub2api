@@ -4,7 +4,7 @@
       <!-- Loading State -->
       <div v-if="loading" class="flex items-center justify-center py-12">
         <div
-          class="h-8 w-8 animate-spin rounded-full border-b-2 border-primary-600"
+          class="settings-loading-spinner h-8 w-8 animate-spin rounded-full"
         ></div>
       </div>
 
@@ -81,7 +81,7 @@
                 class="flex items-center gap-2 text-gray-500"
               >
                 <div
-                  class="h-4 w-4 animate-spin rounded-full border-b-2 border-primary-600"
+                  class="settings-loading-spinner h-4 w-4 animate-spin rounded-full"
                 ></div>
                 {{ t("common.loading") }}
               </div>
@@ -221,7 +221,7 @@
                 class="flex items-center gap-2 text-gray-500"
               >
                 <div
-                  class="h-4 w-4 animate-spin rounded-full border-b-2 border-primary-600"
+                  class="settings-loading-spinner h-4 w-4 animate-spin rounded-full"
                 ></div>
                 {{ t("common.loading") }}
               </div>
@@ -322,7 +322,7 @@
                 class="flex items-center gap-2 text-gray-500"
               >
                 <div
-                  class="h-4 w-4 animate-spin rounded-full border-b-2 border-primary-600"
+                  class="settings-loading-spinner h-4 w-4 animate-spin rounded-full"
                 ></div>
                 {{ t("common.loading") }}
               </div>
@@ -430,7 +430,7 @@
                 class="flex items-center gap-2 text-gray-500"
               >
                 <div
-                  class="h-4 w-4 animate-spin rounded-full border-b-2 border-primary-600"
+                  class="settings-loading-spinner h-4 w-4 animate-spin rounded-full"
                 ></div>
                 {{ t("common.loading") }}
               </div>
@@ -610,7 +610,7 @@
                 class="flex items-center gap-2 text-gray-500"
               >
                 <div
-                  class="h-4 w-4 animate-spin rounded-full border-b-2 border-primary-600"
+                  class="settings-loading-spinner h-4 w-4 animate-spin rounded-full"
                 ></div>
                 {{ t("common.loading") }}
               </div>
@@ -809,7 +809,7 @@
                 class="flex items-center gap-2 text-gray-500"
               >
                 <div
-                  class="h-4 w-4 animate-spin rounded-full border-b-2 border-primary-600"
+                  class="settings-loading-spinner h-4 w-4 animate-spin rounded-full"
                 ></div>
                 {{ t("common.loading") }}
               </div>
@@ -4901,7 +4901,7 @@
                             quotaPercentage(provider) > 90
                               ? 'bg-red-500'
                               : quotaPercentage(provider) > 70
-                                ? 'bg-yellow-500'
+                                ? 'bg-amber-500'
                                 : 'bg-green-500'
                           "
                           :style="{
@@ -5086,7 +5086,7 @@
             <div class="space-y-6 p-6">
               <!-- Backend Mode -->
               <div
-                class="flex items-center justify-between rounded-lg border border-amber-200 bg-amber-50 p-4 dark:border-amber-800 dark:bg-amber-900/20"
+                class="settings-info-toggle-panel flex items-center justify-between rounded-xl border p-4"
               >
                 <div>
                   <h3 class="text-sm font-medium text-gray-900 dark:text-white">
@@ -11089,14 +11089,21 @@ watch(
 }
 
 .settings-tab:focus-visible {
-  @apply ring-2 ring-primary-500/40 ring-offset-2 ring-offset-white dark:ring-offset-dark-900;
+  box-shadow:
+    0 0 0 3px rgb(14 165 233 / 0.16),
+    0 0 0 1px rgb(14 165 233 / 0.35) inset,
+    0 8px 18px rgb(15 23 42 / 0.06);
 }
 
 .settings-tab-active {
-  @apply border-primary-200/80 bg-white text-primary-700 shadow-sm dark:border-primary-400/30 dark:bg-dark-700/95 dark:text-primary-200;
+  color: #075fac;
+  border-color: rgb(148 212 255 / 0.66);
+  background:
+    linear-gradient(135deg, rgb(255 255 255 / 0.98), rgb(236 248 255 / 0.76));
   box-shadow:
-    0 8px 18px rgb(15 23 42 / 0.08),
-    0 1px 0 rgb(255 255 255 / 0.92) inset;
+    0 10px 24px rgb(14 165 233 / 0.12),
+    0 1px 0 rgb(255 255 255 / 0.96) inset,
+    0 0 0 1px rgb(255 255 255 / 0.64) inset;
 }
 
 .settings-tab-active::before {
@@ -11113,11 +11120,30 @@ watch(
 }
 
 .settings-tab-active .settings-tab-icon {
-  @apply bg-primary-50 text-primary-600 dark:bg-primary-400/10 dark:text-primary-300;
+  color: #0c78d8;
+  background: linear-gradient(135deg, rgb(245 251 255 / 0.98), rgb(225 243 255 / 0.82));
+  box-shadow:
+    0 1px 0 rgb(255 255 255 / 0.9) inset,
+    0 6px 14px rgb(14 165 233 / 0.12);
 }
 
 .settings-tab-label {
   @apply min-w-0 overflow-hidden text-ellipsis whitespace-nowrap leading-none;
+}
+
+.settings-info-toggle-panel {
+  border-color: rgb(148 212 255 / 0.52);
+  background:
+    linear-gradient(135deg, rgb(255 255 255 / 0.94), rgb(239 249 255 / 0.78)),
+    linear-gradient(180deg, rgb(255 255 255 / 0.48), rgb(255 255 255 / 0));
+  box-shadow:
+    0 14px 30px rgb(14 165 233 / 0.08),
+    0 1px 0 rgb(255 255 255 / 0.92) inset;
+}
+
+.settings-loading-spinner {
+  border: 2px solid rgb(186 230 253 / 0.5);
+  border-bottom-color: #0ea5e9;
 }
 </style>
 
@@ -11138,8 +11164,35 @@ watch(
 }
 
 .dark .settings-tab-active {
+  color: #b9e7ff;
+  border-color: rgb(124 200 255 / 0.34);
+  background:
+    linear-gradient(135deg, rgb(15 23 42 / 0.92), rgb(20 47 68 / 0.72));
   box-shadow:
     0 12px 26px rgb(0 0 0 / 0.22),
     0 1px 0 rgb(255 255 255 / 0.08) inset;
+}
+
+.dark .settings-tab-active .settings-tab-icon {
+  color: #9ad7ff;
+  background: rgb(124 200 255 / 0.12);
+  box-shadow:
+    0 1px 0 rgb(255 255 255 / 0.07) inset,
+    0 8px 18px rgb(56 189 248 / 0.1);
+}
+
+.dark .settings-info-toggle-panel {
+  border-color: rgb(124 200 255 / 0.26);
+  background:
+    linear-gradient(135deg, rgb(15 23 42 / 0.84), rgb(14 45 68 / 0.56)),
+    linear-gradient(180deg, rgb(255 255 255 / 0.04), rgb(255 255 255 / 0));
+  box-shadow:
+    0 16px 34px rgb(0 0 0 / 0.2),
+    0 1px 0 rgb(255 255 255 / 0.06) inset;
+}
+
+.dark .settings-loading-spinner {
+  border-color: rgb(124 200 255 / 0.18);
+  border-bottom-color: #7cc8ff;
 }
 </style>

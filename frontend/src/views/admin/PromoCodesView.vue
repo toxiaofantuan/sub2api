@@ -2,26 +2,27 @@
   <AppLayout>
     <TablePageLayout>
       <template #filters>
-        <div class="flex flex-wrap items-center gap-3">
+        <div class="card p-4">
+          <div class="table-toolbar">
           <!-- Left: Search + Filters -->
-          <div class="flex-1 sm:max-w-64">
+          <div class="table-toolbar-primary">
             <input
               v-model="searchQuery"
               type="text"
               :placeholder="t('admin.promo.searchCodes')"
-              class="input"
+              class="input table-toolbar-search"
               @input="handleSearch"
             />
+            <Select
+              v-model="filters.status"
+              :options="filterStatusOptions"
+              class="table-toolbar-control-sm"
+              @change="loadCodes"
+            />
           </div>
-          <Select
-            v-model="filters.status"
-            :options="filterStatusOptions"
-            class="w-36"
-            @change="loadCodes"
-          />
 
           <!-- Right: Action buttons -->
-          <div class="flex flex-1 flex-wrap items-center justify-end gap-2">
+          <div class="table-toolbar-actions">
             <button
               @click="loadCodes"
               :disabled="loading"
@@ -34,6 +35,7 @@
               <Icon name="plus" size="md" class="mr-1" />
               {{ t('admin.promo.createCode') }}
             </button>
+          </div>
           </div>
         </div>
       </template>

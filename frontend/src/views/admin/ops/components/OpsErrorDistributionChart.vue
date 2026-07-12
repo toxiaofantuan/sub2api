@@ -25,7 +25,7 @@ const isDarkMode = computed(() => document.documentElement.classList.contains('d
 const colors = computed(() => ({
   blue: '#3b82f6',
   red: '#ef4444',
-  orange: '#f59e0b',
+  violet: '#8b5cf6',
   gray: '#9ca3af',
   text: isDarkMode.value ? '#9ca3af' : '#6b7280'
 }))
@@ -68,7 +68,7 @@ const categories = computed<ErrorCategory[]>(() => {
   }
 
   const out: ErrorCategory[] = []
-  if (upstream > 0) out.push({ label: t('admin.ops.upstream'), count: upstream, color: colors.value.orange })
+  if (upstream > 0) out.push({ label: t('admin.ops.upstream'), count: upstream, color: colors.value.violet })
   if (client > 0) out.push({ label: t('admin.ops.client'), count: client, color: colors.value.blue })
   if (system > 0) out.push({ label: t('admin.ops.system'), count: system, color: colors.value.red })
   if (other > 0) out.push({ label: t('admin.ops.other'), count: other, color: colors.value.gray })

@@ -244,7 +244,7 @@
                         ? 'bg-purple-100 dark:bg-purple-900/30'
                         : item.value >= 0
                           ? 'bg-blue-100 dark:bg-blue-900/30'
-                          : 'bg-orange-100 dark:bg-orange-900/30'
+                          : 'bg-rose-100 dark:bg-rose-900/30'
                   ]"
                 >
                   <!-- 余额类型图标 -->
@@ -273,7 +273,7 @@
                     :class="
                       item.value >= 0
                         ? 'text-blue-600 dark:text-blue-400'
-                        : 'text-orange-600 dark:text-orange-400'
+                        : 'text-rose-600 dark:text-rose-400'
                     "
                   />
                 </div>
@@ -298,7 +298,7 @@
                         ? 'text-purple-600 dark:text-purple-400'
                         : item.value >= 0
                           ? 'text-blue-600 dark:text-blue-400'
-                          : 'text-orange-600 dark:text-orange-400'
+                          : 'text-rose-600 dark:text-rose-400'
                   ]"
                 >
                   {{ formatHistoryValue(item) }}

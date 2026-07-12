@@ -304,7 +304,7 @@ watch(
 function getLoadBarClass(loadPct: number): string {
   if (loadPct >= 90) return 'bg-red-500 dark:bg-red-600'
   if (loadPct >= 70) return 'bg-orange-500 dark:bg-orange-600'
-  if (loadPct >= 50) return 'bg-yellow-500 dark:bg-yellow-600'
+  if (loadPct >= 50) return 'bg-amber-500 dark:bg-amber-600'
   return 'bg-green-500 dark:bg-green-600'
 }
 
@@ -315,7 +315,7 @@ function getLoadBarStyle(loadPct: number): string {
 function getLoadTextClass(loadPct: number): string {
   if (loadPct >= 90) return 'text-red-600 dark:text-red-400'
   if (loadPct >= 70) return 'text-orange-600 dark:text-orange-400'
-  if (loadPct >= 50) return 'text-yellow-600 dark:text-yellow-400'
+  if (loadPct >= 50) return 'text-amber-600 dark:text-amber-400'
   return 'text-green-600 dark:text-green-400'
 }
 
@@ -491,7 +491,7 @@ watch(
             <!-- 限流账号 -->
             <span
               v-if="row.rate_limited_accounts > 0"
-              class="rounded-full bg-amber-100 px-1.5 py-0.5 font-semibold text-amber-700 dark:bg-amber-900/30 dark:text-amber-400"
+              class="rounded-full bg-sky-100 px-1.5 py-0.5 font-semibold text-sky-700 dark:bg-sky-900/30 dark:text-sky-400"
             >
               {{ t('admin.ops.concurrency.rateLimited', { count: row.rate_limited_accounts }) }}
             </span>
@@ -543,7 +543,7 @@ watch(
               </span>
               <span
                 v-else-if="row.is_rate_limited"
-                class="inline-flex items-center gap-1 rounded bg-amber-100 px-1.5 py-0.5 text-[10px] font-medium text-amber-700 dark:bg-amber-900/30 dark:text-amber-400"
+                class="inline-flex items-center gap-1 rounded bg-sky-100 px-1.5 py-0.5 text-[10px] font-medium text-sky-700 dark:bg-sky-900/30 dark:text-sky-400"
               >
                 <svg class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
@@ -602,7 +602,7 @@ watch(
 <style scoped>
 .custom-scrollbar {
   scrollbar-width: thin;
-  scrollbar-color: rgba(156, 163, 175, 0.3) transparent;
+  scrollbar-color: var(--ui-scrollbar-thumb, rgba(88, 183, 255, 0.42)) transparent;
 }
 
 .custom-scrollbar::-webkit-scrollbar {
@@ -614,11 +614,17 @@ watch(
 }
 
 .custom-scrollbar::-webkit-scrollbar-thumb {
-  background-color: rgba(156, 163, 175, 0.3);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.58), rgba(255, 255, 255, 0.1)),
+    var(--ui-scrollbar-thumb, rgba(88, 183, 255, 0.42));
   border-radius: 3px;
+  background-clip: padding-box;
 }
 
 .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-  background-color: rgba(156, 163, 175, 0.5);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.42), rgba(255, 255, 255, 0.04)),
+    var(--ui-scrollbar-thumb-hover, rgba(36, 152, 242, 0.7));
+  background-clip: padding-box;
 }
 </style>

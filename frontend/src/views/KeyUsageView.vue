@@ -4,8 +4,8 @@
     <header class="relative z-20 px-6 py-4">
       <nav class="mx-auto flex max-w-6xl items-center justify-between">
         <router-link to="/home" class="flex items-center gap-3">
-          <div class="h-10 w-10 overflow-hidden rounded-lg shadow-sm">
-            <img :src="siteLogo || '/logo.png'" alt="Logo" class="h-full w-full object-contain" />
+          <div class="flex h-10 w-10 items-center justify-center">
+            <img :src="siteLogo || '/logo.png'" alt="Logo" class="max-h-full max-w-full object-contain" />
           </div>
           <span class="text-lg font-semibold text-gray-900 dark:text-white">{{ siteName }}</span>
         </router-link>
@@ -671,13 +671,13 @@ interface DetailRow {
 
 function getUsageColor(pct: number): string {
   if (pct > 90) return 'text-rose-500'
-  if (pct > 70) return 'text-amber-600 dark:text-amber-300'
+  if (pct > 70) return 'text-sky-600 dark:text-sky-300'
   return 'key-value-default'
 }
 
 function getRemainingColor(value: number, warningThreshold: number): string {
   if (value <= 0) return 'text-rose-500'
-  if (value < warningThreshold) return 'text-amber-600 dark:text-amber-300'
+  if (value < warningThreshold) return 'text-sky-600 dark:text-sky-300'
   return 'key-value-default'
 }
 

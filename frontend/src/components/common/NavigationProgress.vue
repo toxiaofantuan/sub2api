@@ -46,24 +46,31 @@ const isVisible = computed(() => isLoading.value)
   background: linear-gradient(
     90deg,
     transparent 0%,
-    theme('colors.primary.400') 20%,
-    theme('colors.primary.500') 50%,
-    theme('colors.primary.400') 80%,
+    rgba(148, 212, 255, 0.28) 14%,
+    #58b7ff 32%,
+    #2498f2 50%,
+    #73c9f8 68%,
+    rgba(148, 212, 255, 0.28) 86%,
     transparent 100%
-  );
+  ) !important;
+  box-shadow:
+    0 0 12px rgba(36, 152, 242, 0.35),
+    0 0 24px rgba(115, 201, 248, 0.2) !important;
   animation: progress-slide 1.5s ease-in-out infinite;
 }
 
 /* 暗色模式下的进度条颜色 */
-:root.dark .navigation-progress-bar {
+:global(.dark) .navigation-progress-bar {
   background: linear-gradient(
     90deg,
     transparent 0%,
-    theme('colors.primary.500') 20%,
-    theme('colors.primary.400') 50%,
-    theme('colors.primary.500') 80%,
+    rgba(124, 200, 255, 0.24) 14%,
+    #7cc8ff 32%,
+    #9ad7ff 50%,
+    #78d4ff 68%,
+    rgba(124, 200, 255, 0.24) 86%,
     transparent 100%
-  );
+  ) !important;
 }
 
 /* 进度条滑动动画 */

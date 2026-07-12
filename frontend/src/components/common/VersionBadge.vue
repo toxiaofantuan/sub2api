@@ -19,8 +19,8 @@
         ></span>
         <!-- Update indicator -->
         <span v-if="hasUpdate" class="relative flex h-2 w-2">
-          <span class="absolute inline-flex h-full w-full animate-ping rounded-full bg-primary-400 opacity-75"></span>
-          <span class="relative inline-flex h-2 w-2 rounded-full bg-primary-600 dark:bg-primary-300"></span>
+          <span class="absolute inline-flex h-full w-full animate-ping rounded-full bg-sky-400 opacity-75"></span>
+          <span class="relative inline-flex h-2 w-2 rounded-full bg-violet-500 dark:bg-violet-300"></span>
         </span>
       </button>
 
@@ -57,7 +57,7 @@
           <div class="p-4">
             <!-- Loading state -->
             <div v-if="loading" class="flex items-center justify-center py-6">
-              <svg class="h-6 w-6 animate-spin text-primary-600 dark:text-primary-300" fill="none" viewBox="0 0 24 24">
+              <svg class="h-6 w-6 animate-spin text-violet-600 dark:text-violet-300" fill="none" viewBox="0 0 24 24">
                 <circle
                   class="opacity-25"
                   cx="12"
@@ -245,7 +245,7 @@
                       name="download"
                       size="sm"
                       :stroke-width="2"
-                      class="text-primary-600 dark:text-primary-300"
+                      class="text-violet-600 dark:text-violet-300"
                     />
                   </div>
                   <div class="min-w-0 flex-1">
@@ -257,7 +257,7 @@
                     </p>
                   </div>
                   <svg
-                    class="h-4 w-4 text-primary-600 transition-transform group-hover:translate-x-0.5 dark:text-primary-300"
+                    class="h-4 w-4 text-violet-600 transition-transform group-hover:translate-x-0.5 dark:text-violet-300"
                     fill="none"
                     viewBox="0 0 24 24"
                     stroke="currentColor"
@@ -271,7 +271,7 @@
                   class="version-update-card flex items-center gap-2 rounded-md p-2"
                 >
                   <svg
-                    class="h-3.5 w-3.5 flex-shrink-0 text-primary-600 dark:text-primary-300"
+                    class="h-3.5 w-3.5 flex-shrink-0 text-violet-600 dark:text-violet-300"
                     fill="none"
                     viewBox="0 0 24 24"
                     stroke="currentColor"
@@ -302,7 +302,7 @@
                       name="download"
                       size="sm"
                       :stroke-width="2"
-                      class="text-primary-600 dark:text-primary-300"
+                      class="text-violet-600 dark:text-violet-300"
                     />
                   </div>
                   <div class="min-w-0 flex-1">
@@ -422,7 +422,7 @@
                         class="flex items-center justify-center py-4"
                       >
                         <svg
-                          class="h-5 w-5 animate-spin text-primary-500"
+                          class="h-5 w-5 animate-spin text-violet-500"
                           fill="none"
                           viewBox="0 0 24 24"
                         >
@@ -479,7 +479,7 @@
                           class="flex w-full items-center justify-between rounded-lg border px-3 py-2 text-left transition-all disabled:cursor-not-allowed disabled:opacity-60"
                           :class="
                             selectedRollbackVersion === item.version
-                              ? 'border-amber-300 bg-amber-50 shadow-sm dark:border-amber-700 dark:bg-amber-900/20'
+                              ? 'border-violet-300 bg-violet-50 shadow-sm dark:border-violet-700 dark:bg-violet-900/20'
                               : 'border-gray-200 hover:border-gray-300 hover:bg-gray-50 dark:border-dark-700 dark:hover:border-dark-600 dark:hover:bg-dark-700/40'
                           "
                         >
@@ -488,20 +488,20 @@
                               class="flex h-3.5 w-3.5 items-center justify-center rounded-full border transition-colors"
                               :class="
                                 selectedRollbackVersion === item.version
-                                  ? 'border-amber-500'
+                                  ? 'border-violet-500'
                                   : 'border-gray-300 dark:border-dark-500'
                               "
                             >
                               <span
                                 v-if="selectedRollbackVersion === item.version"
-                                class="h-1.5 w-1.5 rounded-full bg-amber-500"
+                                class="h-1.5 w-1.5 rounded-full bg-violet-500"
                               ></span>
                             </span>
                             <span
                               class="text-sm font-semibold"
                               :class="
                                 selectedRollbackVersion === item.version
-                                  ? 'text-amber-700 dark:text-amber-300'
+                                  ? 'text-violet-700 dark:text-violet-300'
                                   : 'text-gray-700 dark:text-dark-200'
                               "
                               >v{{ item.version }}</span
@@ -563,7 +563,7 @@
                             </div>
 
                             <p
-                              class="flex items-start gap-1.5 px-0.5 text-[11px] leading-4 text-amber-600 dark:text-amber-400"
+                              class="flex items-start gap-1.5 px-0.5 text-[11px] leading-4 text-rose-600 dark:text-rose-400"
                             >
                               <Icon
                                 name="exclamationTriangle"
@@ -584,7 +584,7 @@
                             <button
                               @click="handleRollback"
                               :disabled="rollingBack"
-                              class="flex w-full items-center justify-center gap-2 rounded-lg bg-amber-500 px-4 py-2 text-sm font-medium text-white shadow-sm transition-colors hover:bg-amber-600 disabled:cursor-not-allowed disabled:opacity-50"
+                              class="flex w-full items-center justify-center gap-2 rounded-lg bg-rose-500 px-4 py-2 text-sm font-medium text-white shadow-sm transition-colors hover:bg-rose-600 disabled:cursor-not-allowed disabled:opacity-50"
                             >
                               <svg
                                 v-if="rollingBack"

@@ -462,21 +462,21 @@ onUnmounted(() => {
   @apply cursor-pointer;
   color: var(--ui-ink, #25233a);
   background: var(--ui-surface, rgba(255, 255, 255, 0.66));
-  border: 1px solid var(--ui-border, rgba(129, 119, 190, 0.2));
-  box-shadow: var(--ui-shadow-sm, 0 6px 18px rgba(88, 76, 145, 0.1));
+  border: 1px solid var(--ui-border, rgba(89, 159, 221, 0.16));
+  box-shadow: var(--ui-shadow-sm, 0 6px 18px rgba(54, 111, 166, 0.08));
   backdrop-filter: blur(16px) saturate(145%);
   -webkit-backdrop-filter: blur(16px) saturate(145%);
 }
 
 .select-trigger-open {
-  border-color: var(--ui-primary, #8b7de0);
+  border-color: var(--ui-primary, #2498f2);
   box-shadow:
-    0 0 0 3px var(--ui-primary-soft, rgba(139, 125, 224, 0.16)),
-    var(--ui-shadow-sm, 0 10px 24px rgba(88, 76, 145, 0.12));
+    0 0 0 3px var(--ui-primary-soft, rgba(36, 152, 242, 0.13)),
+    var(--ui-shadow-sm, 0 10px 24px rgba(54, 111, 166, 0.1));
 }
 
 .select-trigger:focus-visible {
-  outline: 2px solid color-mix(in srgb, var(--ui-primary, #8b7de0) 62%, transparent);
+  outline: 2px solid color-mix(in srgb, var(--ui-primary, #2498f2) 62%, transparent);
   outline-offset: 2px;
 }
 
@@ -512,8 +512,8 @@ onUnmounted(() => {
   @apply overflow-hidden;
   color: var(--ui-ink, #25233a);
   background: var(--ui-surface-strong, rgba(255, 255, 255, 0.86));
-  border: 1px solid var(--ui-border, rgba(129, 119, 190, 0.2));
-  box-shadow: var(--ui-shadow-hover, 0 18px 44px rgba(78, 66, 136, 0.2));
+  border: 1px solid var(--ui-border, rgba(89, 159, 221, 0.16));
+  box-shadow: var(--ui-shadow-hover, 0 18px 44px rgba(54, 111, 166, 0.11));
   backdrop-filter: blur(24px) saturate(160%);
   -webkit-backdrop-filter: blur(24px) saturate(160%);
   pointer-events: auto !important;
@@ -521,7 +521,7 @@ onUnmounted(() => {
 
 .select-dropdown-portal .select-search {
   @apply flex items-center gap-2 px-3 py-2;
-  border-bottom: 1px solid var(--ui-border, rgba(129, 119, 190, 0.16));
+  border-bottom: 1px solid var(--ui-border, rgba(89, 159, 221, 0.16));
 }
 
 .select-dropdown-portal .select-search-input {
@@ -544,34 +544,34 @@ onUnmounted(() => {
 }
 
 .select-dropdown-portal .select-option:hover {
-  color: var(--ui-primary-strong, #6858c7);
-  background: var(--ui-primary-soft, rgba(139, 125, 224, 0.16));
+  color: var(--ui-primary-strong, #0c78d8);
+  background: var(--ui-primary-soft, rgba(36, 152, 242, 0.13));
 }
 
 .select-dropdown-portal .select-option-selected {
-  color: var(--ui-primary-strong, #6858c7);
-  background: var(--ui-primary-soft, rgba(139, 125, 224, 0.2));
-  box-shadow: inset 0 0 0 1px var(--ui-border, rgba(129, 119, 190, 0.2));
+  color: var(--ui-primary-strong, #0c78d8);
+  background: var(--ui-primary-soft, rgba(36, 152, 242, 0.16));
+  box-shadow: inset 0 0 0 1px var(--ui-border, rgba(89, 159, 221, 0.16));
 }
 
 .select-dropdown-portal .select-option-focused {
-  color: var(--ui-primary-strong, #6858c7);
-  background: var(--ui-primary-soft, rgba(139, 125, 224, 0.16));
+  color: var(--ui-primary-strong, #0c78d8);
+  background: var(--ui-primary-soft, rgba(36, 152, 242, 0.13));
 }
 
 .dark .select-dropdown-portal .select-option:hover,
 .dark .select-dropdown-portal .select-option-focused {
-  color: var(--ui-primary-strong, #c8c1ff);
-  background: var(--ui-primary-soft, rgba(151, 137, 232, 0.2));
+  color: var(--ui-primary-strong, #9ad7ff);
+  background: var(--ui-primary-soft, rgba(124, 200, 255, 0.16));
 }
 
 .dark .select-dropdown-portal .select-option-selected {
-  color: var(--ui-primary-strong, #c8c1ff);
-  background: var(--ui-primary-soft, rgba(151, 137, 232, 0.26));
+  color: var(--ui-primary-strong, #9ad7ff);
+  background: var(--ui-primary-soft, rgba(124, 200, 255, 0.2));
 }
 
 .select-dropdown-portal .select-option-check {
-  color: var(--ui-primary-strong, #6858c7);
+  color: var(--ui-primary-strong, #0c78d8);
 }
 
 .select-dropdown-portal .select-option-disabled {

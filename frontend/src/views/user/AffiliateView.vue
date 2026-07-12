@@ -38,7 +38,7 @@
             <p class="mt-2 text-2xl font-semibold text-gray-900 dark:text-white">
               {{ formatCurrency(detail.aff_history_quota) }}
             </p>
-            <p v-if="detail.aff_frozen_quota > 0" class="mt-1 text-xs text-amber-600 dark:text-amber-400">
+            <p v-if="detail.aff_frozen_quota > 0" class="mt-1 text-xs text-sky-600 dark:text-sky-400">
               {{ t('affiliate.stats.frozenQuota') }}: {{ formatCurrency(detail.aff_frozen_quota) }}
             </p>
           </div>
@@ -99,7 +99,7 @@
               <span>{{ transferring ? t('affiliate.transfer.transferring') : t('affiliate.transfer.button') }}</span>
             </button>
           </div>
-          <p v-if="detail.aff_quota <= 0" class="mt-3 text-sm text-amber-600 dark:text-amber-400">
+          <p v-if="detail.aff_quota <= 0" class="mt-3 text-sm text-rose-600 dark:text-rose-400">
             {{ t('affiliate.transfer.empty') }}
           </p>
         </div>
