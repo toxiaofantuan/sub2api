@@ -3,6 +3,8 @@ services:
     image: caddy:2-alpine
     container_name: sub2api-caddy
     restart: unless-stopped
+    profiles:
+      - edge
     env_file:
       - .env.sub2api
     # Prevent containers from inheriting an unreachable host systemd-resolved stub (127.0.0.53).
@@ -36,6 +38,8 @@ services:
       - 223.5.5.5
       - 119.29.29.29
       - 1.1.1.1
+    ports:
+      - "127.0.0.1:${SUB2API_HOST_PORT:-8080}:8080"
     environment:
       AUTO_SETUP: "true"
       SERVER_HOST: 0.0.0.0
