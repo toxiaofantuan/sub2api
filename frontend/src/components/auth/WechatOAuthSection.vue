@@ -12,7 +12,7 @@
     <p
       v-if="disabledHint"
       data-testid="wechat-oauth-hint"
-      class="text-sm text-amber-600 dark:text-amber-400"
+      class="text-sm text-sky-600 dark:text-sky-400"
     >
       {{ disabledHint }}
     </p>

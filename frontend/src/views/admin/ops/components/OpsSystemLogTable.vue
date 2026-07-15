@@ -380,7 +380,7 @@ onMounted(async () => {
       <div class="flex flex-wrap items-center gap-2 text-xs">
         <span class="rounded-md bg-gray-100 px-2 py-1 text-gray-700 dark:bg-dark-700 dark:text-gray-200">{{ t('admin.ops.systemLogs.queue') }} {{ health.queue_depth }}/{{ health.queue_capacity }}</span>
         <span class="rounded-md bg-gray-100 px-2 py-1 text-gray-700 dark:bg-dark-700 dark:text-gray-200">{{ t('admin.ops.systemLogs.written') }} {{ health.written_count }}</span>
-        <span class="rounded-md bg-amber-100 px-2 py-1 text-amber-700 dark:bg-amber-900/30 dark:text-amber-300">{{ t('admin.ops.systemLogs.dropped') }} {{ health.dropped_count }}</span>
+        <span class="rounded-md bg-rose-100 px-2 py-1 text-rose-700 dark:bg-rose-900/30 dark:text-rose-300">{{ t('admin.ops.systemLogs.dropped') }} {{ health.dropped_count }}</span>
         <span class="rounded-md bg-red-100 px-2 py-1 text-red-700 dark:bg-red-900/30 dark:text-red-300">{{ t('admin.ops.systemLogs.failed') }} {{ health.write_failed_count }}</span>
       </div>
     </div>
@@ -437,70 +437,72 @@ onMounted(async () => {
       <p v-if="health.last_error" class="mt-2 text-xs text-red-600 dark:text-red-400">{{ t('admin.ops.systemLogs.latestWriteError') }} {{ health.last_error }}</p>
     </div>
 
-    <div class="mb-4 grid grid-cols-1 gap-3 md:grid-cols-5">
-      <label class="text-xs text-gray-600 dark:text-gray-300">
+    <div class="mb-3 table-toolbar">
+      <div class="table-toolbar-filters">
+      <label class="table-toolbar-field-sm text-xs text-gray-600 dark:text-gray-300">
         {{ t('admin.ops.systemLogs.timeRange') }}
         <Select v-model="filters.time_range" class="mt-1" :options="timeRangeOptions" />
       </label>
-      <label class="text-xs text-gray-600 dark:text-gray-300">
+      <label class="table-toolbar-field text-xs text-gray-600 dark:text-gray-300">
         {{ t('admin.ops.systemLogs.startTime') }}
         <input v-model="filters.start_time" type="datetime-local" class="input mt-1" />
       </label>
-      <label class="text-xs text-gray-600 dark:text-gray-300">
+      <label class="table-toolbar-field text-xs text-gray-600 dark:text-gray-300">
         {{ t('admin.ops.systemLogs.endTime') }}
         <input v-model="filters.end_time" type="datetime-local" class="input mt-1" />
       </label>
-      <label class="text-xs text-gray-600 dark:text-gray-300">
-        {{ t('admin.ops.systemLogs.level') }}
-        <Select v-model="filters.level" class="mt-1" :options="filterLevelOptions" />
-      </label>
-      <label class="text-xs text-gray-600 dark:text-gray-300">
-        {{ t('admin.ops.systemLogs.component') }}
-        <input v-model="filters.component" type="text" class="input mt-1" :placeholder="t('admin.ops.systemLogs.componentPlaceholder')" />
-      </label>
-      <label class="text-xs text-gray-600 dark:text-gray-300">
+      <label class="table-toolbar-field text-xs text-gray-600 dark:text-gray-300">
         {{ t('admin.ops.systemLogs.host') }}
         <input v-model="filters.host" type="text" class="input mt-1" />
       </label>
-      <label class="text-xs text-gray-600 dark:text-gray-300">
+      <label class="table-toolbar-field-sm text-xs text-gray-600 dark:text-gray-300">
+        {{ t('admin.ops.systemLogs.level') }}
+        <Select v-model="filters.level" class="mt-1" :options="filterLevelOptions" />
+      </label>
+      <label class="table-toolbar-field text-xs text-gray-600 dark:text-gray-300">
+        {{ t('admin.ops.systemLogs.component') }}
+        <input v-model="filters.component" type="text" class="input mt-1" :placeholder="t('admin.ops.systemLogs.componentPlaceholder')" />
+      </label>
+      <label class="table-toolbar-field text-xs text-gray-600 dark:text-gray-300">
         request_id
         <input v-model="filters.request_id" type="text" class="input mt-1" />
       </label>
-      <label class="text-xs text-gray-600 dark:text-gray-300">
+      <label class="table-toolbar-field text-xs text-gray-600 dark:text-gray-300">
         client_request_id
         <input v-model="filters.client_request_id" type="text" class="input mt-1" />
       </label>
-      <label class="text-xs text-gray-600 dark:text-gray-300">
+      <label class="table-toolbar-field-sm text-xs text-gray-600 dark:text-gray-300">
         user_id
         <input v-model="filters.user_id" type="text" class="input mt-1" />
       </label>
-      <label class="text-xs text-gray-600 dark:text-gray-300">
+      <label class="table-toolbar-field-sm text-xs text-gray-600 dark:text-gray-300">
         {{ t('admin.ops.systemLogs.keyId') }}
         <input v-model="filters.api_key_id" type="text" class="input mt-1" />
       </label>
-      <label class="text-xs text-gray-600 dark:text-gray-300">
+      <label class="table-toolbar-field-sm text-xs text-gray-600 dark:text-gray-300">
         account_id
         <input v-model="filters.account_id" type="text" class="input mt-1" />
       </label>
-      <label class="text-xs text-gray-600 dark:text-gray-300">
+      <label class="table-toolbar-field-sm text-xs text-gray-600 dark:text-gray-300">
         {{ t('admin.ops.systemLogs.platform') }}
         <input v-model="filters.platform" type="text" class="input mt-1" />
       </label>
-      <label class="text-xs text-gray-600 dark:text-gray-300">
+      <label class="table-toolbar-field text-xs text-gray-600 dark:text-gray-300">
         {{ t('admin.ops.systemLogs.model') }}
         <input v-model="filters.model" type="text" class="input mt-1" />
       </label>
-      <label class="text-xs text-gray-600 dark:text-gray-300">
+      <label class="table-toolbar-field-lg text-xs text-gray-600 dark:text-gray-300">
         {{ t('admin.ops.systemLogs.keyword') }}
         <input v-model="filters.q" type="text" class="input mt-1" :placeholder="t('admin.ops.systemLogs.keywordPlaceholder')" />
       </label>
-    </div>
+      </div>
 
-    <div class="mb-3 flex flex-wrap gap-2">
-      <button type="button" class="btn btn-primary btn-sm" @click="applyFilters">{{ t('admin.ops.systemLogs.search') }}</button>
-      <button type="button" class="btn btn-secondary btn-sm" @click="resetFilters">{{ t('common.reset') }}</button>
-      <button type="button" class="btn btn-danger btn-sm" @click="cleanupCurrentFilter">{{ t('admin.ops.systemLogs.cleanCurrentFilters') }}</button>
-      <button type="button" class="btn btn-secondary btn-sm" @click="fetchHealth">{{ t('admin.ops.systemLogs.refreshHealth') }}</button>
+      <div class="table-toolbar-actions">
+        <button type="button" class="btn btn-primary btn-sm" @click="applyFilters">{{ t('admin.ops.systemLogs.search') }}</button>
+        <button type="button" class="btn btn-secondary btn-sm" @click="resetFilters">{{ t('common.reset') }}</button>
+        <button type="button" class="btn btn-danger btn-sm" @click="cleanupCurrentFilter">{{ t('admin.ops.systemLogs.cleanCurrentFilters') }}</button>
+        <button type="button" class="btn btn-secondary btn-sm" @click="fetchHealth">{{ t('admin.ops.systemLogs.refreshHealth') }}</button>
+      </div>
     </div>
 
     <div class="overflow-hidden rounded-xl border border-gray-200 dark:border-dark-700">

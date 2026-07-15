@@ -388,18 +388,20 @@ function cancelDelete() {
 
 <template>
   <div class="rounded-3xl bg-white p-6 shadow-sm ring-1 ring-gray-900/5 dark:bg-dark-800 dark:ring-dark-700">
-    <div class="mb-4 flex items-start justify-between gap-4">
-      <div>
-        <h3 class="text-sm font-bold text-gray-900 dark:text-white">{{ t('admin.ops.alertRules.title') }}</h3>
-        <p class="mt-1 text-xs text-gray-500 dark:text-gray-400">{{ t('admin.ops.alertRules.description') }}</p>
+    <div class="mb-4 table-toolbar">
+      <div class="table-toolbar-primary">
+        <div>
+          <h3 class="text-sm font-bold text-gray-900 dark:text-white">{{ t('admin.ops.alertRules.title') }}</h3>
+          <p class="mt-1 text-xs text-gray-500 dark:text-gray-400">{{ t('admin.ops.alertRules.description') }}</p>
+        </div>
       </div>
 
-      <div class="flex items-center gap-2">
+      <div class="table-toolbar-actions">
         <button class="btn btn-sm btn-primary" :disabled="loading" @click="openCreate">
           {{ t('admin.ops.alertRules.create') }}
         </button>
         <button
-          class="flex items-center gap-1.5 rounded-lg bg-gray-100 px-3 py-1.5 text-xs font-bold text-gray-700 transition-colors hover:bg-gray-200 disabled:cursor-not-allowed disabled:opacity-50 dark:bg-dark-700 dark:text-gray-300 dark:hover:bg-dark-600"
+          class="btn btn-sm btn-secondary"
           :disabled="loading"
           @click="load"
         >

@@ -2,9 +2,10 @@
   <AppLayout>
     <TablePageLayout>
       <template #filters>
-        <div class="flex flex-col justify-between gap-4 lg:flex-row lg:items-start">
-          <div class="flex flex-1 flex-wrap items-center gap-3">
-            <div class="relative w-full sm:w-80">
+        <div class="card p-4">
+        <div class="table-toolbar">
+          <div class="table-toolbar-primary">
+            <div class="relative table-toolbar-search">
               <Icon
                 name="search"
                 size="md"
@@ -19,7 +20,7 @@
             </div>
           </div>
 
-          <div class="flex w-full flex-shrink-0 flex-wrap items-center justify-end gap-3 lg:w-auto">
+          <div class="table-toolbar-actions">
             <button
               @click="loadChannels"
               :disabled="loading"
@@ -29,6 +30,7 @@
               <Icon name="refresh" size="md" :class="loading ? 'animate-spin' : ''" />
             </button>
           </div>
+        </div>
         </div>
       </template>
 

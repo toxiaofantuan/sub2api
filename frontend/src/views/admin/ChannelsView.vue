@@ -2,10 +2,11 @@
   <AppLayout>
     <TablePageLayout>
       <template #filters>
-        <div class="flex flex-col justify-between gap-4 lg:flex-row lg:items-start">
+        <div class="card p-4">
+          <div class="table-toolbar">
           <!-- Left: Search + Filters -->
-          <div class="flex flex-1 flex-wrap items-center gap-3">
-            <div class="relative w-full sm:w-64">
+          <div class="table-toolbar-primary">
+            <div class="relative table-toolbar-search">
               <Icon
                 name="search"
                 size="md"
@@ -24,13 +25,13 @@
               v-model="filters.status"
               :options="statusFilterOptions"
               :placeholder="t('admin.channels.allStatus', 'All Status')"
-              class="w-40"
+              class="table-toolbar-control"
               @change="loadChannels"
             />
           </div>
 
           <!-- Right: Actions -->
-          <div class="flex w-full flex-shrink-0 flex-wrap items-center justify-end gap-3 lg:w-auto">
+          <div class="table-toolbar-actions">
             <button
               @click="loadChannels"
               :disabled="loading"
@@ -43,6 +44,7 @@
               <Icon name="plus" size="md" class="mr-2" />
               {{ t('admin.channels.createChannel', 'Create Channel') }}
             </button>
+          </div>
           </div>
         </div>
       </template>

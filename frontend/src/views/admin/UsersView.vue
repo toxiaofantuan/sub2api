@@ -3,11 +3,12 @@
     <TablePageLayout>
       <!-- Single Row: Search, Filters, and Actions -->
       <template #filters>
-        <div class="flex flex-wrap items-center gap-3">
+        <div class="card p-4">
+          <div class="table-toolbar">
           <!-- Left: Search + Active Filters -->
-          <div class="flex flex-1 flex-wrap items-center gap-3">
+          <div class="table-toolbar-primary">
             <!-- Search Box -->
-            <div class="relative w-full md:w-64">
+            <div class="relative table-toolbar-search">
               <Icon
                 name="search"
                 size="md"
@@ -23,7 +24,7 @@
             </div>
 
             <!-- Role Filter (visible when enabled) -->
-            <div v-if="visibleFilters.has('role')" class="w-full sm:w-32">
+            <div v-if="visibleFilters.has('role')" class="table-toolbar-control-sm">
               <Select
                 v-model="filters.role"
                 :options="[
@@ -36,7 +37,7 @@
             </div>
 
             <!-- Status Filter (visible when enabled) -->
-            <div v-if="visibleFilters.has('status')" class="w-full sm:w-32">
+            <div v-if="visibleFilters.has('status')" class="table-toolbar-control-sm">
               <Select
                 v-model="filters.status"
                 :options="[
@@ -49,7 +50,7 @@
             </div>
 
             <!-- Group Filter (visible when enabled) -->
-            <div v-if="visibleFilters.has('group')" class="w-full sm:w-44">
+            <div v-if="visibleFilters.has('group')" class="table-toolbar-control">
               <Select
                 v-model="filters.group"
                 :options="groupFilterOptions"
@@ -62,7 +63,7 @@
             </div>
 
             <!-- API Key Group Filter (visible when enabled) -->
-            <div v-if="visibleFilters.has('apiKeyGroup')" class="w-full sm:w-44">
+            <div v-if="visibleFilters.has('apiKeyGroup')" class="table-toolbar-control">
               <Select
                 v-model="filters.apiKeyGroup"
                 :options="apiKeyGroupFilterOptions"
@@ -76,7 +77,7 @@
             <template v-for="(value, attrId) in activeAttributeFilters" :key="attrId">
               <div
                 v-if="visibleFilters.has(`attr_${attrId}`)"
-                class="relative w-full sm:w-36"
+                class="relative table-toolbar-control"
               >
                 <!-- Text/Email/URL/Textarea/Date type: styled input -->
                 <input
@@ -124,9 +125,9 @@
           </div>
 
           <!-- Right: Actions and Settings -->
-          <div class="flex flex-wrap items-center justify-end gap-2">
+          <div class="table-toolbar-actions">
             <!-- Mobile: Secondary buttons (icon only) -->
-            <div class="flex items-center gap-2 md:contents">
+            <div class="contents">
               <!-- Refresh Button -->
               <button
                 @click="loadUsers"
@@ -163,7 +164,7 @@
                       v-if="visibleFilters.has(filter.key)"
                       name="check"
                       size="sm"
-                      class="text-primary-500"
+                      class="text-sky-500"
                       :stroke-width="2"
                     />
                   </button>
@@ -184,7 +185,7 @@
                       v-if="visibleFilters.has(`attr_${attr.id}`)"
                       name="check"
                       size="sm"
-                      class="text-primary-500"
+                      class="text-sky-500"
                       :stroke-width="2"
                     />
                   </button>
@@ -225,7 +226,7 @@
                       v-if="isColumnVisible(col.key)"
                       name="check"
                       size="sm"
-                      :class="isForcedVisibleColumn(col.key) ? 'text-gray-400 dark:text-gray-500' : 'text-primary-500'"
+                      :class="isForcedVisibleColumn(col.key) ? 'text-gray-400 dark:text-gray-500' : 'text-sky-500'"
                       :stroke-width="2"
                     />
                   </button>
@@ -248,6 +249,7 @@
               {{ t('admin.users.createUser') }}
             </button>
           </div>
+          </div>
         </div>
       </template>
 
@@ -267,9 +269,9 @@
           <template #cell-email="{ value }">
             <div class="flex items-center gap-2">
               <div
-                class="flex h-8 w-8 items-center justify-center rounded-full bg-primary-100 dark:bg-primary-900/30"
+                class="ui-user-avatar flex h-8 w-8 items-center justify-center rounded-full"
               >
-                <span class="text-sm font-medium text-primary-700 dark:text-primary-300">
+                <span class="text-sm font-medium">
                   {{ value.charAt(0).toUpperCase() }}
                 </span>
               </div>
@@ -311,7 +313,7 @@
           </template>
 
           <template #cell-role="{ value }">
-            <span :class="['badge', value === 'admin' ? 'badge-purple' : 'badge-gray']">
+            <span :class="['badge', value === 'admin' ? 'badge-admin' : 'badge-user']">
               {{ t('admin.users.roles.' + value) }}
             </span>
           </template>
@@ -324,8 +326,8 @@
                 class="group/ex relative inline-flex cursor-pointer items-center gap-1 whitespace-nowrap text-xs"
                 @click.stop="toggleExpandedGroup(row.id)"
               >
-                <Icon name="shield" size="xs" class="h-3.5 w-3.5 text-purple-500 dark:text-purple-400" />
-                <span class="font-medium text-purple-600 dark:text-purple-400">{{ getUserGroups(row).exclusive.length }}</span>
+                <Icon name="shield" size="xs" class="h-3.5 w-3.5 text-sky-500 dark:text-sky-300" />
+                <span class="font-medium text-sky-600 dark:text-sky-300">{{ getUserGroups(row).exclusive.length }}</span>
                 <span class="text-gray-500 dark:text-dark-400">{{ t('admin.users.exclusiveLabel') }}</span>
                 <!-- Hover tooltip（操作菜单未打开时显示） -->
                 <div
@@ -348,7 +350,7 @@
                   <div
                     v-for="g in getUserGroups(row).exclusive"
                     :key="g.id"
-                    class="flex cursor-pointer items-center gap-2 px-3 py-2 text-gray-700 transition-colors hover:bg-primary-50 hover:text-primary-600 dark:text-dark-200 dark:hover:bg-primary-900/30 dark:hover:text-primary-400"
+                    class="flex cursor-pointer items-center gap-2 px-3 py-2 text-gray-700 transition-colors hover:bg-sky-50 hover:text-sky-600 dark:text-dark-200 dark:hover:bg-sky-900/30 dark:hover:text-sky-400"
                     @click.stop="openGroupReplace(row, g)"
                   >
                     <Icon name="swap" size="xs" class="h-3.5 w-3.5 flex-shrink-0 opacity-50" />
@@ -410,7 +412,7 @@
             <div class="flex items-center gap-2">
               <div class="group relative">
                 <button
-                  class="font-medium text-gray-900 underline decoration-dashed decoration-gray-300 underline-offset-4 transition-colors hover:text-primary-600 dark:text-white dark:decoration-dark-500 dark:hover:text-primary-400"
+                  class="font-medium text-gray-900 underline decoration-dashed decoration-gray-300 underline-offset-4 transition-colors hover:text-sky-600 dark:text-white dark:decoration-dark-500 dark:hover:text-sky-400"
                   @click="handleBalanceHistory(row)"
                 >
                   ${{ value.toFixed(2) }}
@@ -434,7 +436,7 @@
           <template #cell-balance_platform_quota="{ row }">
             <button
               type="button"
-              class="block text-left underline decoration-dashed decoration-gray-300 underline-offset-4 transition-colors hover:decoration-primary-400 dark:decoration-dark-500"
+              class="block text-left underline decoration-dashed decoration-gray-300 underline-offset-4 transition-colors hover:decoration-sky-400 dark:decoration-dark-500"
               :title="t('admin.users.platformQuota.cellColumnTooltip')"
               @click="handlePlatformQuota(row)"
             >
@@ -457,7 +459,7 @@
                   type="button"
                   class="flex items-center gap-1 rounded px-1 py-0.5 transition-colors hover:bg-gray-200 dark:hover:bg-dark-700"
                   :class="usageSort && usageSort.key === usageKey
-                    ? 'text-primary-600 dark:text-primary-400'
+                    ? 'text-sky-600 dark:text-sky-400'
                     : 'text-gray-400 dark:text-dark-500'"
                   :title="t('admin.users.sortBy')"
                   :data-test="`usage-sort-trigger-${usageKey}`"
@@ -495,7 +497,7 @@
                     type="button"
                     class="flex w-full items-center justify-between gap-3 px-3 py-1.5 text-left text-xs normal-case tracking-normal hover:bg-gray-100 dark:hover:bg-dark-700"
                     :class="isUsageSortActive(usageKey, metric)
-                      ? 'font-medium text-primary-600 dark:text-primary-400'
+                      ? 'font-medium text-sky-600 dark:text-sky-400'
                       : 'text-gray-700 dark:text-gray-300'"
                     :data-test="`usage-sort-${usageKey}-${metric}`"
                     @click.stop="toggleUsageSort(usageKey, metric)"
@@ -589,7 +591,7 @@
               <!-- Edit Button -->
               <button
                 @click="handleEdit(row)"
-                class="flex flex-col items-center gap-0.5 rounded-lg p-1.5 text-gray-500 transition-colors hover:bg-gray-100 hover:text-primary-600 dark:hover:bg-dark-700 dark:hover:text-primary-400"
+                class="flex flex-col items-center gap-0.5 rounded-lg p-1.5 text-gray-500 transition-colors hover:bg-gray-100 hover:text-sky-600 dark:hover:bg-dark-700 dark:hover:text-sky-400"
               >
                 <Icon name="edit" size="sm" />
                 <span class="text-xs">{{ t('common.edit') }}</span>
@@ -602,7 +604,7 @@
                 :class="[
                   'flex flex-col items-center gap-0.5 rounded-lg p-1.5 text-gray-500 transition-colors',
                   row.status === 'active'
-                    ? 'hover:bg-orange-50 hover:text-orange-600 dark:hover:bg-orange-900/20 dark:hover:text-orange-400'
+                    ? 'hover:bg-red-50 hover:text-red-600 dark:hover:bg-red-900/20 dark:hover:text-red-400'
                     : 'hover:bg-green-50 hover:text-green-600 dark:hover:bg-green-900/20 dark:hover:text-green-400'
                 ]"
               >
@@ -691,7 +693,7 @@
                 @click="handleWithdraw(user); closeActionMenu()"
                 class="flex w-full items-center gap-2 px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-dark-700"
               >
-                <svg class="h-4 w-4 text-amber-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <svg class="h-4 w-4 text-rose-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 12H4" />
                 </svg>
                 {{ t('admin.users.withdraw') }}

@@ -8,7 +8,7 @@
         id="login-agreement-consent"
         type="checkbox"
         :checked="accepted"
-        class="mt-[2px] h-4 w-4 flex-shrink-0 rounded border-gray-300 text-primary-600 focus:ring-primary-500 dark:border-dark-600 dark:bg-dark-900"
+        class="mt-[2px] h-4 w-4 flex-shrink-0 rounded border-gray-300 text-sky-700 focus:ring-sky-300 dark:border-dark-600 dark:bg-dark-900 dark:focus:ring-sky-400/30"
         @change="handleCheckboxChange"
       />
       <div class="min-w-0 flex-1">
@@ -24,7 +24,7 @@
               :to="documentRoute(doc)"
               target="_blank"
               rel="noopener noreferrer"
-              class="font-medium text-primary-600 underline-offset-4 transition hover:text-primary-700 hover:underline dark:text-primary-300 dark:hover:text-primary-200"
+              class="font-medium text-sky-700 underline-offset-4 transition hover:text-blue-600 hover:underline dark:text-sky-200 dark:hover:text-blue-100"
             >
               {{ doc.title }}
             </RouterLink>
@@ -37,19 +37,19 @@
 
   <div
     v-else-if="!accepted && documents.length > 0"
-    class="rounded-lg border border-primary-100 bg-primary-50/70 p-3 text-sm text-primary-900 dark:border-primary-500/20 dark:bg-primary-500/10 dark:text-primary-100"
+    class="rounded-lg border border-sky-100 bg-sky-50/80 p-3 text-sm text-sky-900 dark:border-sky-400/20 dark:bg-sky-400/10 dark:text-sky-100"
   >
     <div class="flex items-start gap-3">
-      <Icon name="shield" size="sm" class="mt-0.5 flex-shrink-0 text-primary-600 dark:text-primary-300" />
+      <Icon name="shield" size="sm" class="mt-0.5 flex-shrink-0 text-sky-600 dark:text-sky-200" />
       <div class="min-w-0 flex-1">
         <p class="font-medium">{{ t('legal.loginAgreementPrompt.noticeTitle') }}</p>
-        <p class="mt-1 text-primary-700 dark:text-primary-200/80">
+        <p class="mt-1 text-sky-700 dark:text-sky-100/80">
           {{ t('legal.loginAgreementPrompt.noticeDescription') }}
         </p>
       </div>
       <button
         type="button"
-        class="flex-shrink-0 rounded-md bg-primary-600 px-3 py-1.5 text-xs font-medium text-white transition hover:bg-primary-700"
+        class="flex-shrink-0 rounded-md bg-sky-500 px-3 py-1.5 text-xs font-medium text-white transition hover:bg-sky-600"
         @click="emit('open')"
       >
         {{ t('legal.loginAgreementPrompt.viewTerms') }}
@@ -66,7 +66,7 @@
         <div class="w-full max-w-[600px] overflow-hidden rounded-2xl bg-white shadow-2xl ring-1 ring-black/10 dark:bg-dark-900 dark:ring-white/10">
           <div class="border-b border-gray-100 bg-white px-6 py-6 dark:border-dark-800 dark:bg-dark-900">
             <div class="flex items-start gap-4">
-              <span class="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-xl bg-primary-50 text-primary-700 ring-1 ring-primary-100 dark:bg-primary-500/10 dark:text-primary-300 dark:ring-primary-500/20">
+              <span class="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-xl bg-sky-50 text-sky-700 ring-1 ring-sky-100 dark:bg-sky-400/10 dark:text-sky-200 dark:ring-sky-400/20">
                 <Icon name="shield" size="md" />
               </span>
               <div class="min-w-0 flex-1">
@@ -103,15 +103,15 @@
                 :to="documentRoute(doc)"
                 target="_blank"
                 rel="noopener noreferrer"
-                class="group flex min-h-[72px] w-full items-center gap-3 rounded-xl border border-gray-200 bg-gray-50/70 px-4 py-3 text-left transition hover:-translate-y-0.5 hover:border-primary-200 hover:bg-white hover:shadow-sm dark:border-dark-700 dark:bg-dark-800/70 dark:hover:border-primary-500/30 dark:hover:bg-dark-800"
+                class="group flex min-h-[72px] w-full items-center gap-3 rounded-xl border border-gray-200 bg-gray-50/70 px-4 py-3 text-left transition hover:-translate-y-0.5 hover:border-sky-200 hover:bg-white hover:shadow-sm dark:border-dark-700 dark:bg-dark-800/70 dark:hover:border-sky-400/30 dark:hover:bg-dark-800"
               >
-                <span class="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-lg bg-white text-gray-700 ring-1 ring-gray-200 transition group-hover:bg-primary-50 group-hover:text-primary-700 group-hover:ring-primary-100 dark:bg-dark-900 dark:text-dark-200 dark:ring-dark-700 dark:group-hover:bg-primary-500/10 dark:group-hover:text-primary-200 dark:group-hover:ring-primary-500/20">
+                <span class="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-lg bg-white text-gray-700 ring-1 ring-gray-200 transition group-hover:bg-sky-50 group-hover:text-sky-700 group-hover:ring-sky-100 dark:bg-dark-900 dark:text-dark-200 dark:ring-dark-700 dark:group-hover:bg-sky-400/10 dark:group-hover:text-sky-200 dark:group-hover:ring-sky-400/20">
                   <Icon :name="documentIcon(index, doc.title)" size="sm" />
                 </span>
                 <span class="min-w-0 flex-1">
                   <span class="block truncate text-sm font-semibold text-gray-950 dark:text-white">{{ doc.title }}</span>
                 </span>
-                <span class="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full text-gray-400 transition group-hover:bg-primary-50 group-hover:text-primary-600 dark:group-hover:bg-primary-500/10 dark:group-hover:text-primary-300">
+                <span class="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full text-gray-400 transition group-hover:bg-sky-50 group-hover:text-sky-600 dark:group-hover:bg-sky-400/10 dark:group-hover:text-sky-200">
                   <Icon name="externalLink" size="sm" />
                 </span>
               </RouterLink>
@@ -129,7 +129,7 @@
               </button>
               <button
                 type="button"
-                class="rounded-xl bg-primary-600 px-4 py-3 text-sm font-semibold text-white shadow-sm shadow-primary-600/20 transition hover:bg-primary-700"
+                class="rounded-xl bg-sky-600 px-4 py-3 text-sm font-semibold text-white shadow-sm shadow-sky-500/20 transition hover:bg-blue-600"
                 @click="emit('accept')"
               >
                 {{ t('legal.loginAgreementPrompt.accept') }}

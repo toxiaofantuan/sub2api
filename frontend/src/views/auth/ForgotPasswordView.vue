@@ -32,7 +32,7 @@
         <div class="text-center">
           <router-link
             to="/login"
-            class="inline-flex items-center gap-2 font-medium text-primary-600 transition-colors hover:text-primary-500 dark:text-primary-400 dark:hover:text-primary-300"
+            class="inline-flex items-center gap-2 font-medium text-sky-700 transition-colors hover:text-blue-600 dark:text-sky-200 dark:hover:text-blue-100"
           >
             <Icon name="arrowLeft" size="sm" />
             {{ t('auth.backToLogin') }}
@@ -115,7 +115,7 @@
         {{ t('auth.rememberedPassword') }}
         <router-link
           to="/login"
-          class="font-medium text-primary-600 transition-colors hover:text-primary-500 dark:text-primary-400 dark:hover:text-primary-300"
+          class="font-medium text-sky-700 transition-colors hover:text-blue-600 dark:text-sky-200 dark:hover:text-blue-100"
         >
           {{ t('auth.signIn') }}
         </router-link>

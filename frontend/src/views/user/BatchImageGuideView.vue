@@ -2,9 +2,11 @@
   <AppLayout>
     <TablePageLayout>
       <template #filters>
-        <div class="flex flex-col gap-3">
-          <div class="flex flex-col gap-3 2xl:flex-row 2xl:items-center 2xl:justify-between">
-            <div class="grid w-full grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-[260px_160px_144px_152px] 2xl:w-auto">
+        <div class="card p-4">
+        <div class="space-y-3">
+          <div class="table-toolbar">
+            <div class="table-toolbar-primary">
+              <div class="grid w-full grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-[minmax(220px,260px)_160px_144px_152px]">
               <div class="min-w-0">
                 <SearchInput
                   v-model="filters.taskName"
@@ -17,7 +19,7 @@
               <Select v-model="filters.status" :options="statusFilterOptions" class="w-full" @change="applyFilters" />
               <Select v-model="filters.downloaded" :options="downloadFilterOptions" class="w-full" @change="applyFilters" />
             </div>
-            <div class="flex flex-wrap items-center justify-start gap-2 sm:justify-end 2xl:flex-shrink-0">
+            <div class="table-toolbar-actions">
               <button type="button" class="btn btn-secondary" :disabled="loadingJobs" @click="resetFilters">
                 重置
               </button>
@@ -34,15 +36,16 @@
               </button>
             </div>
           </div>
+          </div>
 
           <div
             v-if="selectedJobIds.size"
-            class="flex flex-wrap items-center justify-between gap-3 rounded-lg border border-gray-200 bg-white px-3 py-2 shadow-sm dark:border-dark-700 dark:bg-dark-800"
+            class="table-selection-bar"
           >
             <span class="text-sm text-gray-600 dark:text-gray-300">
               已选择 <span class="font-medium text-gray-900 dark:text-white">{{ selectedJobIds.size }}</span> 个任务
             </span>
-            <div class="flex flex-wrap items-center gap-2">
+            <div class="table-toolbar-actions">
               <button
                 type="button"
                 class="btn btn-secondary btn-sm"
@@ -63,6 +66,7 @@
               </button>
             </div>
           </div>
+        </div>
         </div>
       </template>
 
@@ -115,7 +119,7 @@
                   <span v-if="row.child_count > 0 && !row.is_child" class="flex-shrink-0 rounded-full bg-gray-100 px-2 py-0.5 text-xs font-normal text-gray-600 dark:bg-dark-700 dark:text-gray-300">
                     {{ row.child_count }} 子任务
                   </span>
-                  <span v-if="row.is_child" class="flex-shrink-0 rounded-full bg-amber-50 px-2 py-0.5 text-xs font-normal text-amber-700 dark:bg-amber-900/20 dark:text-amber-300">
+                  <span v-if="row.is_child" class="flex-shrink-0 rounded-full bg-sky-50 px-2 py-0.5 text-xs font-normal text-sky-700 dark:bg-sky-900/20 dark:text-sky-300">
                     子任务
                   </span>
 	                </span>
@@ -278,7 +282,7 @@
             <button
               v-if="canRetry(job)"
               type="button"
-              class="flex w-full items-center gap-2 px-3 py-2 text-left text-gray-700 transition-colors hover:bg-amber-50 hover:text-amber-700 disabled:opacity-60 dark:text-gray-200 dark:hover:bg-amber-900/20 dark:hover:text-amber-300"
+              class="flex w-full items-center gap-2 px-3 py-2 text-left text-gray-700 transition-colors hover:bg-sky-50 hover:text-sky-700 disabled:opacity-60 dark:text-gray-200 dark:hover:bg-sky-900/20 dark:hover:text-sky-300"
               :disabled="retryingBatchId === job.id"
               @click="retryFailedJob(job)"
             >
@@ -511,7 +515,7 @@
 
     <BaseDialog :show="!!previewImageItem" :title="previewImageItem?.custom_id || '图片预览'" width="extra-wide" :z-index="60" @close="closeImagePreview">
       <div class="space-y-3">
-        <div class="rounded-lg border border-amber-200 bg-amber-50 px-3 py-2 text-sm text-amber-900 dark:border-amber-800 dark:bg-amber-950/30 dark:text-amber-100">
+        <div class="rounded-lg border border-sky-200 bg-sky-50 px-3 py-2 text-sm text-sky-900 dark:border-sky-800 dark:bg-sky-950/30 dark:text-sky-100">
           当前显示的是浏览器本地缓存的压缩缩略图，清晰度会有影响；需要查看原图请下载 ZIP。
         </div>
         <div class="flex min-h-[420px] items-center justify-center rounded-lg bg-gray-50 p-4 dark:bg-dark-900">
@@ -547,7 +551,7 @@
                 {{ key.name }} · {{ key.group?.name || 'Gemini' }}
               </option>
             </select>
-            <p v-if="!loadingKeys && geminiApiKeys.length === 0" class="input-hint text-amber-600 dark:text-amber-400">
+            <p v-if="!loadingKeys && geminiApiKeys.length === 0" class="input-hint text-sky-600 dark:text-sky-400">
               当前没有可用于批量生图的 Gemini API Key。请先创建并绑定已开启批量生图的 Gemini 分组。
             </p>
           </div>
@@ -561,10 +565,10 @@
                 {{ model.label }}
               </option>
             </select>
-            <p v-if="modelLoadError" class="input-hint text-amber-600 dark:text-amber-400">
+            <p v-if="modelLoadError" class="input-hint text-rose-600 dark:text-rose-400">
               {{ modelLoadError }}
             </p>
-            <p v-else-if="selectedApiKey && !loadingModels && availableBatchImageModels.length === 0" class="input-hint text-amber-600 dark:text-amber-400">
+            <p v-else-if="selectedApiKey && !loadingModels && availableBatchImageModels.length === 0" class="input-hint text-sky-600 dark:text-sky-400">
               {{ batchImageText('noModelsHint') }}
             </p>
           </div>
@@ -684,7 +688,7 @@
           </div>
         </div>
 
-	        <div class="rounded-lg border border-amber-200 bg-amber-50 p-3 text-sm leading-6 text-amber-900 dark:border-amber-800 dark:bg-amber-950/30 dark:text-amber-100">
+	        <div class="rounded-lg border border-sky-200 bg-sky-50 p-3 text-sm leading-6 text-sky-900 dark:border-sky-800 dark:bg-sky-950/30 dark:text-sky-100">
 	          取消任务会请求上游取消；已被系统索引为成功的图片仍会按成功项结算扣费，其余冻结金额会释放。
 	        </div>
 	        <div v-if="submitting" class="rounded-lg border border-sky-200 bg-sky-50 p-3 text-sm leading-6 text-sky-800 dark:border-sky-800 dark:bg-sky-950/30 dark:text-sky-100">
@@ -2785,6 +2789,7 @@ onBeforeUnmount(() => {
 
 .batch-prompt-popover p {
   scrollbar-width: thin;
+  scrollbar-color: var(--ui-scrollbar-thumb, rgba(88, 183, 255, 0.46)) transparent;
 }
 
 .batch-output-count-select {

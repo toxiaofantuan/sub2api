@@ -328,7 +328,7 @@ watch(historyRange, () => {
 function severityBadgeClass(severity: string | undefined): string {
   const s = String(severity || '').trim().toLowerCase()
   if (s === 'p0' || s === 'critical') return 'bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-300'
-  if (s === 'p1' || s === 'warning') return 'bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-300'
+  if (s === 'p1' || s === 'warning') return 'bg-rose-100 text-rose-700 dark:bg-rose-900/30 dark:text-rose-300'
   if (s === 'p2' || s === 'info') return 'bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-300'
   if (s === 'p3') return 'bg-gray-100 text-gray-700 dark:bg-dark-700 dark:text-gray-300'
   return 'bg-gray-100 text-gray-700 dark:bg-dark-700 dark:text-gray-300'
@@ -356,19 +356,21 @@ const empty = computed(() => events.value.length === 0 && !loading.value)
 
 <template>
   <div class="rounded-3xl bg-white p-6 shadow-sm ring-1 ring-gray-900/5 dark:bg-dark-800 dark:ring-dark-700">
-    <div class="mb-4 flex items-start justify-between gap-4">
-      <div>
+    <div class="mb-4 table-toolbar">
+      <div class="table-toolbar-primary">
+        <div>
         <h3 class="text-sm font-bold text-gray-900 dark:text-white">{{ t('admin.ops.alertEvents.title') }}</h3>
         <p class="mt-1 text-xs text-gray-500 dark:text-gray-400">{{ t('admin.ops.alertEvents.description') }}</p>
+        </div>
       </div>
 
-      <div class="flex items-center gap-2">
-        <Select :model-value="timeRange" :options="timeRangeOptions" class="w-[120px]" @change="timeRange = String($event || '24h')" />
-        <Select :model-value="severity" :options="severityOptions" class="w-[88px]" @change="severity = String($event || '')" />
-        <Select :model-value="status" :options="statusOptions" class="w-[110px]" @change="status = String($event || '')" />
-        <Select :model-value="emailSent" :options="emailSentOptions" class="w-[110px]" @change="emailSent = String($event || '')" />
+      <div class="table-toolbar-actions">
+        <Select :model-value="timeRange" :options="timeRangeOptions" class="table-toolbar-control-sm" @change="timeRange = String($event || '24h')" />
+        <Select :model-value="severity" :options="severityOptions" class="table-toolbar-control-sm" @change="severity = String($event || '')" />
+        <Select :model-value="status" :options="statusOptions" class="table-toolbar-control-sm" @change="status = String($event || '')" />
+        <Select :model-value="emailSent" :options="emailSentOptions" class="table-toolbar-control-sm" @change="emailSent = String($event || '')" />
         <button
-          class="flex items-center gap-1.5 rounded-lg bg-gray-100 px-3 py-1.5 text-xs font-bold text-gray-700 transition-colors hover:bg-gray-200 disabled:cursor-not-allowed disabled:opacity-50 dark:bg-dark-700 dark:text-gray-300 dark:hover:bg-dark-600"
+          class="btn btn-secondary btn-sm"
           :disabled="loading"
           @click="loadFirstPage"
         >
@@ -599,12 +601,16 @@ const empty = computed(() => events.value.length === 0 && !loading.value)
 
 
         <div class="rounded-xl border border-gray-200 bg-white p-4 dark:border-dark-700 dark:bg-dark-800">
-          <div class="mb-3 flex flex-wrap items-center justify-between gap-3">
-            <div>
-              <div class="text-sm font-bold text-gray-900 dark:text-white">{{ t('admin.ops.alertEvents.detail.historyTitle') }}</div>
-              <div class="mt-0.5 text-xs text-gray-500 dark:text-gray-400">{{ t('admin.ops.alertEvents.detail.historyHint') }}</div>
+          <div class="mb-3 table-toolbar">
+            <div class="table-toolbar-primary">
+              <div>
+                <div class="text-sm font-bold text-gray-900 dark:text-white">{{ t('admin.ops.alertEvents.detail.historyTitle') }}</div>
+                <div class="mt-0.5 text-xs text-gray-500 dark:text-gray-400">{{ t('admin.ops.alertEvents.detail.historyHint') }}</div>
+              </div>
             </div>
-            <Select :model-value="historyRange" :options="historyRangeOptions" class="w-[140px]" @change="historyRange = String($event || '7d')" />
+            <div class="table-toolbar-actions">
+              <Select :model-value="historyRange" :options="historyRangeOptions" class="table-toolbar-control-sm" @change="historyRange = String($event || '7d')" />
+            </div>
           </div>
 
           <div v-if="historyLoading" class="py-6 text-center text-xs text-gray-500 dark:text-gray-400">
@@ -645,4 +651,3 @@ const empty = computed(() => events.value.length === 0 && !loading.value)
     </BaseDialog>
   </div>
 </template>
-

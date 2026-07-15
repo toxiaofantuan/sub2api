@@ -22,7 +22,7 @@
         {{ t('admin.accounts.crsUpdateBehaviorNote') }}
       </div>
       <div
-        class="rounded-lg border border-amber-200 bg-amber-50 p-3 text-xs text-amber-600 dark:border-amber-800 dark:bg-amber-900/20 dark:text-amber-400"
+        class="rounded-lg border border-sky-200 bg-sky-50 p-3 text-xs text-sky-600 dark:border-sky-800 dark:bg-sky-900/20 dark:text-sky-400"
       >
         {{ t('admin.accounts.crsVersionRequirement') }}
       </div>

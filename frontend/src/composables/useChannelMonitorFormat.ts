@@ -24,6 +24,8 @@ import {
 } from '@/constants/channelMonitor'
 
 const NEUTRAL_BADGE = 'bg-gray-100 text-gray-800 dark:bg-dark-700 dark:text-gray-300'
+const BRAND_PICKER_ACTIVE = 'border-primary-300 bg-primary-500 text-white dark:border-primary-400/30 dark:bg-primary-500 dark:text-white'
+const BRAND_PICKER_IDLE = 'border-primary-100 bg-white/70 text-gray-600 hover:border-primary-200 hover:bg-primary-100/70 hover:text-primary-700 dark:border-dark-700 dark:bg-dark-800/70 dark:text-gray-400 dark:hover:border-primary-400/20 dark:hover:bg-primary-400/10 dark:hover:text-primary-200'
 
 /** Availability HSL hue multiplier: 0%=red(0) / 50%=yellow(60) / 100%=green(120). */
 const HSL_HUE_PER_PERCENT = 1.2
@@ -109,8 +111,8 @@ export function useChannelMonitorFormat() {
           : 'border-gray-200 bg-white text-gray-600 hover:border-zinc-400 hover:text-zinc-800 dark:border-dark-700 dark:bg-dark-800 dark:text-gray-400 dark:hover:border-zinc-500/50'
       default:
         return active
-          ? 'border-gray-400 bg-gray-50 text-gray-700 dark:border-dark-500 dark:bg-dark-700 dark:text-gray-200'
-          : 'border-gray-200 bg-white text-gray-600 hover:border-gray-300 dark:border-dark-700 dark:bg-dark-800 dark:text-gray-400'
+          ? BRAND_PICKER_ACTIVE
+          : BRAND_PICKER_IDLE
     }
   }
 
@@ -177,9 +179,7 @@ export function providerGradient(provider: string): string {
     case PROVIDER_ANTHROPIC:
       return 'bg-gradient-to-br from-orange-50 to-amber-100 dark:from-orange-500/10 dark:to-amber-500/20'
     case PROVIDER_GEMINI:
-      return 'bg-gradient-to-br from-sky-50 to-indigo-100 dark:from-sky-500/10 dark:to-indigo-500/20'
-    case PROVIDER_GROK:
-      return 'bg-gradient-to-br from-zinc-50 to-neutral-200 dark:from-zinc-500/10 dark:to-neutral-500/20'
+      return 'bg-gradient-to-br from-primary-200/70 to-accent-200/70 dark:from-primary-400/15 dark:to-accent-400/20'
     default:
       return 'bg-gradient-to-br from-gray-100 to-gray-200 dark:from-dark-700 dark:to-dark-600'
   }

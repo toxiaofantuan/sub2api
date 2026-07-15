@@ -60,35 +60,101 @@ onUnmounted(() => {
 
 /* 表格滚动容器 - 增强版表体滚动方案 */
 .table-scroll-container {
-  @apply flex flex-col overflow-hidden h-full bg-white dark:bg-dark-800 rounded-2xl border border-gray-200 dark:border-dark-700 shadow-sm;
+  @apply flex flex-col overflow-hidden h-full rounded-md;
+  background: var(--ui-surface, rgba(255, 255, 255, 0.66));
+  border: 1px solid var(--ui-border, rgba(89, 159, 221, 0.16));
+  box-shadow: var(--ui-shadow, 0 16px 40px rgba(88, 76, 145, 0.12));
+  backdrop-filter: blur(24px) saturate(160%);
+  -webkit-backdrop-filter: blur(24px) saturate(160%);
+}
+
+:global(.dark) .table-scroll-container {
+  background: var(--ui-surface, rgba(35, 32, 57, 0.7));
+  border-color: var(--ui-border, rgba(218, 223, 255, 0.12));
+  box-shadow: var(--ui-shadow, 0 18px 44px rgba(12, 10, 28, 0.3));
 }
 
 .table-scroll-container :deep(.table-wrapper) {
   @apply flex-1 overflow-x-auto overflow-y-auto;
   /* 确保横向滚动条显示在最底部 */
+  background: var(--ui-surface-strong, rgba(255, 255, 255, 0.88));
   scrollbar-gutter: stable;
+}
+
+:global(.dark) .table-scroll-container :deep(.table-wrapper) {
+  background: var(--ui-surface-strong, rgba(32, 30, 52, 0.9));
 }
 
 .table-scroll-container :deep(table) {
   @apply w-full;
   min-width: max-content; /* 关键：确保表格宽度根据内容撑开，从而触发横向滚动 */
   display: table; /* 使用标准 table 布局以支持 sticky 列 */
+  background: var(--ui-table-row, #ffffff);
+}
+
+:global(.dark) .table-scroll-container :deep(table) {
+  background: var(--ui-table-row, #272d46);
 }
 
 .table-scroll-container :deep(thead) {
-  @apply bg-gray-50/80 dark:bg-dark-800/80 backdrop-blur-sm;
+  background: var(--ui-table-header, #e4f4ff);
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+
+:global(.dark) .table-scroll-container :deep(thead) {
+  background: var(--ui-table-header, #1d2237);
 }
 
 .table-scroll-container :deep(tbody) {
   /* 保持默认 table-row-group 显示，不使用 block */
+  background: var(--ui-table-row, #ffffff);
+}
+
+:global(.dark) .table-scroll-container :deep(tbody) {
+  background: var(--ui-table-row, #272d46);
 }
 
 .table-scroll-container :deep(th) {
-  @apply px-5 py-4 text-left text-sm font-medium text-gray-600 dark:text-dark-300 border-b border-gray-200 dark:border-dark-700;
+  @apply px-5 py-4 text-left text-sm font-medium text-gray-600 dark:text-dark-300 border-b border-transparent;
+  background: var(--ui-table-header, #e4f4ff);
+  border-color: var(--ui-border, rgba(89, 159, 221, 0.16));
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+
+:global(.dark) .table-scroll-container :deep(th) {
+  background: var(--ui-table-header, #1d2237);
+  border-color: var(--ui-border, rgba(218, 223, 255, 0.12));
 }
 
 .table-scroll-container :deep(td) {
-  @apply px-5 py-4 text-sm text-gray-700 dark:text-gray-300 border-b border-gray-100 dark:border-dark-800;
+  @apply px-5 py-4 text-sm text-gray-700 dark:text-gray-300 border-b border-transparent;
+  background: var(--ui-table-row, #ffffff);
+  border-color: var(--ui-table-border, rgba(94, 166, 226, 0.18));
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+
+:global(.dark) .table-scroll-container :deep(td) {
+  background: var(--ui-table-row, #272d46);
+  border-color: var(--ui-table-border, rgba(218, 223, 255, 0.08));
+}
+
+.table-scroll-container :deep(tbody tr:nth-child(even) td) {
+  background: var(--ui-table-row-alt, #eff8ff);
+}
+
+:global(.dark) .table-scroll-container :deep(tbody tr:nth-child(even) td) {
+  background: var(--ui-table-row-alt, #2d3452);
+}
+
+.table-scroll-container :deep(tbody tr:hover td) {
+  background: var(--ui-table-hover, #d5edff);
+}
+
+:global(.dark) .table-scroll-container :deep(tbody tr:hover td) {
+  background: var(--ui-table-hover, #41587e);
 }
 
 /* 移动端：恢复正常滚动 */

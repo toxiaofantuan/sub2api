@@ -232,15 +232,19 @@
 
         <div class="card">
           <div class="flex flex-col gap-4 border-b border-gray-100 px-6 py-4 dark:border-dark-700">
-            <div class="flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
-              <div>
-                <h2 class="text-lg font-semibold text-gray-900 dark:text-white">{{ t('admin.riskControl.records') }}</h2>
-                <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">{{ t('admin.riskControl.recordsHint') }}</p>
+            <div class="table-toolbar">
+              <div class="table-toolbar-primary">
+                <div>
+                  <h2 class="text-lg font-semibold text-gray-900 dark:text-white">{{ t('admin.riskControl.records') }}</h2>
+                  <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">{{ t('admin.riskControl.recordsHint') }}</p>
+                </div>
               </div>
-              <button type="button" class="btn btn-secondary inline-flex items-center gap-2" :disabled="logsLoading" @click="loadLogs">
-                <Icon name="refresh" size="sm" :class="logsLoading ? 'animate-spin' : ''" />
-                {{ t('admin.riskControl.refresh') }}
-              </button>
+              <div class="table-toolbar-actions">
+                <button type="button" class="btn btn-secondary" :disabled="logsLoading" @click="loadLogs">
+                  <Icon name="refresh" size="sm" :class="logsLoading ? 'animate-spin' : ''" />
+                  {{ t('admin.riskControl.refresh') }}
+                </button>
+              </div>
             </div>
 
             <div class="flex flex-col gap-2 rounded-lg border border-gray-100 bg-gray-50 px-3 py-2 dark:border-dark-700 dark:bg-dark-900/30 sm:flex-row sm:items-center sm:justify-between">
@@ -263,13 +267,15 @@
               </div>
             </div>
 
-            <div class="grid grid-cols-1 gap-3 md:grid-cols-2 xl:grid-cols-6">
-              <Select v-model="filters.result" :options="resultOptions" @change="reloadLogsFromFirstPage" />
-              <Select v-model="filters.group_id" :options="groupFilterOptions" @change="reloadLogsFromFirstPage" />
-              <Select v-model="filters.endpoint" :options="endpointOptions" @change="reloadLogsFromFirstPage" />
-              <input v-model.trim="filters.search" type="search" class="input" :placeholder="t('admin.riskControl.filters.search')" @keyup.enter="reloadLogsFromFirstPage" />
-              <input v-model="filters.from" type="datetime-local" class="input" :title="t('admin.riskControl.filters.from')" @change="reloadLogsFromFirstPage" />
-              <input v-model="filters.to" type="datetime-local" class="input" :title="t('admin.riskControl.filters.to')" @change="reloadLogsFromFirstPage" />
+            <div class="table-toolbar">
+              <div class="table-toolbar-filters">
+                <Select v-model="filters.result" class="table-toolbar-control-sm" :options="resultOptions" @change="reloadLogsFromFirstPage" />
+                <Select v-model="filters.group_id" class="table-toolbar-control" :options="groupFilterOptions" @change="reloadLogsFromFirstPage" />
+                <Select v-model="filters.endpoint" class="table-toolbar-control" :options="endpointOptions" @change="reloadLogsFromFirstPage" />
+                <input v-model.trim="filters.search" type="search" class="input table-toolbar-search" :placeholder="t('admin.riskControl.filters.search')" @keyup.enter="reloadLogsFromFirstPage" />
+                <input v-model="filters.from" type="datetime-local" class="input table-toolbar-control" :title="t('admin.riskControl.filters.from')" @change="reloadLogsFromFirstPage" />
+                <input v-model="filters.to" type="datetime-local" class="input table-toolbar-control" :title="t('admin.riskControl.filters.to')" @change="reloadLogsFromFirstPage" />
+              </div>
             </div>
           </div>
 
@@ -490,7 +496,7 @@
                       <button
                         type="button"
                         class="rounded-md px-3 py-1.5 text-xs font-medium transition-colors"
-                        :class="configForm.api_keys_mode === 'replace' ? 'bg-amber-500 text-white shadow-sm' : 'text-gray-600 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-dark-700'"
+                        :class="configForm.api_keys_mode === 'replace' ? 'bg-primary-500 text-white shadow-sm' : 'text-gray-600 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-dark-700'"
                         :disabled="configForm.clear_api_key"
                         @click="setAPIKeysMode('replace')"
                       >

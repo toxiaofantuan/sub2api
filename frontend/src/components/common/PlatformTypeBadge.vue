@@ -164,7 +164,7 @@ const planIconName = computed<'bolt' | null>(() => {
 
 const platformClass = computed(() => {
   if (props.platform === 'anthropic') {
-    return 'bg-orange-100 text-orange-700 dark:bg-orange-900/30 dark:text-orange-400'
+    return 'bg-slate-100 text-slate-700 dark:bg-slate-800 dark:text-slate-300'
   }
   if (props.platform === 'openai') {
     return 'bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-400'
@@ -180,7 +180,7 @@ const platformClass = computed(() => {
 
 const typeClass = computed(() => {
   if (props.platform === 'anthropic') {
-    return 'bg-orange-100 text-orange-600 dark:bg-orange-900/30 dark:text-orange-400'
+    return 'bg-slate-100 text-slate-600 dark:bg-slate-800 dark:text-slate-300'
   }
   if (props.platform === 'openai') {
     return 'bg-emerald-100 text-emerald-600 dark:bg-emerald-900/30 dark:text-emerald-400'
@@ -230,7 +230,7 @@ const privacyBadge = computed(() => {
     case 'training_off':
       return { label: 'Private', icon: shieldCheck, title: t('admin.accounts.privacyTrainingOff'), class: 'bg-green-100 text-green-600 dark:bg-green-900/30 dark:text-green-400' }
     case 'training_set_cf_blocked':
-      return { label: 'CF', icon: shieldX, title: t('admin.accounts.privacyCfBlocked'), class: 'bg-yellow-100 text-yellow-600 dark:bg-yellow-900/30 dark:text-yellow-400' }
+      return { label: 'CF', icon: shieldX, title: t('admin.accounts.privacyCfBlocked'), class: 'bg-rose-100 text-rose-600 dark:bg-rose-900/30 dark:text-rose-400' }
     case 'training_set_failed':
       return { label: 'Fail', icon: shieldX, title: t('admin.accounts.privacyFailed'), class: 'bg-red-100 text-red-600 dark:bg-red-900/30 dark:text-red-400' }
     // Antigravity states

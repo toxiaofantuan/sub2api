@@ -323,18 +323,28 @@ onUnmounted(() => {
 <style scoped>
 .date-picker-trigger {
   @apply flex items-center gap-2;
-  @apply rounded-lg px-3 py-2 text-sm;
-  @apply bg-white dark:bg-dark-800;
-  @apply border border-gray-200 dark:border-dark-600;
-  @apply text-gray-700 dark:text-gray-300;
+  @apply rounded-md px-3 py-2 text-sm;
   @apply transition-all duration-200;
-  @apply focus:border-primary-500 focus:outline-none focus:ring-2 focus:ring-primary-500/30;
-  @apply hover:border-gray-300 dark:hover:border-dark-500;
+  @apply focus:outline-none;
   @apply cursor-pointer;
+  color: var(--ui-ink, #25233a);
+  background: var(--ui-surface, rgba(255, 255, 255, 0.66));
+  border: 1px solid var(--ui-border, rgba(129, 119, 190, 0.2));
+  box-shadow: var(--ui-shadow-sm, 0 6px 18px rgba(88, 76, 145, 0.1));
+  backdrop-filter: blur(16px) saturate(145%);
+  -webkit-backdrop-filter: blur(16px) saturate(145%);
 }
 
 .date-picker-trigger-open {
-  @apply border-primary-500 ring-2 ring-primary-500/30;
+  border-color: var(--ui-primary, #8b7de0);
+  box-shadow:
+    0 0 0 3px var(--ui-primary-soft, rgba(139, 125, 224, 0.16)),
+    var(--ui-shadow-sm, 0 10px 24px rgba(88, 76, 145, 0.12));
+}
+
+.date-picker-trigger:focus-visible {
+  outline: 2px solid color-mix(in srgb, var(--ui-primary, #8b7de0) 62%, transparent);
+  outline-offset: 2px;
 }
 
 .date-picker-icon {
@@ -350,13 +360,17 @@ onUnmounted(() => {
 }
 
 .date-picker-dropdown {
-  @apply absolute left-0 z-[100] mt-2;
-  @apply bg-white dark:bg-dark-800;
-  @apply rounded-xl;
-  @apply border border-gray-200 dark:border-dark-700;
-  @apply shadow-lg shadow-black/10 dark:shadow-black/30;
+  position: fixed;
+  z-index: 100000050;
+  @apply rounded-md;
   @apply overflow-hidden;
-  @apply min-w-[320px];
+  @apply max-w-[calc(100vw-1.5rem)];
+  color: var(--ui-ink, #25233a);
+  background: var(--ui-surface-strong, rgba(255, 255, 255, 0.86));
+  border: 1px solid var(--ui-border, rgba(129, 119, 190, 0.2));
+  box-shadow: var(--ui-shadow-hover, 0 18px 44px rgba(78, 66, 136, 0.2));
+  backdrop-filter: blur(24px) saturate(160%);
+  -webkit-backdrop-filter: blur(24px) saturate(160%);
 }
 
 .date-picker-presets {
@@ -370,13 +384,29 @@ onUnmounted(() => {
   @apply transition-colors duration-150;
 }
 
+.date-picker-preset:hover {
+  color: var(--ui-primary-strong, #6858c7);
+  background: var(--ui-primary-soft, rgba(139, 125, 224, 0.16));
+}
+
 .date-picker-preset-active {
-  @apply bg-primary-100 dark:bg-primary-900/30;
-  @apply text-primary-700 dark:text-primary-300;
+  color: var(--ui-primary-strong, #6858c7);
+  background: var(--ui-primary-soft, rgba(139, 125, 224, 0.22));
+  box-shadow: inset 0 0 0 1px var(--ui-border, rgba(129, 119, 190, 0.2));
+}
+
+:global(html.dark .date-picker-preset:hover) {
+  color: var(--ui-primary-strong, #c8c1ff);
+  background: var(--ui-primary-soft, rgba(151, 137, 232, 0.2));
+}
+
+:global(html.dark .date-picker-preset-active) {
+  color: var(--ui-primary-strong, #c8c1ff);
+  background: var(--ui-primary-soft, rgba(151, 137, 232, 0.26));
 }
 
 .date-picker-divider {
-  @apply border-t border-gray-100 dark:border-dark-700;
+  border-top: 1px solid var(--ui-border, rgba(129, 119, 190, 0.16));
 }
 
 .date-picker-custom {
@@ -393,10 +423,15 @@ onUnmounted(() => {
 
 .date-picker-input {
   @apply w-full rounded-md px-2 py-1.5 text-sm;
-  @apply bg-gray-50 dark:bg-dark-700;
-  @apply border border-gray-200 dark:border-dark-600;
-  @apply text-gray-900 dark:text-gray-100;
-  @apply focus:border-primary-500 focus:outline-none focus:ring-2 focus:ring-primary-500/30;
+  @apply focus:outline-none;
+  color: var(--ui-ink, #25233a);
+  background: var(--ui-surface-muted, rgba(239, 239, 250, 0.72));
+  border: 1px solid var(--ui-border, rgba(129, 119, 190, 0.18));
+}
+
+.date-picker-input:focus {
+  border-color: var(--ui-primary, #8b7de0);
+  box-shadow: 0 0 0 3px var(--ui-primary-soft, rgba(139, 125, 224, 0.16));
 }
 
 .date-picker-input::-webkit-calendar-picker-indicator {
@@ -421,6 +456,21 @@ onUnmounted(() => {
   @apply bg-primary-600 text-white;
   @apply hover:bg-primary-700;
   @apply transition-colors duration-150;
+  color: var(--ui-on-action, #ffffff);
+  background: linear-gradient(
+    135deg,
+    var(--ui-action-start, #6557bf),
+    var(--ui-action-end, #3c78a8)
+  );
+  box-shadow: var(--ui-shadow-sm, 0 6px 14px rgba(88, 76, 145, 0.14));
+}
+
+.date-picker-apply:hover {
+  background: linear-gradient(
+    135deg,
+    var(--ui-action-hover-start, #5549a7),
+    var(--ui-action-hover-end, #2f709e)
+  );
 }
 
 /* Dropdown animation */

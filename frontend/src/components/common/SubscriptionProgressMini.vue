@@ -233,7 +233,7 @@ function getProgressDotClass(sub: UserSubscription): string {
   }
   const maxPercentage = getMaxUsagePercentage(sub)
   if (maxPercentage >= 90) return 'bg-red-500'
-  if (maxPercentage >= 70) return 'bg-orange-500'
+  if (maxPercentage >= 70) return 'bg-amber-500'
   return 'bg-green-500'
 }
 
@@ -241,7 +241,7 @@ function getProgressBarClass(used: number | undefined, limit: number | null | un
   if (!limit || limit === 0) return 'bg-gray-400'
   const percentage = ((used || 0) / limit) * 100
   if (percentage >= 90) return 'bg-red-500'
-  if (percentage >= 70) return 'bg-orange-500'
+  if (percentage >= 70) return 'bg-amber-500'
   return 'bg-green-500'
 }
 
@@ -274,7 +274,7 @@ function getDaysRemainingClass(expiresAt: string): string {
   const diff = expires.getTime() - now.getTime()
   const days = Math.ceil(diff / (1000 * 60 * 60 * 24))
   if (days <= 3) return 'text-red-600 dark:text-red-400'
-  if (days <= 7) return 'text-orange-600 dark:text-orange-400'
+  if (days <= 7) return 'text-amber-600 dark:text-amber-400'
   return 'text-gray-500 dark:text-dark-400'
 }
 

@@ -103,7 +103,7 @@ const labelClass = computed(() => {
     indigo: 'bg-indigo-100 text-indigo-700 dark:bg-indigo-900/40 dark:text-indigo-300',
     emerald: 'bg-emerald-100 text-emerald-700 dark:bg-emerald-900/40 dark:text-emerald-300',
     purple: 'bg-purple-100 text-purple-700 dark:bg-purple-900/40 dark:text-purple-300',
-    amber: 'bg-amber-100 text-amber-700 dark:bg-amber-900/40 dark:text-amber-300'
+    amber: 'bg-sky-100 text-sky-700 dark:bg-sky-900/40 dark:text-sky-300'
   }
   return colors[props.color]
 })
@@ -121,7 +121,7 @@ const barClass = computed(() => {
   if (props.utilization >= 100) {
     return 'bg-red-500'
   } else if (props.utilization >= 80) {
-    return 'bg-amber-500'
+    return 'bg-sky-500'
   } else {
     return 'bg-green-500'
   }
@@ -140,7 +140,7 @@ const textClass = computed(() => {
   if (props.utilization >= 100) {
     return 'text-red-600 dark:text-red-400'
   } else if (props.utilization >= 80) {
-    return 'text-amber-600 dark:text-amber-400'
+    return 'text-sky-600 dark:text-sky-400'
   } else {
     return 'text-gray-600 dark:text-gray-400'
   }

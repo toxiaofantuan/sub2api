@@ -2,16 +2,18 @@
   <AppLayout>
     <TablePageLayout>
       <template #filters>
-        <MonitorFiltersBar
-          v-model:search="searchQuery"
-          v-model:provider="providerFilter"
-          v-model:enabled="enabledFilter"
-          :loading="loading"
-          @reload="reload"
-          @create="openCreateDialog"
-          @manage-templates="showTemplateManager = true"
-          @search-input="handleSearch"
-        />
+        <div class="card p-4">
+          <MonitorFiltersBar
+            v-model:search="searchQuery"
+            v-model:provider="providerFilter"
+            v-model:enabled="enabledFilter"
+            :loading="loading"
+            @reload="reload"
+            @create="openCreateDialog"
+            @manage-templates="showTemplateManager = true"
+            @search-input="handleSearch"
+          />
+        </div>
       </template>
 
       <template #table>

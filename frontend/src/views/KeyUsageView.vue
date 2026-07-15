@@ -1,11 +1,11 @@
 <template>
-  <div class="relative flex min-h-screen flex-col bg-gray-50 dark:bg-dark-950">
+  <div class="key-usage-shell relative flex min-h-screen flex-col">
     <!-- Header (same pattern as HomeView) -->
     <header class="relative z-20 px-6 py-4">
       <nav class="mx-auto flex max-w-6xl items-center justify-between">
         <router-link to="/home" class="flex items-center gap-3">
-          <div class="h-10 w-10 overflow-hidden rounded-xl shadow-md">
-            <img :src="siteLogo || '/logo.png'" alt="Logo" class="h-full w-full object-contain" />
+          <div class="flex h-10 w-10 items-center justify-center">
+            <img src="/logo.png" alt="Logo" class="max-h-full max-w-full object-contain" />
           </div>
           <span class="text-lg font-semibold tracking-tight text-gray-900 dark:text-white">{{ siteName }}</span>
         </router-link>
@@ -77,7 +77,7 @@
           <button
             @click="queryKey"
             :disabled="isQuerying"
-            class="h-12 px-7 rounded-xl bg-primary-500 hover:bg-primary-600 text-white font-medium text-sm transition-all active:scale-[0.97] flex items-center gap-2 whitespace-nowrap disabled:opacity-60"
+            class="btn btn-primary h-12 whitespace-nowrap px-7"
           >
             <svg v-if="isQuerying" class="w-4 h-4 animate-spin" viewBox="0 0 24 24" fill="none">
               <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="3" opacity="0.25"/>
@@ -120,7 +120,7 @@
               />
               <button
                 @click="queryKey"
-                class="text-xs px-3 py-1.5 rounded-lg bg-primary-500 text-white hover:bg-primary-600"
+                class="btn btn-primary btn-sm text-xs"
               >{{ t('keyUsage.apply') }}</button>
             </div>
           </div>
@@ -159,7 +159,7 @@
             <div class="inline-flex items-center gap-2 px-5 py-2.5 rounded-full border border-gray-200 bg-white/90 shadow-sm backdrop-blur-sm dark:border-dark-700 dark:bg-dark-900/90">
               <span
                 class="w-2.5 h-2.5 rounded-full pulse-dot"
-                :class="statusInfo.isActive ? 'bg-emerald-500' : 'bg-rose-500'"
+                :class="statusInfo.isActive ? 'key-status-active' : 'key-status-inactive'"
               ></span>
               <span class="text-sm font-medium text-gray-900 dark:text-white">{{ statusInfo.label }}</span>
               <span class="text-xs text-gray-400 dark:text-dark-500">|</span>
@@ -432,7 +432,6 @@ const appStore = useAppStore()
 // ==================== Site Settings (same as HomeView) ====================
 
 const siteName = computed(() => appStore.cachedPublicSettings?.site_name || appStore.siteName || 'Sub2API')
-const siteLogo = computed(() => sanitizeUrl(appStore.cachedPublicSettings?.site_logo || appStore.siteLogo || '', { allowRelative: true, allowDataUrl: true }))
 const docUrl = computed(() => sanitizeUrl(appStore.cachedPublicSettings?.doc_url || appStore.docUrl || ''))
 const githubUrl = 'https://github.com/Wei-Shaw/sub2api'
 
@@ -527,16 +526,14 @@ function setDailyUsageDays(days: 7 | 30 | 90) {
 
 const CIRCUMFERENCE = 2 * Math.PI * 68
 const RING_GRADIENTS = [
-  { from: '#14b8a6', to: '#5eead4' },
-  { from: '#6366F1', to: '#A5B4FC' },
-  { from: '#10B981', to: '#6EE7B7' },
-  { from: '#F59E0B', to: '#FCD34D' },
+  { from: 'var(--ui-primary)', to: 'var(--ui-accent)' },
+  { from: 'var(--ui-accent)', to: 'var(--ui-primary-strong)' },
 ]
 
 const ringAnimated = ref(false)
 const displayPcts = ref<number[]>([])
 
-const ringTrackColor = computed(() => isDark.value ? '#222222' : '#F0F0EE')
+const ringTrackColor = 'var(--ui-border)'
 
 interface RingItem {
   title: string
@@ -673,8 +670,8 @@ interface DetailRow {
 
 function getUsageColor(pct: number): string {
   if (pct > 90) return 'text-rose-500'
-  if (pct > 70) return 'text-amber-500'
-  return 'text-emerald-500'
+  if (pct > 70) return 'text-sky-600 dark:text-sky-300'
+  return 'key-value-default'
 }
 
 const detailRows = computed<DetailRow[]>(() => {
@@ -940,13 +937,179 @@ onUnmounted(() => {
 </script>
 
 <style scoped>
+.key-usage-shell {
+  background:
+    linear-gradient(125deg, var(--ui-accent-soft) 0%, transparent 38%),
+    linear-gradient(235deg, var(--ui-primary-soft) 0%, transparent 44%);
+}
+
+.key-usage-shell .btn-primary {
+  color: var(--ui-on-action);
+  background: linear-gradient(135deg, var(--ui-action-start) 0%, var(--ui-action-end) 100%);
+}
+
+.key-usage-shell .btn-primary:hover {
+  color: var(--ui-on-action);
+  background: linear-gradient(135deg, var(--ui-action-hover-start) 0%, var(--ui-action-hover-end) 100%);
+}
+
+.key-inline-icon,
+.key-icon-button,
+.key-ring-icon {
+  color: var(--ui-primary-strong);
+}
+
+.key-icon-button {
+  transition: color 0.2s ease;
+}
+
+.key-icon-button:hover {
+  color: var(--ui-ink);
+}
+
+.key-option-button {
+  border-radius: 7px;
+  transition:
+    background-color 0.18s ease,
+    color 0.18s ease,
+    box-shadow 0.18s ease;
+}
+
+.key-option-button-selected {
+  color: var(--ui-on-action);
+  background: linear-gradient(135deg, var(--ui-action-start) 0%, var(--ui-action-end) 100%);
+  box-shadow: inset 0 1px 0 var(--ui-highlight);
+}
+
+.key-option-button-idle {
+  color: var(--ui-muted);
+  background: var(--ui-surface);
+  border: 1px solid var(--ui-border);
+}
+
+.key-option-button-idle:hover {
+  color: var(--ui-ink);
+  background: var(--ui-primary-soft);
+}
+
+.key-date-input {
+  border-radius: 7px;
+  color: var(--ui-ink);
+  background: var(--ui-surface);
+  border: 1px solid var(--ui-border);
+  box-shadow: inset 0 1px 0 var(--ui-highlight);
+}
+
+.key-segmented {
+  background: var(--ui-surface-muted);
+  border: 1px solid var(--ui-border);
+}
+
+.key-detail-icon {
+  color: var(--ui-primary-strong);
+  background: var(--ui-primary-soft);
+}
+
+.key-detail-icon-svg {
+  color: currentColor;
+}
+
+.key-status-active {
+  background: var(--ui-primary);
+}
+
+.key-status-inactive {
+  background: var(--ui-muted);
+  opacity: 0.55;
+}
+
+.key-value-default {
+  color: var(--ui-ink);
+}
+
+.key-panel,
+.key-glass-card {
+  position: relative;
+  overflow: hidden;
+  background: var(--ui-surface);
+  border: 1px solid var(--ui-border);
+  box-shadow: var(--ui-shadow);
+  backdrop-filter: blur(26px) saturate(1.45);
+  -webkit-backdrop-filter: blur(26px) saturate(1.45);
+  transition:
+    transform 0.22s ease,
+    box-shadow 0.22s ease;
+}
+
+.key-panel:hover,
+.key-glass-card:hover {
+  box-shadow: var(--ui-shadow-hover);
+}
+
+.key-glass-input {
+  background: var(--ui-surface);
+  border: 1px solid var(--ui-border);
+  box-shadow: inset 0 1px 0 var(--ui-highlight), var(--ui-shadow-sm);
+  backdrop-filter: blur(20px) saturate(1.35);
+  -webkit-backdrop-filter: blur(20px) saturate(1.35);
+}
+
+.key-glass-pill {
+  position: relative;
+  overflow: hidden;
+  border-radius: 999px;
+  background: var(--ui-surface-strong);
+  border: 1px solid var(--ui-border);
+  box-shadow: var(--ui-shadow-sm);
+  backdrop-filter: blur(20px) saturate(1.4);
+  -webkit-backdrop-filter: blur(20px) saturate(1.4);
+}
+
+.key-detail-row {
+  background: var(--ui-surface-muted);
+}
+
+.key-detail-row:hover {
+  background: var(--ui-primary-soft);
+}
+
+.key-stat-grid {
+  background: transparent;
+}
+
+.key-stat-cell {
+  background: var(--ui-surface-muted);
+}
+
+.key-table-head {
+  background: var(--ui-table-header);
+}
+
+.key-table-row {
+  background: var(--ui-table-row);
+  transition: background-color 0.15s ease;
+}
+
+.key-table-row > td {
+  background: var(--ui-table-row);
+}
+
+.key-table-row:last-child {
+  border-bottom: 0;
+}
+
+.key-table-row:hover,
+.key-table-row:hover > td {
+  background: var(--ui-table-hover);
+}
+
 /* Input focus ring */
 .input-ring {
   transition: box-shadow 0.2s ease, border-color 0.2s ease;
 }
 .input-ring:focus {
-  box-shadow: 0 0 0 3px rgba(20, 184, 166, 0.2);
-  border-color: #14b8a6;
+  box-shadow: 0 0 0 3px var(--ui-primary-soft), inset 0 1px 0 var(--ui-highlight);
+  border-color: var(--ui-primary);
   outline: none;
 }
 

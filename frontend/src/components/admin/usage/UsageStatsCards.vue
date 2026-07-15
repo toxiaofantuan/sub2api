@@ -11,7 +11,7 @@
       </div>
     </div>
     <div class="card p-4 flex items-center gap-3">
-      <div class="rounded-lg bg-amber-100 p-2 dark:bg-amber-900/30 text-amber-600"><svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m21 7.5-9-5.25L3 7.5m18 0-9 5.25m9-5.25v9l-9 5.25M3 7.5l9 5.25M3 7.5v9l9 5.25m0-9v9" /></svg></div>
+      <div class="rounded-lg bg-violet-100 p-2 dark:bg-violet-900/30 text-violet-600"><svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m21 7.5-9-5.25L3 7.5m18 0-9 5.25m9-5.25v9l-9 5.25M3 7.5l9 5.25M3 7.5v9l9 5.25m0-9v9" /></svg></div>
       <div>
         <p class="text-xs font-medium text-gray-500">{{ t('usage.totalTokens') }}</p>
         <p class="text-xl font-bold">{{ formatTokens(stats?.total_tokens || 0) }}</p>
@@ -36,7 +36,7 @@
               />
             </svg>
             <span
-              class="pointer-events-none absolute left-1/2 top-full z-30 mt-2 w-56 -translate-x-1/2 rounded-lg border border-gray-200 bg-white p-3 text-left text-xs text-gray-700 opacity-0 shadow-lg transition-opacity duration-150 group-hover:opacity-100 group-focus:opacity-100 dark:border-dark-600 dark:bg-dark-800 dark:text-dark-200"
+              class="usage-stat-tooltip pointer-events-none absolute left-1/2 top-full z-30 mt-2 w-56 -translate-x-1/2 rounded-lg border border-gray-200 bg-white p-3 text-left text-xs text-gray-700 opacity-0 shadow-lg transition-opacity duration-150 group-hover:opacity-100 group-focus:opacity-100 dark:border-dark-600 dark:bg-dark-800 dark:text-dark-200"
             >
               <span class="mb-2 block font-medium text-gray-900 dark:text-white">
                 {{ cacheDetailLabel() }}
@@ -69,7 +69,7 @@
         </p>
         <p class="text-xs text-gray-400">
           <template v-if="showAccountCost && totalAccountCost != null">
-            <span class="text-orange-500">{{ t('usage.accountCost') }} ${{ totalAccountCost.toFixed(4) }}</span>
+            <span class="text-violet-500">{{ t('usage.accountCost') }} ${{ totalAccountCost.toFixed(4) }}</span>
             <span> · </span>
           </template>
           <span>
@@ -126,3 +126,15 @@ const formatTokens = (value: number) => {
 const cacheLabel = () => t('usage.cacheTotal')
 const cacheDetailLabel = () => t('usage.cacheBreakdown')
 </script>
+
+<style scoped>
+@media (max-width: 767px) {
+  .usage-stat-tooltip {
+    left: auto !important;
+    right: 0 !important;
+    width: min(13rem, calc(100vw - 2rem)) !important;
+    max-width: calc(100vw - 2rem) !important;
+    transform: none !important;
+  }
+}
+</style>

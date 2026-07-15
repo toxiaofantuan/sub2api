@@ -1,14 +1,18 @@
 <template>
-  <div v-if="!isDesktopViewport" class="space-y-3">
+  <div v-if="!isDesktopViewport" class="mobile-table-list">
     <template v-if="loading">
-      <div v-for="i in 5" :key="i" class="rounded-lg border border-gray-200 bg-white p-4 dark:border-dark-700 dark:bg-dark-900">
-        <div class="space-y-3">
-          <div v-for="column in dataColumns" :key="column.key" class="flex justify-between">
-            <div class="h-4 w-20 animate-pulse rounded bg-gray-200 dark:bg-dark-700"></div>
-            <div class="h-4 w-32 animate-pulse rounded bg-gray-200 dark:bg-dark-700"></div>
+      <div v-for="i in 5" :key="i" class="glass-card mobile-table-card">
+        <div class="mobile-table-card-grid">
+          <div
+            v-for="(column, columnIndex) in dataColumns"
+            :key="column.key"
+            :class="getMobileCellClass(column, columnIndex)"
+          >
+            <div class="h-3 w-14 animate-pulse rounded bg-sky-100/80 dark:bg-dark-700"></div>
+            <div class="h-4 w-full max-w-28 animate-pulse rounded bg-sky-100/80 dark:bg-dark-700"></div>
           </div>
-          <div v-if="hasActionsColumn" class="border-t border-gray-200 pt-3 dark:border-dark-700">
-            <div class="h-8 w-full animate-pulse rounded bg-gray-200 dark:bg-dark-700"></div>
+          <div v-if="hasActionsColumn" class="mobile-table-actions">
+            <div class="h-9 w-full animate-pulse rounded-xl bg-sky-100/80 dark:bg-dark-700"></div>
           </div>
         </div>
       </div>
@@ -35,26 +39,26 @@
       <div
         v-for="(row, index) in sortedData"
         :key="resolveRowKey(row, index)"
-        class="rounded-lg border border-gray-200 bg-white p-4 dark:border-dark-700 dark:bg-dark-900"
+        class="glass-card mobile-table-card"
         :class="{ 'cursor-pointer': clickableRows }"
         @click="clickableRows && emit('rowClick', row)"
       >
-        <div class="space-y-3">
+        <div class="mobile-table-card-grid">
           <div
-            v-for="column in dataColumns"
+            v-for="(column, columnIndex) in dataColumns"
             :key="column.key"
-            class="flex items-start justify-between gap-4"
+            :class="getMobileCellClass(column, columnIndex)"
           >
-            <span class="text-xs font-medium uppercase tracking-wider text-gray-500 dark:text-dark-400">
+            <span class="mobile-table-label">
               {{ column.label }}
             </span>
-            <div class="text-right text-sm text-gray-900 dark:text-gray-100">
+            <div class="mobile-table-value">
               <slot :name="`cell-${column.key}`" :row="row" :value="row[column.key]" :expanded="actionsExpanded">
                 {{ column.formatter ? column.formatter(row[column.key], row) : row[column.key] }}
               </slot>
             </div>
           </div>
-          <div v-if="hasActionsColumn" class="border-t border-gray-200 pt-3 dark:border-dark-700">
+          <div v-if="hasActionsColumn" class="mobile-table-actions" @click.stop>
             <slot name="cell-actions" :row="row" :value="row['actions']" :expanded="actionsExpanded"></slot>
           </div>
         </div>
@@ -487,7 +491,7 @@ const applySortState = (state: PersistedSortState | null) => {
 
 const getSortIndicatorClass = (key: string, order: 'asc' | 'desc') => {
   return sortKey.value === key && sortOrder.value === order
-    ? 'text-primary-600 dark:text-primary-400'
+    ? 'data-table-sort-indicator-active'
     : 'text-gray-300 transition-colors dark:text-dark-500'
 }
 
@@ -568,6 +572,35 @@ const dataColumns = computed(() => props.columns.filter((column) => column.key !
 const columnsSignature = computed(() =>
   props.columns.map((column) => `${column.key}:${column.sortable ? '1' : '0'}`).join('|')
 )
+
+const mobileFullWidthColumnKeys = new Set([
+  'accounts',
+  'api_key',
+  'base_url',
+  'description',
+  'email',
+  'endpoint',
+  'error',
+  'last_error',
+  'message',
+  'notes',
+  'prompt',
+  'remark',
+  'token',
+  'url',
+])
+
+const getMobileCellClass = (column: Column, index: number) => {
+  const classes = ['mobile-table-field']
+
+  if (index === 0) {
+    classes.push('mobile-table-field-title')
+  } else if (mobileFullWidthColumnKeys.has(column.key)) {
+    classes.push('mobile-table-field-wide')
+  }
+
+  return classes
+}
 
 watch(
   isDesktopViewport,
@@ -835,6 +868,204 @@ defineExpose({
 </script>
 
 <style scoped>
+.mobile-table-list {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.mobile-table-card {
+  padding: 0.68rem;
+  overflow: hidden;
+  border-color: rgba(94, 166, 226, 0.22);
+  background:
+    linear-gradient(145deg, rgba(255, 255, 255, 0.9), rgba(240, 249, 255, 0.68)),
+    rgba(255, 255, 255, 0.78);
+  box-shadow:
+    0 16px 36px rgba(56, 136, 203, 0.12),
+    inset 0 1px 0 rgba(255, 255, 255, 0.8);
+}
+
+:global(.dark) .mobile-table-card {
+  border-color: rgba(124, 200, 255, 0.14);
+  background:
+    linear-gradient(145deg, rgba(31, 36, 58, 0.92), rgba(20, 27, 45, 0.82)),
+    rgba(24, 31, 50, 0.86);
+  box-shadow:
+    0 16px 36px rgba(0, 0, 0, 0.24),
+    inset 0 1px 0 rgba(255, 255, 255, 0.06);
+}
+
+.mobile-table-card-grid {
+  display: flex;
+  flex-wrap: wrap;
+  align-content: flex-start;
+  align-items: flex-start;
+  gap: 0.42rem;
+}
+
+.mobile-table-field {
+  min-width: 0;
+  max-width: 100%;
+  flex: 0 1 auto;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 0.5rem;
+  justify-content: space-between;
+  padding: 0.36rem 0.48rem;
+  border: 1px solid rgba(148, 212, 255, 0.16);
+  border-radius: 0.75rem;
+  background: rgba(255, 255, 255, 0.48);
+}
+
+:global(.dark) .mobile-table-field {
+  border-color: rgba(124, 200, 255, 0.1);
+  background: rgba(15, 23, 42, 0.3);
+}
+
+.mobile-table-field-title,
+.mobile-table-field-wide,
+.mobile-table-actions {
+  flex: 1 0 100%;
+  width: 100%;
+}
+
+.mobile-table-field-wide {
+  flex-direction: column;
+  align-items: stretch;
+  gap: 0.24rem;
+}
+
+.mobile-table-field-title {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding: 0 0 0.5rem;
+  border: 0;
+  border-bottom: 1px solid rgba(94, 166, 226, 0.18);
+  border-radius: 0;
+  background: transparent;
+}
+
+:global(.dark) .mobile-table-field-title {
+  border-bottom-color: rgba(124, 200, 255, 0.12);
+  background: transparent;
+}
+
+.mobile-table-label {
+  flex: 0 0 auto;
+  color: #64748b;
+  font-size: 0.69rem;
+  font-weight: 650;
+  line-height: 1.35;
+  letter-spacing: 0.01em;
+  white-space: nowrap;
+}
+
+:global(.dark) .mobile-table-label {
+  color: #9ca3af;
+}
+
+.mobile-table-value {
+  min-width: 0;
+  color: var(--ui-ink, #1f2937);
+  font-size: 0.84rem;
+  line-height: 1.4;
+  text-align: right;
+  overflow-wrap: anywhere;
+}
+
+.mobile-table-field-wide .mobile-table-value {
+  text-align: left;
+}
+
+.mobile-table-field-title .mobile-table-value {
+  color: var(--ui-ink-strong, #111827);
+  font-size: 0.95rem;
+  font-weight: 700;
+  text-align: right;
+  max-width: 68%;
+}
+
+:global(.dark) .mobile-table-value {
+  color: #f3f4f6;
+}
+
+.mobile-table-value :deep(.badge),
+.mobile-table-value :deep([class*='rounded-full']) {
+  max-width: 100%;
+}
+
+.mobile-table-actions {
+  margin-top: 0.05rem;
+  padding: 0.3rem;
+  border: 1px solid rgba(148, 212, 255, 0.16);
+  border-radius: 0.9rem;
+  background: rgba(248, 250, 252, 0.66);
+}
+
+:global(.dark) .mobile-table-actions {
+  border-color: rgba(124, 200, 255, 0.1);
+  background: rgba(15, 23, 42, 0.32);
+}
+
+.mobile-table-actions :deep(> *) {
+  width: 100%;
+  display: flex !important;
+  flex-wrap: nowrap;
+  gap: 0.35rem;
+  align-items: center;
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding-bottom: 0.04rem;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin;
+}
+
+.mobile-table-actions :deep(button),
+.mobile-table-actions :deep(a) {
+  width: auto !important;
+  min-width: 0;
+  max-width: 100%;
+  min-height: 1.95rem;
+  flex: 0 0 auto !important;
+  flex-direction: row !important;
+  gap: 0.28rem !important;
+  justify-content: center;
+  padding: 0.32rem 0.52rem !important;
+  border-radius: 0.75rem;
+  white-space: nowrap;
+}
+
+.mobile-table-actions :deep(button span),
+.mobile-table-actions :deep(a span) {
+  white-space: nowrap;
+}
+
+@media (max-width: 300px) {
+  .mobile-table-card {
+    padding: 0.75rem;
+  }
+
+  .mobile-table-card-grid {
+    gap: 0.48rem;
+  }
+
+  .mobile-table-field {
+    padding: 0.48rem 0.55rem;
+  }
+
+  .mobile-table-field-title {
+    flex-direction: column;
+    gap: 0.2rem;
+  }
+
+  .mobile-table-field-title .mobile-table-value {
+    text-align: left;
+  }
+}
 /* 表格横向滚动 */
 .table-wrapper {
   --select-col-width: 52px; /* 勾选列宽度：px-6 (24px*2) + checkbox (16px) */
@@ -844,6 +1075,12 @@ defineExpose({
   flex: 1;
   min-height: 0;
   isolation: isolate;
+  color: var(--ui-ink, #25233a);
+  background: var(--ui-surface-strong, rgba(255, 255, 255, 0.88));
+}
+
+:global(.dark) .table-wrapper {
+  background: var(--ui-surface-strong, rgba(32, 30, 52, 0.9));
 }
 
 /* 表头容器，确保在滚动时覆盖表体内容 */
@@ -851,17 +1088,36 @@ defineExpose({
   position: sticky;
   top: 0;
   z-index: 200;
-  background-color: rgb(249 250 251);
+  background: var(--ui-table-header, #e4f4ff);
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
 }
 
-.dark .table-wrapper .table-header {
-  background-color: rgb(31 41 55);
+:global(.dark) .table-wrapper .table-header {
+  background: var(--ui-table-header, #1d2237);
 }
 
 /* 表体保持在表头下方 */
 .table-body {
   position: relative;
   z-index: 0;
+  background: var(--ui-table-row, #ffffff);
+}
+
+:global(.dark) .table-body {
+  background: var(--ui-table-row, #272d46);
+}
+
+.table-body td {
+  border-bottom: 1px solid var(--ui-table-border, rgba(94, 166, 226, 0.18));
+  background: var(--ui-table-row, #ffffff);
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+
+:global(.dark) .table-body td {
+  border-bottom-color: var(--ui-table-border, rgba(218, 223, 255, 0.08));
+  background: var(--ui-table-row, #272d46);
 }
 
 /* 所有表头单元格固定在顶部 */
@@ -869,11 +1125,38 @@ defineExpose({
   position: sticky;
   top: 0;
   z-index: 210; /* 必须高于所有表体内容 */
-  background-color: rgb(249 250 251);
+  background: var(--ui-table-header, #e4f4ff);
+  border-bottom-color: var(--ui-table-border, rgba(94, 166, 226, 0.18));
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
 }
 
-.dark .sticky-header-cell {
-  background-color: rgb(31 41 55);
+.data-table-sortable-header {
+  cursor: pointer;
+  transition:
+    background-color 0.16s ease,
+    color 0.16s ease;
+}
+
+.data-table-sortable-header:hover,
+.data-table-sort-active {
+  color: var(--ui-primary-strong, #0c78d8);
+  background: var(--ui-primary-soft, rgba(36, 152, 242, 0.13));
+}
+
+:global(.dark) .data-table-sortable-header:hover,
+:global(.dark) .data-table-sort-active {
+  color: var(--ui-primary-strong, #9ad7ff);
+  background: var(--ui-primary-soft, rgba(124, 200, 255, 0.16));
+}
+
+.data-table-sort-indicator-active {
+  color: var(--ui-primary-strong, #0c78d8);
+}
+
+:global(.dark) .sticky-header-cell {
+  background: var(--ui-table-header, #1d2237);
+  border-bottom-color: var(--ui-table-border, rgba(218, 223, 255, 0.08));
 }
 
 /* Sticky 列基础样式 */
@@ -909,20 +1192,41 @@ defineExpose({
 
 /* 表体 sticky 列背景 */
 tbody .sticky-col {
-  background-color: white;
+  background: var(--ui-table-row, #ffffff);
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
 }
 
-.dark tbody .sticky-col {
-  background-color: rgb(17 24 39);
+:global(.dark) .table-wrapper tbody .sticky-col {
+  background: var(--ui-table-row, #272d46);
 }
 
 /* hover 状态保持 */
 tbody tr:hover .sticky-col {
-  background-color: rgb(249 250 251);
+  background: var(--ui-table-hover, #eeecff);
 }
 
-.dark tbody tr:hover .sticky-col {
-  background-color: rgb(31 41 55);
+:global(.dark) .table-wrapper tbody tr:hover .sticky-col {
+  background: var(--ui-table-hover, #35304f);
+}
+
+.data-table-row {
+  background: var(--ui-table-row, #ffffff);
+  transition: background-color 0.15s ease;
+}
+
+.data-table-row:hover,
+.data-table-row:hover > td {
+  background: var(--ui-table-hover, #eeecff);
+}
+
+:global(.dark) .data-table-row {
+  background: var(--ui-table-row, #272d46);
+}
+
+:global(.dark) .data-table-row:hover,
+:global(.dark) .data-table-row:hover > td {
+  background: var(--ui-table-hover, #35304f);
 }
 
 /* 阴影只在可滚动时显示 */
@@ -935,7 +1239,7 @@ tbody tr:hover .sticky-col {
   bottom: 0;
   width: 10px;
   transform: translateX(100%);
-  background: linear-gradient(to right, rgba(0, 0, 0, 0.08), transparent);
+  background: linear-gradient(to right, var(--ui-primary-soft, rgba(36, 152, 242, 0.13)), transparent);
   pointer-events: none;
 }
 
@@ -948,7 +1252,7 @@ tbody tr:hover .sticky-col {
   bottom: 0;
   width: 10px;
   transform: translateX(100%);
-  background: linear-gradient(to right, rgba(0, 0, 0, 0.08), transparent);
+  background: linear-gradient(to right, var(--ui-primary-soft, rgba(36, 152, 242, 0.13)), transparent);
   pointer-events: none;
 }
 
@@ -961,18 +1265,18 @@ tbody tr:hover .sticky-col {
   bottom: 0;
   width: 10px;
   transform: translateX(-100%);
-  background: linear-gradient(to left, rgba(0, 0, 0, 0.08), transparent);
+  background: linear-gradient(to left, var(--ui-primary-soft, rgba(36, 152, 242, 0.13)), transparent);
   pointer-events: none;
 }
 
 /* 暗色模式阴影 */
-.dark .is-scrollable .sticky-col-left::after,
-.dark .is-scrollable .sticky-col-left-second::after {
-  background: linear-gradient(to right, rgba(0, 0, 0, 0.2), transparent);
+:global(.dark) .is-scrollable .sticky-col-left::after,
+:global(.dark) .is-scrollable .sticky-col-left-second::after {
+  background: linear-gradient(to right, var(--ui-primary-soft, rgba(124, 200, 255, 0.16)), transparent);
 }
 
-.dark .is-scrollable .sticky-col-right::before {
-  background: linear-gradient(to left, rgba(0, 0, 0, 0.2), transparent);
+:global(.dark) .is-scrollable .sticky-col-right::before {
+  background: linear-gradient(to left, var(--ui-primary-soft, rgba(124, 200, 255, 0.16)), transparent);
 }
 </style>
 
@@ -996,41 +1300,50 @@ tbody tr:hover .sticky-col {
 }
 
 .table-wrapper::-webkit-scrollbar-track {
-  background-color: rgba(0, 0, 0, 0.03) !important;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.56), rgba(255, 255, 255, 0.18)),
+    var(--ui-scrollbar-track, rgba(231, 245, 255, 0.48)) !important;
   border-radius: 6px !important;
   margin: 0 4px !important;
 }
 .dark .table-wrapper::-webkit-scrollbar-track {
-  background-color: rgba(255, 255, 255, 0.05) !important;
+  background: var(--ui-scrollbar-track, rgba(124, 200, 255, 0.1)) !important;
 }
 
 /* 常驻、不透明的滑块，无视鼠标是否 hover 都在那！ */
 .table-wrapper::-webkit-scrollbar-thumb {
-  background-color: rgba(107, 114, 128, 0.75) !important; 
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.64), rgba(255, 255, 255, 0.12)),
+    var(--ui-scrollbar-thumb, rgba(88, 183, 255, 0.46)) !important;
   border-radius: 6px !important;
   border: 2px solid transparent !important;
   background-clip: padding-box !important;
   -webkit-appearance: none !important;
 }
 .table-wrapper::-webkit-scrollbar-thumb:hover {
-  background-color: rgba(75, 85, 99, 0.9) !important;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.44), rgba(255, 255, 255, 0.04)),
+    var(--ui-scrollbar-thumb-hover, rgba(36, 152, 242, 0.72)) !important;
+  background-clip: padding-box !important;
 }
 
 .dark .table-wrapper::-webkit-scrollbar-thumb {
-  background-color: rgba(156, 163, 175, 0.75) !important;
+  background: var(--ui-scrollbar-thumb, rgba(124, 200, 255, 0.4)) !important;
+  background-clip: padding-box !important;
 }
 .dark .table-wrapper::-webkit-scrollbar-thumb:hover {
-  background-color: rgba(209, 213, 219, 0.9) !important;
+  background: var(--ui-scrollbar-thumb-hover, rgba(154, 215, 255, 0.68)) !important;
+  background-clip: padding-box !important;
 }
 
 /* 3. 仅给真正的 Firefox 留的后路 */
 @supports (-moz-appearance:none) {
   .table-wrapper {
     scrollbar-width: thin !important;
-    scrollbar-color: rgba(156, 163, 175, 0.5) rgba(0, 0, 0, 0.03) !important;
+    scrollbar-color: var(--ui-scrollbar-thumb, rgba(88, 183, 255, 0.46)) transparent !important;
   }
   .dark .table-wrapper {
-    scrollbar-color: rgba(75, 85, 99, 0.5) rgba(255, 255, 255, 0.05) !important;
+    scrollbar-color: var(--ui-scrollbar-thumb, rgba(124, 200, 255, 0.4)) transparent !important;
   }
 }
 </style>

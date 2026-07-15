@@ -2,12 +2,11 @@
   <AppLayout>
     <TablePageLayout>
       <template #filters>
-        <div
-          class="flex flex-col justify-between gap-4 lg:flex-row lg:items-start"
-        >
+        <div class="card p-4">
+          <div class="table-toolbar">
           <!-- Left: fuzzy search + filters (can wrap to multiple lines) -->
-          <div class="flex flex-1 flex-wrap items-center gap-3">
-            <div class="relative w-full sm:w-64">
+          <div class="table-toolbar-primary">
+            <div class="relative table-toolbar-search">
               <Icon
                 name="search"
                 size="md"
@@ -25,29 +24,27 @@
               v-model="filters.platform"
               :options="platformFilterOptions"
               :placeholder="t('admin.groups.allPlatforms')"
-              class="w-44"
+              class="table-toolbar-control"
               @change="loadGroups"
             />
             <Select
               v-model="filters.status"
               :options="statusOptions"
               :placeholder="t('admin.groups.allStatus')"
-              class="w-40"
+              class="table-toolbar-control"
               @change="loadGroups"
             />
             <Select
               v-model="filters.is_exclusive"
               :options="exclusiveOptions"
               :placeholder="t('admin.groups.allGroups')"
-              class="w-44"
+              class="table-toolbar-control"
               @change="loadGroups"
             />
           </div>
 
           <!-- Right: actions -->
-          <div
-            class="flex w-full flex-shrink-0 flex-wrap items-center justify-end gap-3 lg:w-auto"
-          >
+          <div class="table-toolbar-actions">
             <button
               @click="loadGroups"
               :disabled="loading"
@@ -109,6 +106,7 @@
               {{ t("admin.groups.createGroup") }}
             </button>
           </div>
+          </div>
         </div>
       </template>
 
@@ -139,7 +137,7 @@
               :class="[
                 'inline-flex items-center gap-1.5 rounded-full px-2.5 py-0.5 text-xs font-medium',
                 value === 'anthropic'
-                  ? 'bg-orange-100 text-orange-700 dark:bg-orange-900/30 dark:text-orange-400'
+                  ? 'bg-slate-100 text-slate-700 dark:bg-slate-800 dark:text-slate-300'
                   : value === 'openai'
                     ? 'bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-400'
                     : value === 'antigravity'
@@ -377,7 +375,7 @@
               </button>
               <button
                 @click="handleRPMOverrides(row)"
-                class="flex flex-col items-center gap-0.5 rounded-lg p-1.5 text-gray-500 transition-colors hover:bg-gray-100 hover:text-orange-600 dark:hover:bg-dark-700 dark:hover:text-orange-400"
+                class="flex flex-col items-center gap-0.5 rounded-lg p-1.5 text-gray-500 transition-colors hover:bg-gray-100 hover:text-primary-600 dark:hover:bg-dark-700 dark:hover:text-primary-400"
               >
                 <Icon name="bolt" size="sm" />
                 <span class="text-xs">{{
@@ -3483,7 +3481,7 @@
                   :class="[
                     'inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-xs font-medium',
                     group.platform === 'anthropic'
-                      ? 'bg-orange-100 text-orange-700 dark:bg-orange-900/30 dark:text-orange-400'
+                      ? 'bg-slate-100 text-slate-700 dark:bg-slate-800 dark:text-slate-300'
                       : group.platform === 'openai'
                         ? 'bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-400'
                         : group.platform === 'antigravity'

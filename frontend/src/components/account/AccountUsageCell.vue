@@ -37,7 +37,7 @@
       <!-- Usage data -->
       <div v-else-if="usageInfo" class="space-y-1">
         <!-- API error (degraded response) -->
-        <div v-if="usageInfo.error" class="text-xs text-amber-600 dark:text-amber-400 truncate max-w-[200px]" :title="usageInfo.error">
+        <div v-if="usageInfo.error" class="text-xs text-rose-600 dark:text-rose-400 truncate max-w-[200px]" :title="usageInfo.error">
           {{ usageInfo.error }}
         </div>
         <!-- 5h Window -->
@@ -219,7 +219,7 @@
             />
           </svg>
           <span
-            class="pointer-events-none absolute left-0 top-full z-50 mt-1 w-80 whitespace-normal break-words rounded bg-gray-900 px-3 py-2 text-xs leading-relaxed text-white opacity-0 shadow-lg transition-opacity group-hover:opacity-100 dark:bg-gray-700"
+            class="account-usage-tooltip pointer-events-none absolute left-0 top-full z-50 mt-1 w-80 whitespace-normal break-words rounded bg-gray-900 px-3 py-2 text-xs leading-relaxed text-white opacity-0 shadow-lg transition-opacity group-hover:opacity-100 dark:bg-gray-700"
           >
             {{ t('admin.accounts.ineligibleWarning') }}
           </span>
@@ -259,14 +259,14 @@
 
       <!-- Needs reauth (401) -->
       <div v-else-if="needsReauth" class="space-y-1">
-        <span class="inline-block rounded px-1.5 py-0.5 text-[10px] font-medium bg-orange-100 text-orange-700 dark:bg-orange-900/40 dark:text-orange-300">
+        <span class="inline-block rounded px-1.5 py-0.5 text-[10px] font-medium bg-violet-100 text-violet-700 dark:bg-violet-900/40 dark:text-violet-300">
           {{ t('admin.accounts.needsReauth') }}
         </span>
       </div>
 
       <!-- Degraded error (non-403, non-401) -->
       <div v-else-if="usageInfo?.error" class="space-y-1">
-        <span class="inline-block rounded px-1.5 py-0.5 text-[10px] font-medium bg-amber-100 text-amber-700 dark:bg-amber-900/40 dark:text-amber-300">
+        <span class="inline-block rounded px-1.5 py-0.5 text-[10px] font-medium bg-sky-100 text-sky-700 dark:bg-sky-900/40 dark:text-sky-300">
           {{ usageErrorLabel }}
         </span>
       </div>
@@ -346,7 +346,7 @@
         {{ error }}
       </div>
       <div v-else-if="needsReauth" class="space-y-1">
-        <span class="inline-block rounded px-1.5 py-0.5 text-[10px] font-medium bg-orange-100 text-orange-700 dark:bg-orange-900/40 dark:text-orange-300">
+        <span class="inline-block rounded px-1.5 py-0.5 text-[10px] font-medium bg-violet-100 text-violet-700 dark:bg-violet-900/40 dark:text-violet-300">
           {{ t('admin.accounts.needsReauth') }}
         </span>
       </div>
@@ -413,13 +413,13 @@
           :show-now-when-idle="true"
           color="emerald"
         />
-        <div v-if="grokRetryAfterLabel" class="text-[10px] text-amber-600 dark:text-amber-400">
+        <div v-if="grokRetryAfterLabel" class="text-[10px] text-sky-600 dark:text-sky-400">
           {{ t('admin.accounts.usageWindow.grokRetryAfter', { time: grokRetryAfterLabel }) }}
         </div>
         <div v-if="grokQuotaUnknown" class="text-[10px] text-gray-500 dark:text-gray-400">
           {{ grokQuotaUnknownLabel }}
         </div>
-        <div v-else-if="usageInfo.error" class="truncate text-xs text-amber-600 dark:text-amber-400 max-w-[200px]" :title="usageInfo.error">
+        <div v-else-if="usageInfo.error" class="truncate text-xs text-rose-600 dark:text-rose-400 max-w-[200px]" :title="usageInfo.error">
           {{ usageErrorLabel }}
         </div>
         <div v-if="grokQuotaStatusLine" class="text-[10px] text-gray-500 dark:text-gray-400">
@@ -458,7 +458,7 @@
             />
           </svg>
           <span
-            class="pointer-events-none absolute left-0 top-full z-50 mt-1 w-80 whitespace-normal break-words rounded bg-gray-900 px-3 py-2 text-xs leading-relaxed text-white opacity-0 shadow-lg transition-opacity group-hover:opacity-100 dark:bg-gray-700"
+            class="account-usage-tooltip pointer-events-none absolute left-0 top-full z-50 mt-1 w-80 whitespace-normal break-words rounded bg-gray-900 px-3 py-2 text-xs leading-relaxed text-white opacity-0 shadow-lg transition-opacity group-hover:opacity-100 dark:bg-gray-700"
           >
             <div class="font-semibold mb-1">{{ t('admin.accounts.gemini.quotaPolicy.title') }}</div>
             <div class="mb-2 text-gray-300">{{ t('admin.accounts.gemini.quotaPolicy.note') }}</div>
@@ -1233,7 +1233,7 @@ const forbiddenLabel = computed(() => {
 
 const forbiddenBadgeClass = computed(() => {
   if (forbiddenType.value === 'validation') {
-    return 'bg-yellow-100 text-yellow-700 dark:bg-yellow-900/40 dark:text-yellow-300'
+    return 'bg-sky-100 text-sky-700 dark:bg-sky-900/40 dark:text-sky-300'
   }
   return 'bg-red-100 text-red-700 dark:bg-red-900/40 dark:text-red-300'
 })
@@ -1543,3 +1543,14 @@ onUnmounted(() => {
   desktopViewportMediaQuery = null
 })
 </script>
+
+<style scoped>
+@media (max-width: 767px) {
+  .account-usage-tooltip {
+    left: auto !important;
+    right: 0 !important;
+    width: min(18rem, calc(100vw - 2rem)) !important;
+    max-width: calc(100vw - 2rem) !important;
+  }
+}
+</style>

@@ -2,32 +2,33 @@
   <AppLayout>
     <TablePageLayout>
       <template #filters>
-        <div class="flex flex-wrap items-center gap-3">
+        <div class="card p-4">
+          <div class="table-toolbar">
           <!-- Left: Search + Filters -->
-          <div class="flex-1 sm:max-w-64">
+          <div class="table-toolbar-primary">
             <input
               v-model="searchQuery"
               type="text"
               :placeholder="t('admin.redeem.searchCodes')"
-              class="input"
+              class="input table-toolbar-search"
               @input="handleSearch"
             />
+            <Select
+              v-model="filters.type"
+              :options="filterTypeOptions"
+              class="table-toolbar-control"
+              @change="loadCodes"
+            />
+            <Select
+              v-model="filters.status"
+              :options="filterStatusOptions"
+              class="table-toolbar-control"
+              @change="loadCodes"
+            />
           </div>
-          <Select
-            v-model="filters.type"
-            :options="filterTypeOptions"
-            class="w-36"
-            @change="loadCodes"
-          />
-          <Select
-            v-model="filters.status"
-            :options="filterStatusOptions"
-            class="w-36"
-            @change="loadCodes"
-          />
 
           <!-- Right: Action buttons -->
-          <div class="flex flex-1 flex-wrap items-center justify-end gap-2">
+          <div class="table-toolbar-actions">
             <button
               @click="loadCodes"
               :disabled="loading"
@@ -45,12 +46,13 @@
               :disabled="selectedCount === 0 || batchUpdating"
               class="btn btn-secondary"
             >
-              <Icon name="edit" size="md" class="mr-2" />
+              <Icon name="edit" size="md" class="redeem-action-icon" />
               {{ t('admin.redeem.batchUpdate') }}
             </button>
             <button @click="showGenerateDialog = true" class="btn btn-primary">
               {{ t('admin.redeem.generateCodes') }}
             </button>
+          </div>
           </div>
         </div>
       </template>
@@ -69,7 +71,7 @@
             <input
               data-test="select-all-codes"
               type="checkbox"
-              class="h-4 w-4 cursor-pointer rounded border-gray-300 text-primary-600 focus:ring-primary-500"
+              class="h-4 w-4 cursor-pointer rounded border-gray-300 text-sky-600 accent-sky-500 focus:ring-sky-500"
               :checked="allVisibleSelected"
               @click.stop
               @change="toggleSelectAllVisible($event)"
@@ -80,7 +82,7 @@
             <input
               data-test="select-code"
               type="checkbox"
-              class="h-4 w-4 cursor-pointer rounded border-gray-300 text-primary-600 focus:ring-primary-500"
+              class="h-4 w-4 cursor-pointer rounded border-gray-300 text-sky-600 accent-sky-500 focus:ring-sky-500"
               :checked="selectedCodeIds.has(row.id)"
               @click.stop
               @change="toggleSelectRow(row.id, $event)"
@@ -95,7 +97,7 @@
                 :class="[
                   'flex items-center transition-colors',
                   copiedCode === value
-                    ? 'text-green-500'
+                    ? 'text-sky-500'
                     : 'text-gray-400 hover:text-gray-600 dark:hover:text-gray-300'
                 ]"
                 :title="copiedCode === value ? t('admin.redeem.copied') : t('keys.copyToClipboard')"
@@ -117,11 +119,7 @@
             <span
               :class="[
                 'badge',
-                value === 'balance'
-                  ? 'badge-success'
-                  : value === 'subscription'
-                    ? 'badge-warning'
-                    : 'badge-primary'
+                'badge-primary'
               ]"
             >
               {{ t('admin.redeem.types.' + value) }}
@@ -146,7 +144,7 @@
               :class="[
                 'badge',
                 value === 'unused'
-                  ? 'badge-success'
+                  ? 'badge-primary'
                   : value === 'used'
                     ? 'badge-gray'
                     : 'badge-danger'
@@ -207,15 +205,15 @@
       <template #pagination>
         <div
           v-if="selectedCount > 0"
-          class="mb-4 flex flex-wrap items-center justify-between gap-3 rounded-lg bg-primary-50 p-3 dark:bg-primary-900/20"
+          class="ui-info-panel mb-4 flex flex-wrap items-center justify-between gap-3 rounded-lg border p-3"
         >
-          <span class="text-sm font-medium text-primary-900 dark:text-primary-100">
+          <span class="text-sm font-medium">
             {{ t('admin.redeem.selectedCount', { count: selectedCount }) }}
           </span>
           <div class="flex flex-wrap items-center gap-2">
             <button
               type="button"
-              class="text-xs font-medium text-primary-700 hover:text-primary-800 dark:text-primary-300 dark:hover:text-primary-200"
+              class="text-xs font-medium text-sky-700 hover:text-sky-800 dark:text-sky-300 dark:hover:text-sky-200"
               @click="clearSelectedCodes"
             >
               {{ t('admin.redeem.clearSelection') }}
@@ -367,7 +365,7 @@
                   :class="[
                     'rounded-lg border px-3 py-2 text-sm transition-colors',
                     generateForm.expiry_option === option.value
-                      ? 'border-primary-500 bg-primary-50 text-primary-700 dark:border-primary-400 dark:bg-primary-900/20 dark:text-primary-300'
+                      ? 'border-sky-500 bg-sky-50 text-sky-700 dark:border-sky-400 dark:bg-sky-900/20 dark:text-sky-300'
                       : 'border-gray-200 text-gray-700 hover:bg-gray-50 dark:border-dark-600 dark:text-gray-300 dark:hover:bg-dark-700'
                   ]"
                 >
@@ -433,7 +431,7 @@
                   data-test="batch-field-status"
                   v-model="batchUpdateForm.update_status"
                   type="checkbox"
-                  class="h-4 w-4 rounded border-gray-300 text-primary-600 focus:ring-primary-500"
+                  class="h-4 w-4 rounded border-gray-300 text-sky-600 accent-sky-500 focus:ring-sky-500"
                 />
                 {{ t('admin.redeem.batchFields.status') }}
               </label>
@@ -450,7 +448,7 @@
                 <input
                   v-model="batchUpdateForm.update_expires_at"
                   type="checkbox"
-                  class="h-4 w-4 rounded border-gray-300 text-primary-600 focus:ring-primary-500"
+                  class="h-4 w-4 rounded border-gray-300 text-sky-600 accent-sky-500 focus:ring-sky-500"
                 />
                 {{ t('admin.redeem.batchFields.expiresAt') }}
               </label>
@@ -471,7 +469,7 @@
                   data-test="batch-field-notes"
                   v-model="batchUpdateForm.update_notes"
                   type="checkbox"
-                  class="h-4 w-4 rounded border-gray-300 text-primary-600 focus:ring-primary-500"
+                  class="h-4 w-4 rounded border-gray-300 text-sky-600 accent-sky-500 focus:ring-sky-500"
                 />
                 {{ t('admin.redeem.batchFields.notes') }}
               </label>
@@ -490,7 +488,7 @@
                 <input
                   v-model="batchUpdateForm.update_group_id"
                   type="checkbox"
-                  class="h-4 w-4 rounded border-gray-300 text-primary-600 focus:ring-primary-500"
+                  class="h-4 w-4 rounded border-gray-300 text-sky-600 accent-sky-500 focus:ring-sky-500"
                 />
                 {{ t('admin.redeem.batchFields.group') }}
               </label>
@@ -531,10 +529,10 @@
           >
             <div class="flex items-center gap-3">
               <div
-                class="flex h-10 w-10 items-center justify-center rounded-full bg-green-100 dark:bg-green-900/30"
+                class="flex h-10 w-10 items-center justify-center rounded-full bg-sky-100 dark:bg-sky-500/15"
               >
                 <svg
-                  class="h-5 w-5 text-green-600 dark:text-green-400"
+                  class="h-5 w-5 text-sky-600 dark:text-sky-300"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
@@ -1187,3 +1185,10 @@ onUnmounted(() => {
   abortController?.abort()
 })
 </script>
+
+<style scoped>
+.redeem-action-icon {
+  margin-right: 0.5rem;
+  flex-shrink: 0;
+}
+</style>

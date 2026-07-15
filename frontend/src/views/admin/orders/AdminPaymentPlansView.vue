@@ -2,11 +2,16 @@
   <AppLayout>
     <div class="space-y-4">
       <!-- Actions -->
-      <div class="flex items-center justify-end gap-2">
-        <button @click="loadPlans" :disabled="plansLoading" class="btn btn-secondary" :title="t('common.refresh')">
-          <Icon name="refresh" size="md" :class="plansLoading ? 'animate-spin' : ''" />
-        </button>
-        <button @click="openPlanEdit(null)" class="btn btn-primary">{{ t('payment.admin.createPlan') }}</button>
+      <div class="card p-4">
+        <div class="table-toolbar">
+          <div class="table-toolbar-primary"></div>
+          <div class="table-toolbar-actions">
+            <button @click="loadPlans" :disabled="plansLoading" class="btn btn-secondary" :title="t('common.refresh')">
+              <Icon name="refresh" size="md" :class="plansLoading ? 'animate-spin' : ''" />
+            </button>
+            <button @click="openPlanEdit(null)" class="btn btn-primary">{{ t('payment.admin.createPlan') }}</button>
+          </div>
+        </div>
       </div>
 
       <!-- Plans Table -->

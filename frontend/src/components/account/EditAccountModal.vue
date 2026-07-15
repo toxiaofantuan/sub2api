@@ -79,9 +79,9 @@
 
           <div
             v-if="isOpenAIModelRestrictionDisabled"
-            class="mb-3 rounded-lg bg-amber-50 p-3 dark:bg-amber-900/20"
+            class="mb-3 rounded-lg bg-sky-50 p-3 dark:bg-sky-900/20"
           >
-            <p class="text-xs text-amber-700 dark:text-amber-400">
+            <p class="text-xs text-sky-700 dark:text-sky-400">
               {{ t('admin.accounts.openai.modelRestrictionDisabledByPassthrough') }}
             </p>
           </div>
@@ -350,8 +350,8 @@
           </div>
 
           <div v-if="customErrorCodesEnabled" class="space-y-3">
-            <div class="rounded-lg bg-amber-50 p-3 dark:bg-amber-900/20">
-              <p class="text-xs text-amber-700 dark:text-amber-400">
+            <div class="rounded-lg bg-sky-50 p-3 dark:bg-sky-900/20">
+              <p class="text-xs text-sky-700 dark:text-sky-400">
                 <Icon name="exclamationTriangle" size="sm" class="mr-1 inline" :stroke-width="2" />
                 {{ t('admin.accounts.customErrorCodesWarning') }}
               </p>
@@ -536,9 +536,9 @@
 
         <div
           v-if="isOpenAIModelRestrictionDisabled"
-          class="mb-3 rounded-lg bg-amber-50 p-3 dark:bg-amber-900/20"
+          class="mb-3 rounded-lg bg-sky-50 p-3 dark:bg-sky-900/20"
         >
-          <p class="text-xs text-amber-700 dark:text-amber-400">
+          <p class="text-xs text-sky-700 dark:text-sky-400">
             {{ t('admin.accounts.openai.modelRestrictionDisabledByPassthrough') }}
           </p>
         </div>
@@ -1588,7 +1588,7 @@
         </div>
         <div
           v-else
-          class="rounded-lg bg-amber-50 px-3 py-2 text-xs text-amber-700 dark:bg-amber-900/20 dark:text-amber-300"
+          class="rounded-lg bg-sky-50 px-3 py-2 text-xs text-sky-700 dark:bg-sky-900/20 dark:text-sky-300"
           data-testid="openai-responses-mode-not-applicable"
         >
           {{ t('admin.accounts.openai.responsesModeTextDisabledHint') }}
@@ -2905,8 +2905,8 @@ const codexImageToolOptions = computed<Array<{
     value: 'disabled',
     label: t('admin.accounts.openai.codexImageToolDisabled'),
     description: t('admin.accounts.openai.codexImageToolDisabledDesc'),
-    selectedCardClass: 'border-amber-300 bg-amber-50 text-amber-900 shadow-sm ring-1 ring-amber-200 dark:border-amber-700 dark:bg-amber-900/25 dark:text-amber-100 dark:ring-amber-800',
-    selectedDotClass: 'border-amber-500 bg-amber-500 text-white'
+    selectedCardClass: 'border-violet-300 bg-violet-50 text-violet-900 shadow-sm ring-1 ring-violet-200 dark:border-violet-700 dark:bg-violet-900/25 dark:text-violet-100 dark:ring-violet-800',
+    selectedDotClass: 'border-violet-500 bg-violet-500 text-white'
   },
   {
     value: 'block',
@@ -2933,7 +2933,7 @@ const codexImageToolBadgeClass = computed(() => {
     case 'enabled':
       return 'bg-emerald-100 text-emerald-700 dark:bg-emerald-900/40 dark:text-emerald-300'
     case 'disabled':
-      return 'bg-amber-100 text-amber-700 dark:bg-amber-900/40 dark:text-amber-300'
+      return 'bg-sky-100 text-sky-700 dark:bg-sky-900/40 dark:text-sky-300'
     case 'block':
       return 'bg-rose-100 text-rose-700 dark:bg-rose-900/40 dark:text-rose-300'
     default:

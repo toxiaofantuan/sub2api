@@ -104,17 +104,17 @@
 
           <!-- Daily Average Cost -->
           <div
-            class="card border-amber-200 bg-gradient-to-br from-amber-50 to-white p-4 dark:border-amber-800/30 dark:from-amber-900/10 dark:to-dark-700"
+            class="card border-violet-200 bg-gradient-to-br from-violet-50 to-white p-4 dark:border-violet-800/30 dark:from-violet-900/10 dark:to-dark-700"
           >
             <div class="mb-2 flex items-center justify-between">
               <span class="text-xs font-medium text-gray-500 dark:text-gray-400">{{
                 t('admin.accounts.stats.avgDailyCost')
               }}</span>
-              <div class="rounded-lg bg-amber-100 p-1.5 dark:bg-amber-900/30">
+              <div class="rounded-lg bg-violet-100 p-1.5 dark:bg-violet-900/30">
                 <Icon
                   name="calculator"
                   size="sm"
-                  class="text-amber-600 dark:text-amber-400"
+                  class="text-violet-600 dark:text-violet-400"
                   :stroke-width="2"
                 />
               </div>
@@ -226,11 +226,11 @@
           <!-- Highest Cost Day -->
           <div class="card p-4">
             <div class="mb-3 flex items-center gap-2">
-              <div class="rounded-lg bg-orange-100 p-1.5 dark:bg-orange-900/30">
+              <div class="rounded-lg bg-sky-100 p-1.5 dark:bg-sky-900/30">
                 <Icon
                   name="fire"
                   size="sm"
-                  class="text-orange-600 dark:text-orange-400"
+                  class="text-sky-600 dark:text-sky-400"
                   :stroke-width="2"
                 />
               </div>
@@ -249,7 +249,7 @@
               </div>
               <div class="flex items-center justify-between">
                 <span class="text-xs text-gray-500 dark:text-gray-400">{{ t('usage.accountBilled') }}</span>
-                <span class="text-sm font-semibold text-orange-600 dark:text-orange-400"
+                <span class="text-sm font-semibold text-sky-600 dark:text-sky-400"
                   >${{ formatCost(stats.summary.highest_cost_day?.cost || 0) }}</span
                 >
               </div>

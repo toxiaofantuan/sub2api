@@ -77,7 +77,7 @@
         <!-- Insufficient balance warning -->
         <div
           v-if="form.deduct_balance && balanceInsufficient"
-          class="mt-2 rounded-lg bg-amber-50 p-3 text-sm text-amber-700 dark:bg-amber-900/20 dark:text-amber-300"
+          class="mt-2 rounded-lg bg-rose-50 p-3 text-sm text-rose-700 dark:bg-rose-900/20 dark:text-rose-300"
         >
           {{ t('payment.admin.insufficientBalance') }}
         </div>
@@ -126,7 +126,7 @@
       <!-- Warning -->
       <div
         v-if="warning"
-        class="rounded-lg bg-yellow-50 p-3 text-sm text-yellow-700 dark:bg-yellow-900/20 dark:text-yellow-300"
+        class="rounded-lg bg-rose-50 p-3 text-sm text-rose-700 dark:bg-rose-900/20 dark:text-rose-300"
       >
         {{ warning }}
       </div>

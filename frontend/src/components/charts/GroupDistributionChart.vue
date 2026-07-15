@@ -52,8 +52,8 @@
           <tbody>
             <template v-for="group in displayGroupStats" :key="group.group_id">
               <tr
-                class="border-t border-gray-100 transition-colors dark:border-gray-700"
-                :class="enableBreakdown && group.group_id > 0 ? 'cursor-pointer hover:bg-gray-50 dark:hover:bg-dark-700/40' : ''"
+                class="transition-colors"
+                :class="enableBreakdown && group.group_id > 0 ? 'cursor-pointer hover:bg-primary-100/70 dark:hover:bg-primary-400/10' : ''"
                 @click="enableBreakdown && group.group_id > 0 && toggleBreakdown('group', group.group_id)"
               >
                 <td

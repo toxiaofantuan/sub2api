@@ -267,7 +267,7 @@ function getThresholdColorClass(level: ThresholdLevel): string {
     case 'critical':
       return 'text-red-600 dark:text-red-400'
     case 'warning':
-      return 'text-yellow-600 dark:text-yellow-400'
+      return 'text-amber-600 dark:text-amber-400'
     default:
       return 'text-green-600 dark:text-green-400'
   }
@@ -442,7 +442,7 @@ const healthScoreColor = computed(() => {
   const score = healthScoreValue.value
   if (score == null) return '#9ca3af'
   if (score >= 90) return '#10b981' // green
-  if (score >= 60) return '#f59e0b' // yellow
+  if (score >= 60) return '#0ea5e9' // sky
   return '#ef4444' // red
 })
 
@@ -451,7 +451,7 @@ const healthScoreClass = computed(() => {
   const score = healthScoreValue.value
   if (score == null) return 'text-gray-400'
   if (score >= 90) return 'text-green-500'
-  if (score >= 60) return 'text-yellow-500'
+  if (score >= 60) return 'text-sky-500'
   return 'text-red-500'
 })
 
@@ -654,7 +654,7 @@ const cpuPercentClass = computed(() => {
   const v = cpuPercentValue.value
   if (v == null) return 'text-gray-900 dark:text-white'
   if (v >= 95) return 'text-rose-600 dark:text-rose-400'
-  if (v >= 80) return 'text-yellow-600 dark:text-yellow-400'
+  if (v >= 80) return 'text-amber-600 dark:text-amber-400'
   return 'text-emerald-600 dark:text-emerald-400'
 })
 
@@ -667,7 +667,7 @@ const memPercentClass = computed(() => {
   const v = memPercentValue.value
   if (v == null) return 'text-gray-900 dark:text-white'
   if (v >= 95) return 'text-rose-600 dark:text-rose-400'
-  if (v >= 85) return 'text-yellow-600 dark:text-yellow-400'
+  if (v >= 85) return 'text-amber-600 dark:text-amber-400'
   return 'text-emerald-600 dark:text-emerald-400'
 })
 
@@ -712,7 +712,7 @@ const dbMiddleClass = computed(() => {
   if (systemMetrics.value?.db_ok === false) return 'text-rose-600 dark:text-rose-400'
   if (dbUsagePercent.value != null) {
     if (dbUsagePercent.value >= 90) return 'text-rose-600 dark:text-rose-400'
-    if (dbUsagePercent.value >= 70) return 'text-yellow-600 dark:text-yellow-400'
+    if (dbUsagePercent.value >= 70) return 'text-amber-600 dark:text-amber-400'
     return 'text-emerald-600 dark:text-emerald-400'
   }
   if (systemMetrics.value?.db_ok === true) return 'text-emerald-600 dark:text-emerald-400'
@@ -755,7 +755,7 @@ const redisMiddleClass = computed(() => {
   if (systemMetrics.value?.redis_ok === false) return 'text-rose-600 dark:text-rose-400'
   if (redisUsagePercent.value != null) {
     if (redisUsagePercent.value >= 90) return 'text-rose-600 dark:text-rose-400'
-    if (redisUsagePercent.value >= 70) return 'text-yellow-600 dark:text-yellow-400'
+    if (redisUsagePercent.value >= 70) return 'text-amber-600 dark:text-amber-400'
     return 'text-emerald-600 dark:text-emerald-400'
   }
   if (systemMetrics.value?.redis_ok === true) return 'text-emerald-600 dark:text-emerald-400'
@@ -796,7 +796,7 @@ const goroutineStatusClass = computed(() => {
     case 'ok':
       return 'text-emerald-600 dark:text-emerald-400'
     case 'warning':
-      return 'text-yellow-600 dark:text-yellow-400'
+      return 'text-amber-600 dark:text-amber-400'
     case 'critical':
       return 'text-rose-600 dark:text-rose-400'
     default:
@@ -841,7 +841,7 @@ const jobsStatusClass = computed(() => {
     case 'ok':
       return 'text-emerald-600 dark:text-emerald-400'
     case 'warn':
-      return 'text-yellow-600 dark:text-yellow-400'
+      return 'text-amber-600 dark:text-amber-400'
     default:
       return 'text-gray-900 dark:text-white'
   }
@@ -1020,7 +1020,7 @@ function handleToolbarRefresh() {
                           clip-rule="evenodd"
                         />
                       </svg>
-                      <svg v-else-if="item.type === 'warning'" class="h-4 w-4 text-yellow-500" fill="currentColor" viewBox="0 0 20 20">
+                      <svg v-else-if="item.type === 'warning'" class="h-4 w-4 text-amber-500" fill="currentColor" viewBox="0 0 20 20">
                         <path
                           fill-rule="evenodd"
                           d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z"
@@ -1107,8 +1107,8 @@ function handleToolbarRefresh() {
             <div class="mb-3 flex flex-wrap items-center justify-between gap-2">
               <div class="flex items-center gap-2">
                 <div class="relative flex h-3 w-3 shrink-0">
-                  <span class="absolute inline-flex h-full w-full animate-ping rounded-full bg-blue-400 opacity-75"></span>
-                  <span class="relative inline-flex h-3 w-3 rounded-full bg-blue-500"></span>
+                  <span class="absolute inline-flex h-full w-full animate-ping rounded-full bg-sky-400 opacity-75"></span>
+                  <span class="relative inline-flex h-3 w-3 rounded-full bg-sky-500"></span>
                 </div>
                 <h3 class="text-xs font-bold uppercase tracking-wider text-gray-400">{{ t('admin.ops.realtime.title') }}</h3>
                 <HelpTooltip v-if="!props.fullscreen" :content="t('admin.ops.tooltips.qps')" />
@@ -1251,7 +1251,7 @@ function handleToolbarRefresh() {
             <div class="flex items-center gap-2">
               <span class="text-[10px] font-bold uppercase text-gray-400">{{ t('admin.ops.sla') }}</span>
               <HelpTooltip v-if="!props.fullscreen" :content="t('admin.ops.tooltips.sla')" />
-              <span class="h-1.5 w-1.5 rounded-full" :class="getSLAThresholdLevel(slaPercent) === 'critical' ? 'bg-red-500' : getSLAThresholdLevel(slaPercent) === 'warning' ? 'bg-yellow-500' : 'bg-green-500'"></span>
+              <span class="h-1.5 w-1.5 rounded-full" :class="getSLAThresholdLevel(slaPercent) === 'critical' ? 'bg-red-500' : getSLAThresholdLevel(slaPercent) === 'warning' ? 'bg-amber-500' : 'bg-green-500'"></span>
             </div>
             <button
               v-if="!props.fullscreen"
@@ -1266,7 +1266,7 @@ function handleToolbarRefresh() {
             {{ slaPercent == null ? '-' : `${slaPercent.toFixed(3)}%` }}
           </div>
           <div class="mt-3 h-2 w-full overflow-hidden rounded-full bg-gray-200 dark:bg-dark-700">
-            <div class="h-full transition-all" :class="getSLAThresholdLevel(slaPercent) === 'critical' ? 'bg-red-500' : getSLAThresholdLevel(slaPercent) === 'warning' ? 'bg-yellow-500' : 'bg-green-500'" :style="{ width: `${Math.max((slaPercent ?? 0) - 90, 0) * 10}%` }"></div>
+            <div class="h-full transition-all" :class="getSLAThresholdLevel(slaPercent) === 'critical' ? 'bg-red-500' : getSLAThresholdLevel(slaPercent) === 'warning' ? 'bg-amber-500' : 'bg-green-500'" :style="{ width: `${Math.max((slaPercent ?? 0) - 90, 0) * 10}%` }"></div>
           </div>
           <div class="mt-3 text-xs">
             <div class="flex justify-between">

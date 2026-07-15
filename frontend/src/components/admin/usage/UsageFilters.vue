@@ -1,11 +1,21 @@
 <template>
-  <div :class="flat ? 'p-4 sm:p-6' : 'card p-6'">
-    <!-- Toolbar: left filters (multi-line) + right actions -->
-    <div class="flex flex-wrap items-end justify-between gap-4">
-      <!-- Left: filters (allowed to wrap to multiple rows) -->
-      <div class="flex flex-1 flex-wrap items-end gap-4">
+  <div :class="flat ? 'p-4 sm:px-6' : 'card p-4'">
+    <div class="table-toolbar">
+      <button
+        type="button"
+        class="usage-filter-mobile-toggle btn btn-secondary"
+        @click="mobileFiltersExpanded = !mobileFiltersExpanded"
+      >
+        <span>{{ t('common.filter') }}</span>
+        <span v-if="activeFilterCount" class="usage-filter-count">{{ activeFilterCount }}</span>
+        <span>{{ mobileFiltersExpanded ? t('common.collapse') : t('common.more') }}</span>
+      </button>
+      <div
+        class="table-toolbar-filters usage-filter-grid"
+        :class="{ 'usage-filter-grid-expanded': mobileFiltersExpanded }"
+      >
         <!-- User Search -->
-        <div ref="userSearchRef" class="usage-filter-dropdown relative w-full sm:w-auto sm:min-w-[240px]">
+        <div ref="userSearchRef" class="usage-filter-dropdown usage-filter-primary table-toolbar-field-lg relative">
           <label class="input-label">{{ t('admin.usage.userFilter') }}</label>
           <input
             v-model="userKeyword"
@@ -42,7 +52,7 @@
         </div>
 
         <!-- API Key Search -->
-        <div ref="apiKeySearchRef" class="usage-filter-dropdown relative w-full sm:w-auto sm:min-w-[240px]">
+        <div ref="apiKeySearchRef" class="usage-filter-dropdown usage-filter-advanced table-toolbar-field-lg relative">
           <label class="input-label">{{ t('usage.apiKeyFilter') }}</label>
           <input
             v-model="apiKeyKeyword"
@@ -79,13 +89,13 @@
         </div>
 
         <!-- Model Filter -->
-        <div class="w-full sm:w-auto sm:min-w-[220px]">
+        <div class="usage-filter-primary table-toolbar-field-lg">
           <label class="input-label">{{ t('usage.model') }}</label>
           <Select v-model="filters.model" :options="modelOptions" searchable @change="emitChange" />
         </div>
 
         <!-- Account Filter -->
-        <div ref="accountSearchRef" class="usage-filter-dropdown relative w-full sm:w-auto sm:min-w-[220px]">
+        <div ref="accountSearchRef" class="usage-filter-dropdown usage-filter-advanced table-toolbar-field-lg relative">
           <label class="input-label">{{ t('admin.usage.account') }}</label>
           <input
             v-model="accountKeyword"
@@ -122,51 +132,53 @@
         </div>
 
         <!-- Request Type Filter (usage only) -->
-        <div v-if="mode !== 'errors'" class="w-full sm:w-auto sm:min-w-[180px]">
+        <div v-if="mode !== 'errors'" class="usage-filter-advanced table-toolbar-field-sm">
           <label class="input-label">{{ t('usage.type') }}</label>
           <Select v-model="filters.request_type" :options="requestTypeOptions" @change="emitChange" />
         </div>
 
         <!-- Billing Type Filter (usage only) -->
-        <div v-if="mode !== 'errors'" class="w-full sm:w-auto sm:min-w-[200px]">
+        <div v-if="mode !== 'errors'" class="usage-filter-advanced table-toolbar-field">
           <label class="input-label">{{ t('admin.usage.billingType') }}</label>
           <Select v-model="filters.billing_type" :options="billingTypeOptions" @change="emitChange" />
         </div>
 
         <!-- Billing Mode Filter (usage only；用户排行的 user-breakdown 接口不支持该维度) -->
-        <div v-if="mode === 'usage'" class="w-full sm:w-auto sm:min-w-[200px]">
+        <div v-if="mode === 'usage'" class="usage-filter-advanced table-toolbar-field">
           <label class="input-label">{{ t('admin.usage.billingMode') }}</label>
           <Select v-model="filters.billing_mode" :options="billingModeOptions" @change="emitChange" />
         </div>
 
         <!-- Error Phase Filter (errors only) -->
-        <div v-if="mode === 'errors'" class="w-full sm:w-auto sm:min-w-[180px]">
+        <div v-if="mode === 'errors'" class="usage-filter-advanced table-toolbar-field">
           <label class="input-label">{{ t('admin.ops.errorLog.type') }}</label>
           <Select v-model="filters.error_phase" :options="errorPhaseOptions" @change="emitChange" />
         </div>
 
         <!-- Error Category Filter (errors only) -->
-        <div v-if="mode === 'errors'" class="w-full sm:w-auto sm:min-w-[180px]">
+        <div v-if="mode === 'errors'" class="usage-filter-advanced table-toolbar-field">
           <label class="input-label">{{ t('usage.errors.category') }}</label>
           <Select v-model="filters.error_category" :options="errorCategoryOptions" @change="emitChange" />
         </div>
 
         <!-- Status Code Filter (errors only) -->
-        <div v-if="mode === 'errors'" class="w-full sm:w-auto sm:min-w-[180px]">
+        <div v-if="mode === 'errors'" class="usage-filter-advanced table-toolbar-field-sm">
           <label class="input-label">{{ t('admin.ops.errorLog.status') }}</label>
           <Select v-model="filters.status_code" :options="statusCodeOptions" @change="emitChange" />
         </div>
 
         <!-- Group Filter -->
-        <div class="w-full sm:w-auto sm:min-w-[200px]">
+        <div class="usage-filter-advanced table-toolbar-field">
           <label class="input-label">{{ t('admin.usage.group') }}</label>
           <Select v-model="filters.group_id" :options="groupOptions" searchable @change="emitChange" />
         </div>
 
       </div>
 
-      <!-- Right: actions -->
-      <div v-if="showActions" class="flex w-full flex-wrap items-center justify-end gap-3 sm:w-auto">
+      <div
+        v-if="showActions"
+        class="table-toolbar-actions"
+      >
         <button type="button" @click="$emit('refresh')" class="btn btn-secondary">
           {{ t('common.refresh') }}
         </button>
@@ -229,6 +241,26 @@ const emit = defineEmits([
 
 const { t } = useI18n()
 const filters = toRef(props, 'modelValue')
+const mobileFiltersExpanded = ref(false)
+const activeFilterKeys = [
+  'user_id',
+  'api_key_id',
+  'model',
+  'account_id',
+  'request_type',
+  'billing_type',
+  'billing_mode',
+  'error_phase',
+  'error_category',
+  'status_code',
+  'group_id'
+]
+const activeFilterCount = computed(() =>
+  activeFilterKeys.filter((key) => {
+    const value = filters.value?.[key]
+    return value !== undefined && value !== null && value !== ''
+  }).length
+)
 
 const userSearchRef = ref<HTMLElement | null>(null)
 const apiKeySearchRef = ref<HTMLElement | null>(null)
@@ -502,3 +534,75 @@ const setUserKeyword = (email: string) => {
 
 defineExpose({ setUserKeyword })
 </script>
+
+<style scoped>
+.usage-filter-mobile-toggle {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  gap: 0.45rem;
+  white-space: nowrap;
+
+}
+
+.usage-filter-count {
+  display: inline-flex;
+  min-width: 1.35rem;
+  height: 1.35rem;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  background: rgba(36, 152, 242, 0.13);
+  color: #0c78d8;
+  font-size: 0.75rem;
+  font-weight: 700;
+  line-height: 1;
+
+}
+
+.dark .usage-filter-count {
+  background: rgba(84, 175, 255, 0.18);
+  color: #8bd0ff;
+
+}
+
+@media (max-width: 640px) {
+.usage-filter-mobile-toggle {
+    display: inline-flex;
+    width: 100%;
+  }
+
+.usage-filter-grid {
+    width: 100%;
+    align-items: flex-start;
+    gap: 0.75rem;
+  }
+
+.usage-filter-primary {
+    flex: 1 1 100%;
+    min-width: 0;
+  }
+
+.usage-filter-advanced {
+    display: none;
+    flex: 1 1 calc(50% - 0.375rem);
+    min-width: min(10.25rem, 100%);
+  }
+
+.usage-filter-grid-expanded .usage-filter-advanced {
+    display: block;
+  }
+
+.usage-filter-dropdown {
+    overflow: visible;
+  }
+
+}
+
+@media (max-width: 420px) {
+.usage-filter-advanced {
+    flex-basis: 100%;
+  }
+
+}
+</style>

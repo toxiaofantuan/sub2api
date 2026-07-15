@@ -13,16 +13,16 @@
 
       <!-- Invalid Link State -->
       <div v-if="isInvalidLink" class="space-y-6">
-        <div class="rounded-xl border border-amber-200 bg-amber-50 p-6 dark:border-amber-800/50 dark:bg-amber-900/20">
+        <div class="rounded-xl border border-rose-200 bg-rose-50 p-6 dark:border-rose-500/30 dark:bg-rose-500/10">
           <div class="flex flex-col items-center gap-4 text-center">
-            <div class="flex h-12 w-12 items-center justify-center rounded-full bg-amber-100 dark:bg-amber-800/50">
-              <Icon name="exclamationCircle" size="lg" class="text-amber-600 dark:text-amber-400" />
+            <div class="flex h-12 w-12 items-center justify-center rounded-full bg-rose-100 dark:bg-rose-500/20">
+              <Icon name="exclamationCircle" size="lg" class="text-rose-600 dark:text-rose-300" />
             </div>
             <div>
-              <h3 class="text-lg font-semibold text-amber-800 dark:text-amber-200">
+              <h3 class="text-lg font-semibold text-rose-800 dark:text-rose-200">
                 {{ t('auth.invalidResetLink') }}
               </h3>
-              <p class="mt-2 text-sm text-amber-700 dark:text-amber-300">
+              <p class="mt-2 text-sm text-rose-700 dark:text-rose-300">
                 {{ t('auth.invalidResetLinkHint') }}
               </p>
             </div>
@@ -32,7 +32,7 @@
         <div class="text-center">
           <router-link
             to="/forgot-password"
-            class="inline-flex items-center gap-2 font-medium text-primary-600 transition-colors hover:text-primary-500 dark:text-primary-400 dark:hover:text-primary-300"
+            class="inline-flex items-center gap-2 font-medium text-sky-700 transition-colors hover:text-blue-600 dark:text-sky-200 dark:hover:text-blue-100"
           >
             {{ t('auth.requestNewResetLink') }}
           </router-link>
@@ -190,7 +190,7 @@
         {{ t('auth.rememberedPassword') }}
         <router-link
           to="/login"
-          class="font-medium text-primary-600 transition-colors hover:text-primary-500 dark:text-primary-400 dark:hover:text-primary-300"
+          class="font-medium text-sky-700 transition-colors hover:text-blue-600 dark:text-sky-200 dark:hover:text-blue-100"
         >
           {{ t('auth.signIn') }}
         </router-link>

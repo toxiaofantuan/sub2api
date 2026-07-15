@@ -88,7 +88,7 @@
             <Icon name="play" size="sm" :stroke-width="2" />
             <span>{{ t('admin.accounts.readyToTest') }}</span>
           </div>
-          <div v-else-if="status === 'connecting'" class="flex items-center gap-2 text-yellow-400">
+          <div v-else-if="status === 'connecting'" class="flex items-center gap-2 text-blue-400">
             <Icon name="refresh" size="sm" class="animate-spin" :stroke-width="2" />
             <span>{{ t('admin.accounts.connectingToApi') }}</span>
           </div>
@@ -213,7 +213,7 @@
               : status === 'success'
                 ? 'bg-green-500 text-white hover:bg-green-600'
                 : status === 'error'
-                  ? 'bg-orange-500 text-white hover:bg-orange-600'
+                  ? 'bg-violet-500 text-white hover:bg-violet-600'
                   : 'bg-primary-500 text-white hover:bg-primary-600'
           ]"
         >
@@ -504,7 +504,7 @@ const handleEvent = (event: {
         'text-gray-400'
       )
       addLine('', 'text-gray-300')
-      addLine(t('admin.accounts.response'), 'text-yellow-400')
+      addLine(t('admin.accounts.response'), 'text-sky-400')
       break
 
     case 'content':

@@ -1,17 +1,17 @@
 <template>
-  <div class="flex flex-wrap items-center gap-3">
+  <div class="table-toolbar-primary">
     <SearchInput
       :model-value="searchQuery"
       :placeholder="t('admin.accounts.searchAccounts')"
-      class="w-full sm:w-64"
+      class="table-toolbar-search"
       @update:model-value="$emit('update:searchQuery', $event)"
       @search="$emit('change')"
     />
-    <Select :model-value="filters.platform" class="w-40" :options="pOpts" @update:model-value="updatePlatform" @change="$emit('change')" />
-    <Select :model-value="filters.type" class="w-40" :options="tOpts" @update:model-value="updateType" @change="$emit('change')" />
-    <Select :model-value="filters.status" class="w-40" :options="sOpts" @update:model-value="updateStatus" @change="$emit('change')" />
-    <Select :model-value="filters.privacy_mode" class="w-40" :options="privacyOpts" @update:model-value="updatePrivacyMode" @change="$emit('change')" />
-    <Select :model-value="filters.group" class="w-40" :options="gOpts" @update:model-value="updateGroup" @change="$emit('change')" />
+    <Select :model-value="filters.platform" class="table-toolbar-control" :options="pOpts" @update:model-value="updatePlatform" @change="$emit('change')" />
+    <Select :model-value="filters.type" class="table-toolbar-control" :options="tOpts" @update:model-value="updateType" @change="$emit('change')" />
+    <Select :model-value="filters.status" class="table-toolbar-control" :options="sOpts" @update:model-value="updateStatus" @change="$emit('change')" />
+    <Select :model-value="filters.privacy_mode" class="table-toolbar-control" :options="privacyOpts" @update:model-value="updatePrivacyMode" @change="$emit('change')" />
+    <Select :model-value="filters.group" class="table-toolbar-control" :options="gOpts" @update:model-value="updateGroup" @change="$emit('change')" />
   </div>
 </template>
 

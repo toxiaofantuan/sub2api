@@ -4,11 +4,11 @@
     <template v-if="isAdmin">
       <button
         @click="toggleDropdown"
-        class="flex items-center gap-1.5 rounded-lg px-2 py-1 text-xs transition-colors"
+        class="version-trigger flex items-center gap-1.5 rounded-md px-2 py-1 text-xs transition-colors"
         :class="[
           hasUpdate
-            ? 'bg-amber-100 text-amber-700 hover:bg-amber-200 dark:bg-amber-900/30 dark:text-amber-400 dark:hover:bg-amber-900/50'
-            : 'bg-gray-100 text-gray-600 hover:bg-gray-200 dark:bg-dark-800 dark:text-dark-400 dark:hover:bg-dark-700'
+            ? 'version-trigger-update'
+            : 'version-trigger-idle'
         ]"
         :title="hasUpdate ? t('version.updateAvailable') : t('version.upToDate')"
       >
@@ -19,10 +19,8 @@
         ></span>
         <!-- Update indicator -->
         <span v-if="hasUpdate" class="relative flex h-2 w-2">
-          <span
-            class="absolute inline-flex h-full w-full animate-ping rounded-full bg-amber-400 opacity-75"
-          ></span>
-          <span class="relative inline-flex h-2 w-2 rounded-full bg-amber-500"></span>
+          <span class="absolute inline-flex h-full w-full animate-ping rounded-full bg-sky-400 opacity-75"></span>
+          <span class="relative inline-flex h-2 w-2 rounded-full bg-violet-500 dark:bg-violet-300"></span>
         </span>
       </button>
 
@@ -31,19 +29,19 @@
         <div
           v-if="dropdownOpen"
           ref="dropdownRef"
-          class="absolute left-0 z-50 mt-2 overflow-hidden whitespace-normal rounded-xl border border-gray-200 bg-white shadow-lg transition-all duration-200 dark:border-dark-700 dark:bg-dark-800"
+          class="version-popover absolute left-0 z-50 mt-2 overflow-hidden whitespace-normal rounded-lg transition-all duration-200"
           :class="rollbackPanelOpen && isReleaseBuild ? 'w-80' : 'w-64'"
         >
           <!-- Header with refresh button -->
           <div
-            class="flex items-center justify-between border-b border-gray-100 px-4 py-3 dark:border-dark-700"
+            class="version-popover-header flex items-center justify-between border-b px-4 py-3"
           >
             <span class="text-sm font-medium text-gray-700 dark:text-dark-300">{{
               t('version.currentVersion')
             }}</span>
             <button
               @click="refreshVersion(true)"
-              class="rounded-lg p-1.5 text-gray-400 transition-colors hover:bg-gray-100 hover:text-gray-600 dark:hover:bg-dark-700 dark:hover:text-dark-200"
+              class="version-icon-button rounded-lg p-1.5 transition-colors"
               :disabled="loading"
               :title="t('version.refresh')"
             >
@@ -59,7 +57,7 @@
           <div class="p-4">
             <!-- Loading state -->
             <div v-if="loading" class="flex items-center justify-center py-6">
-              <svg class="h-6 w-6 animate-spin text-primary-500" fill="none" viewBox="0 0 24 24">
+              <svg class="h-6 w-6 animate-spin text-violet-600 dark:text-violet-300" fill="none" viewBox="0 0 24 24">
                 <circle
                   class="opacity-25"
                   cx="12"
@@ -90,10 +88,10 @@
                   <!-- Show check mark when up to date -->
                   <span
                     v-if="!hasUpdate"
-                    class="flex h-5 w-5 items-center justify-center rounded-full bg-green-100 dark:bg-green-900/30"
+                    class="flex h-5 w-5 items-center justify-center rounded-md bg-emerald-500/10 dark:bg-emerald-400/20"
                   >
                     <svg
-                      class="h-3 w-3 text-green-600 dark:text-green-400"
+                      class="h-3 w-3 text-emerald-700 dark:text-emerald-300"
                       fill="currentColor"
                       viewBox="0 0 20 20"
                     >
@@ -120,7 +118,7 @@
                   class="flex items-center gap-3 rounded-lg border border-red-200 bg-red-50 p-3 dark:border-red-800/50 dark:bg-red-900/20"
                 >
                   <div
-                    class="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full bg-red-100 dark:bg-red-900/50"
+                    class="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-lg bg-red-100 dark:bg-red-900/50"
                   >
                     <Icon
                       name="x"
@@ -152,13 +150,13 @@
               <!-- Priority 2: Update success - need restart -->
               <div v-else-if="updateSuccess && needRestart" class="space-y-2">
                 <div
-                  class="flex items-center gap-3 rounded-lg border border-green-200 bg-green-50 p-3 dark:border-green-800/50 dark:bg-green-900/20"
+                  class="flex items-center gap-3 rounded-lg border border-emerald-200 bg-emerald-50 p-3 dark:border-emerald-800/50 dark:bg-emerald-900/20"
                 >
                   <div
-                    class="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full bg-green-100 dark:bg-green-900/50"
+                    class="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-lg bg-emerald-100 dark:bg-emerald-900/50"
                   >
                     <svg
-                      class="h-4 w-4 text-green-600 dark:text-green-400"
+                      class="h-4 w-4 text-emerald-700 dark:text-emerald-300"
                       fill="none"
                       viewBox="0 0 24 24"
                       stroke="currentColor"
@@ -175,7 +173,7 @@
                           : t('version.updateComplete')
                       }}
                     </p>
-                    <p class="text-xs text-green-600/70 dark:text-green-400/70">
+                    <p class="text-xs text-emerald-700/70 dark:text-emerald-300/70">
                       {{ t('version.restartRequired') }}
                     </p>
                   </div>
@@ -185,7 +183,7 @@
                 <button
                   @click="handleRestart"
                   :disabled="restarting"
-                  class="flex w-full items-center justify-center gap-2 rounded-lg bg-green-500 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-green-600 disabled:cursor-not-allowed disabled:opacity-50"
+                  class="version-primary-button flex w-full items-center justify-center gap-2 rounded-md px-4 py-2 text-sm font-medium disabled:cursor-not-allowed disabled:opacity-50"
                 >
                   <svg
                     v-if="restarting"
@@ -238,28 +236,28 @@
                   :href="releaseInfo.html_url"
                   target="_blank"
                   rel="noopener noreferrer"
-                  class="group flex items-center gap-3 rounded-lg border border-amber-200 bg-amber-50 p-3 transition-colors hover:bg-amber-100 dark:border-amber-800/50 dark:bg-amber-900/20 dark:hover:bg-amber-900/30"
+                  class="version-update-card group flex items-center gap-3 rounded-md p-3 transition-colors"
                 >
                   <div
-                    class="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full bg-amber-100 dark:bg-amber-900/50"
+                    class="version-update-icon flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-lg"
                   >
                     <Icon
                       name="download"
                       size="sm"
                       :stroke-width="2"
-                      class="text-amber-600 dark:text-amber-400"
+                      class="text-violet-600 dark:text-violet-300"
                     />
                   </div>
                   <div class="min-w-0 flex-1">
-                    <p class="text-sm font-medium text-amber-700 dark:text-amber-300">
+                    <p class="version-strong text-sm font-medium">
                       {{ t('version.updateAvailable') }}
                     </p>
-                    <p class="text-xs text-amber-600/70 dark:text-amber-400/70">
+                    <p class="version-muted text-xs">
                       v{{ latestVersion }}
                     </p>
                   </div>
                   <svg
-                    class="h-4 w-4 text-amber-500 transition-transform group-hover:translate-x-0.5 dark:text-amber-400"
+                    class="h-4 w-4 text-violet-600 transition-transform group-hover:translate-x-0.5 dark:text-violet-300"
                     fill="none"
                     viewBox="0 0 24 24"
                     stroke="currentColor"
@@ -270,10 +268,10 @@
                 </a>
                 <!-- Source build hint -->
                 <div
-                  class="flex items-center gap-2 rounded-lg border border-blue-200 bg-blue-50 p-2 dark:border-blue-800/50 dark:bg-blue-900/20"
+                  class="version-update-card flex items-center gap-2 rounded-md p-2"
                 >
                   <svg
-                    class="h-3.5 w-3.5 flex-shrink-0 text-blue-500 dark:text-blue-400"
+                    class="h-3.5 w-3.5 flex-shrink-0 text-violet-600 dark:text-violet-300"
                     fill="none"
                     viewBox="0 0 24 24"
                     stroke="currentColor"
@@ -285,7 +283,7 @@
                       d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
                     />
                   </svg>
-                  <p class="text-xs text-blue-600 dark:text-blue-400">
+                  <p class="version-muted text-xs">
                     {{ t('version.sourceModeHint') }}
                   </p>
                 </div>
@@ -295,23 +293,23 @@
               <div v-else-if="hasUpdate && isReleaseBuild" class="space-y-2">
                 <!-- Update info card -->
                 <div
-                  class="flex items-center gap-3 rounded-lg border border-amber-200 bg-amber-50 p-3 dark:border-amber-800/50 dark:bg-amber-900/20"
+                  class="version-update-card flex items-center gap-3 rounded-md p-3"
                 >
-                <div
-                  class="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full bg-amber-100 dark:bg-amber-900/50"
-                >
-                  <Icon
-                    name="download"
-                    size="sm"
-                    :stroke-width="2"
-                    class="text-amber-600 dark:text-amber-400"
-                  />
-                </div>
+                  <div
+                    class="version-update-icon flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-lg"
+                  >
+                    <Icon
+                      name="download"
+                      size="sm"
+                      :stroke-width="2"
+                      class="text-violet-600 dark:text-violet-300"
+                    />
+                  </div>
                   <div class="min-w-0 flex-1">
-                    <p class="text-sm font-medium text-amber-700 dark:text-amber-300">
+                    <p class="version-strong text-sm font-medium">
                       {{ t('version.updateAvailable') }}
                     </p>
-                    <p class="text-xs text-amber-600/70 dark:text-amber-400/70">
+                    <p class="version-muted text-xs">
                       v{{ latestVersion }}
                     </p>
                   </div>
@@ -321,7 +319,7 @@
                 <button
                   @click="handleUpdate"
                   :disabled="updating"
-                  class="flex w-full items-center justify-center gap-2 rounded-lg bg-primary-500 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-primary-600 disabled:cursor-not-allowed disabled:opacity-50"
+                  class="version-primary-button flex w-full items-center justify-center gap-2 rounded-md px-4 py-2 text-sm font-medium disabled:cursor-not-allowed disabled:opacity-50"
                 >
                   <svg v-if="updating" class="h-4 w-4 animate-spin" fill="none" viewBox="0 0 24 24">
                     <circle
@@ -424,7 +422,7 @@
                         class="flex items-center justify-center py-4"
                       >
                         <svg
-                          class="h-5 w-5 animate-spin text-primary-500"
+                          class="h-5 w-5 animate-spin text-violet-500"
                           fill="none"
                           viewBox="0 0 24 24"
                         >
@@ -481,7 +479,7 @@
                           class="flex w-full items-center justify-between rounded-lg border px-3 py-2 text-left transition-all disabled:cursor-not-allowed disabled:opacity-60"
                           :class="
                             selectedRollbackVersion === item.version
-                              ? 'border-amber-300 bg-amber-50 shadow-sm dark:border-amber-700 dark:bg-amber-900/20'
+                              ? 'border-violet-300 bg-violet-50 shadow-sm dark:border-violet-700 dark:bg-violet-900/20'
                               : 'border-gray-200 hover:border-gray-300 hover:bg-gray-50 dark:border-dark-700 dark:hover:border-dark-600 dark:hover:bg-dark-700/40'
                           "
                         >
@@ -490,20 +488,20 @@
                               class="flex h-3.5 w-3.5 items-center justify-center rounded-full border transition-colors"
                               :class="
                                 selectedRollbackVersion === item.version
-                                  ? 'border-amber-500'
+                                  ? 'border-violet-500'
                                   : 'border-gray-300 dark:border-dark-500'
                               "
                             >
                               <span
                                 v-if="selectedRollbackVersion === item.version"
-                                class="h-1.5 w-1.5 rounded-full bg-amber-500"
+                                class="h-1.5 w-1.5 rounded-full bg-violet-500"
                               ></span>
                             </span>
                             <span
                               class="text-sm font-semibold"
                               :class="
                                 selectedRollbackVersion === item.version
-                                  ? 'text-amber-700 dark:text-amber-300'
+                                  ? 'text-violet-700 dark:text-violet-300'
                                   : 'text-gray-700 dark:text-dark-200'
                               "
                               >v{{ item.version }}</span
@@ -565,7 +563,7 @@
                             </div>
 
                             <p
-                              class="flex items-start gap-1.5 px-0.5 text-[11px] leading-4 text-amber-600 dark:text-amber-400"
+                              class="flex items-start gap-1.5 px-0.5 text-[11px] leading-4 text-rose-600 dark:text-rose-400"
                             >
                               <Icon
                                 name="exclamationTriangle"
@@ -586,7 +584,7 @@
                             <button
                               @click="handleRollback"
                               :disabled="rollingBack"
-                              class="flex w-full items-center justify-center gap-2 rounded-lg bg-amber-500 px-4 py-2 text-sm font-medium text-white shadow-sm transition-colors hover:bg-amber-600 disabled:cursor-not-allowed disabled:opacity-50"
+                              class="flex w-full items-center justify-center gap-2 rounded-lg bg-rose-500 px-4 py-2 text-sm font-medium text-white shadow-sm transition-colors hover:bg-rose-600 disabled:cursor-not-allowed disabled:opacity-50"
                             >
                               <svg
                                 v-if="rollingBack"
@@ -923,6 +921,113 @@ onBeforeUnmount(() => {
 </script>
 
 <style scoped>
+.version-trigger {
+  border: 1px solid var(--ui-border);
+  box-shadow: var(--ui-shadow-sm);
+  backdrop-filter: blur(18px) saturate(1.35);
+  -webkit-backdrop-filter: blur(18px) saturate(1.35);
+}
+
+.version-trigger-update {
+  border-color: color-mix(in srgb, var(--ui-primary) 28%, transparent);
+  color: var(--ui-primary-strong);
+  background: var(--ui-primary-soft);
+}
+
+.version-trigger-update:hover {
+  background: color-mix(in srgb, var(--ui-primary) 22%, transparent);
+}
+
+.version-trigger-idle {
+  color: var(--ui-muted);
+  background: var(--ui-surface-muted);
+}
+
+.version-trigger-idle:hover {
+  color: var(--ui-ink);
+  background: var(--ui-surface-strong);
+}
+
+.version-trigger:focus-visible,
+.version-icon-button:focus-visible,
+.version-primary-button:focus-visible {
+  outline: 2px solid color-mix(in srgb, var(--ui-primary) 58%, transparent);
+  outline-offset: 2px;
+}
+
+.version-popover {
+  max-width: calc(100vw - 2rem);
+  border: 1px solid var(--ui-border);
+  color: var(--ui-ink);
+  background:
+    linear-gradient(145deg, var(--ui-highlight), transparent 38%),
+    var(--ui-surface-strong);
+  box-shadow: var(--ui-shadow-hover);
+  backdrop-filter: blur(28px) saturate(1.5);
+  -webkit-backdrop-filter: blur(28px) saturate(1.5);
+}
+
+.version-popover-header {
+  border-color: var(--ui-border);
+  background: color-mix(in srgb, var(--ui-surface-muted) 72%, transparent);
+}
+
+.version-icon-button {
+  color: var(--ui-muted);
+}
+
+.version-icon-button:hover {
+  color: var(--ui-primary-strong);
+  background: var(--ui-primary-soft);
+}
+
+.version-update-card {
+  border: 1px solid color-mix(in srgb, var(--ui-primary) 24%, transparent);
+  background: linear-gradient(135deg, var(--ui-primary-soft), var(--ui-accent-soft));
+  box-shadow: inset 0 1px 0 var(--ui-highlight);
+}
+
+.version-update-card:hover {
+  border-color: color-mix(in srgb, var(--ui-primary) 36%, transparent);
+  background: color-mix(in srgb, var(--ui-primary-soft) 82%, var(--ui-surface-strong));
+}
+
+.version-update-icon {
+  border: 1px solid color-mix(in srgb, var(--ui-primary) 20%, transparent);
+  color: var(--ui-primary-strong);
+  background: color-mix(in srgb, var(--ui-primary-soft) 74%, var(--ui-surface-strong));
+  box-shadow: inset 0 1px 0 var(--ui-highlight);
+}
+
+.version-strong {
+  color: var(--ui-ink);
+}
+
+.version-muted {
+  color: var(--ui-muted);
+}
+
+.version-primary-button {
+  border: 1px solid color-mix(in srgb, var(--ui-primary) 40%, transparent);
+  color: var(--ui-on-action, #ffffff);
+  background: linear-gradient(135deg, var(--ui-action-start, #6557bf), var(--ui-action-end, #3c78a8));
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.3),
+    0 8px 18px color-mix(in srgb, var(--ui-primary) 24%, transparent);
+  transition:
+    filter 0.2s ease,
+    box-shadow 0.2s ease,
+    transform 0.2s ease;
+}
+
+.version-primary-button:hover {
+  filter: saturate(1.08) brightness(1.03);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.36),
+    0 12px 24px color-mix(in srgb, var(--ui-primary) 28%, transparent);
+  transform: translateY(-1px);
+}
+
 .dropdown-enter-active,
 .dropdown-leave-active {
   transition: all 0.2s ease;
@@ -950,5 +1055,22 @@ onBeforeUnmount(() => {
   -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
   overflow: hidden;
+}
+
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .version-trigger,
+  .version-popover {
+    background: var(--ui-surface-strong);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dropdown-enter-active,
+  .dropdown-leave-active,
+  .rollback-enter-active,
+  .rollback-leave-active,
+  .version-primary-button {
+    transition: none;
+  }
 }
 </style>

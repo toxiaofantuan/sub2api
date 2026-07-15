@@ -2,42 +2,45 @@
   <AppLayout>
     <TablePageLayout>
       <template #filters>
-        <div class="flex flex-wrap items-center gap-3">
+        <div class="card p-4">
+          <div class="table-toolbar">
           <!-- Left: Search + Filters -->
-          <div class="relative w-full sm:w-64">
-            <Icon
-              name="search"
-              size="md"
-              class="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 dark:text-gray-500"
-            />
-            <input
-              v-model="searchQuery"
-              type="text"
-              :placeholder="t('admin.proxies.searchProxies')"
-              class="input pl-10"
-              @input="handleSearch"
-            />
-          </div>
+          <div class="table-toolbar-primary">
+            <div class="relative table-toolbar-search">
+              <Icon
+                name="search"
+                size="md"
+                class="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 dark:text-gray-500"
+              />
+              <input
+                v-model="searchQuery"
+                type="text"
+                :placeholder="t('admin.proxies.searchProxies')"
+                class="input pl-10"
+                @input="handleSearch"
+              />
+            </div>
 
-          <div class="w-full sm:w-40">
-            <Select
-              v-model="filters.protocol"
-              :options="protocolOptions"
-              :placeholder="t('admin.proxies.allProtocols')"
-              @change="loadProxies"
-            />
-          </div>
-          <div class="w-full sm:w-36">
-            <Select
-              v-model="filters.status"
-              :options="statusOptions"
-              :placeholder="t('admin.proxies.allStatus')"
-              @change="loadProxies"
-            />
+            <div class="table-toolbar-control">
+              <Select
+                v-model="filters.protocol"
+                :options="protocolOptions"
+                :placeholder="t('admin.proxies.allProtocols')"
+                @change="loadProxies"
+              />
+            </div>
+            <div class="table-toolbar-control-sm">
+              <Select
+                v-model="filters.status"
+                :options="statusOptions"
+                :placeholder="t('admin.proxies.allStatus')"
+                @change="loadProxies"
+              />
+            </div>
           </div>
 
           <!-- Right: All action buttons -->
-          <div class="flex flex-1 flex-wrap items-center justify-end gap-2">
+          <div class="table-toolbar-actions">
             <button
               @click="loadProxies"
               :disabled="loading"
@@ -83,6 +86,7 @@
               <Icon name="plus" size="md" class="mr-2" />
               {{ t('admin.proxies.createProxy') }}
             </button>
+          </div>
           </div>
         </div>
       </template>
