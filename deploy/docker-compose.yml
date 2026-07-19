@@ -16,7 +16,12 @@ services:
   # Sub2API Application
   # ===========================================================================
   sub2api:
-    image: sub2api:latest
+    image: ${SUB2API_IMAGE:-toxiaofantuan/sub2api:glass-cards-tables}
+    build:
+      context: ..
+      dockerfile: Dockerfile
+      args:
+        NPM_CONFIG_REGISTRY: ${NPM_CONFIG_REGISTRY:-https://registry.npmmirror.com}
     container_name: sub2api
     restart: unless-stopped
     ulimits:
